@@ -1,5 +1,4 @@
-#ifndef CLOCKMANAGER_H
-#define CLOCKMANAGER_H
+#pragma once
 
 #include <QObject>
 #include <chrono>
@@ -9,28 +8,24 @@
 class ClockManager : public QObject {
     Q_OBJECT
 
+private:
+    std::chrono::system_clock::time_point currentTime;
+    int fps{30};
+    std::thread loopThread;
+    std::atomic<bool> running{false};
+
 public:
     explicit ClockManager(QObject* parent = nullptr);
-    ~ClockManager();
+    ~ClockManager() override;
 
     void start();
     void stop();
     std::chrono::system_clock::time_point tick();
-    
+    std::chrono::system_clock::time_point getCurrentTime() const;
+    void setCurrentTime(std::chrono::system_clock::time_point time);
     void setFps(int fps);
     int getFps() const;
-    
-    void setCurrentTime(std::chrono::system_clock::time_point time);
-    std::chrono::system_clock::time_point getCurrentTime() const;
 
 signals:
-    void timeUpdated(); // Optional signal for Qt integration
-
-private:
-    int fps;
-    std::chrono::system_clock::time_point currentTime;
-    std::thread timingThread;
-    std::atomic<bool> running;
+    void ticked(std::chrono::system_clock::time_point t);
 };
-
-#endif // CLOCKMANAGER_H

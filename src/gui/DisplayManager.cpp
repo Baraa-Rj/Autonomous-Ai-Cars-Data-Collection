@@ -10,18 +10,13 @@ DisplayManager::DisplayManager(QWidget* parent)
     currentTime = std::chrono::system_clock::now();
     clockManager = new ClockManager(this);
     clockManager->setFps(fps);
-    clockManager->start();
-    timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, [this]() {
-        
-        currentTime += std::chrono::duration_cast<std::chrono::system_clock::duration>(
-            std::chrono::duration<double>(1.0 / static_cast<double>(fps))
-        );
-        
+    connect(clockManager, &ClockManager::ticked, this, [this](std::chrono::system_clock::time_point t){
+        currentTime = t;
         updateCameras(currentTime);
         updateSidebar(currentTime);
         this->update();
     });
+    clockManager->start();
 
     buildUi();
     connectUi();
