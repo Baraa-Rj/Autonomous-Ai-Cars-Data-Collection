@@ -77,3 +77,6 @@ ui_*.h
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Claude Code settings
+.claude/
