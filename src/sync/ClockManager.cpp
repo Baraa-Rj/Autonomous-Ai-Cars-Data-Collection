@@ -1,4 +1,4 @@
-#include "headers/sync/ClockManager.h"
+#include "sync/ClockManager.h"
 
 ClockManager::ClockManager(QObject* parent) : QObject(parent) {}
 

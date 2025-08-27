@@ -1,6 +1,8 @@
-#include "headers/readers/SpeedReader.h"
+#include "readers/SpeedReader.h"
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <cctype>
 
 SpeedReader::SpeedReader(std::string path) : AbstractDataReader(path) {}
 
@@ -13,16 +15,31 @@ std::list<Data> SpeedReader::getDataAt(std::chrono::system_clock::time_point tim
 void SpeedReader::loadData(const std::string& filePath) {
     items.clear();
     std::ifstream file(filePath);
+    if (!file.is_open()) return;
+    auto trim = [](std::string& s){
+        auto isws = [](int c){ return std::isspace(c); };
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [&](char c){ return !isws(c); }));
+        s.erase(std::find_if(s.rbegin(), s.rend(), [&](char c){ return !isws(c); }).base(), s.end());
+    };
     std::string line;
+    bool first = true;
     while (std::getline(file, line)) {
         if (line.empty()) continue;
         std::istringstream iss(line);
         std::string tsStr, speedStr;
         if (!std::getline(iss, tsStr, ',')) continue;
         if (!std::getline(iss, speedStr, ',')) continue;
-        auto tp = std::chrono::system_clock::time_point{std::chrono::seconds(std::stoll(tsStr))};
-        float speed = std::stof(speedStr);
-        SpeedData data(tp, speed);
-        items.push_back(data);
+        trim(tsStr); trim(speedStr);
+        if (first && (tsStr == "time_stamp" || tsStr == "timestamp")) { first = false; continue; }
+        first = false;
+        try {
+            double ts = std::stod(tsStr);
+            auto tp = std::chrono::time_point<std::chrono::system_clock>(
+                std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<double>(ts))
+            );
+            float speed = static_cast<float>(std::stod(speedStr));
+            SpeedData data(tp, speed);
+            items.push_back(data);
+        } catch (...) { continue; }
     }
 }

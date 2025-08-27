@@ -5,8 +5,30 @@ QtOpenCVApp_autogen/timestamp: \
 	/home/dark/Desktop/data-collection-phase/build/CMakeFiles/4.1.0/CMakeCXXCompiler.cmake \
 	/home/dark/Desktop/data-collection-phase/build/CMakeFiles/4.1.0/CMakeSystem.cmake \
 	/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/moc_predefs.h \
+	/home/dark/Desktop/data-collection-phase/headers/data/Data.h \
+	/home/dark/Desktop/data-collection-phase/headers/data/DataStore.h \
 	/home/dark/Desktop/data-collection-phase/headers/gui/DisplayManager.h \
+	/home/dark/Desktop/data-collection-phase/headers/sync/ClockManager.h \
+	/home/dark/Desktop/data-collection-phase/src/data/BrakeData.cpp \
+	/home/dark/Desktop/data-collection-phase/src/data/Data.cpp \
+	/home/dark/Desktop/data-collection-phase/src/data/GpsData.cpp \
+	/home/dark/Desktop/data-collection-phase/src/data/IMUData.cpp \
+	/home/dark/Desktop/data-collection-phase/src/data/ImageData.cpp \
+	/home/dark/Desktop/data-collection-phase/src/data/ImageHandler.cpp \
+	/home/dark/Desktop/data-collection-phase/src/data/SpeedData.cpp \
+	/home/dark/Desktop/data-collection-phase/src/data/SteeringData.cpp \
+	/home/dark/Desktop/data-collection-phase/src/data/ThrottleData.cpp \
 	/home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp \
+	/home/dark/Desktop/data-collection-phase/src/readers/AbstractDataReaders.cpp \
+	/home/dark/Desktop/data-collection-phase/src/readers/BrakeReader.cpp \
+	/home/dark/Desktop/data-collection-phase/src/readers/GpsReader.cpp \
+	/home/dark/Desktop/data-collection-phase/src/readers/IMUReader.cpp \
+	/home/dark/Desktop/data-collection-phase/src/readers/ImageReader.cpp \
+	/home/dark/Desktop/data-collection-phase/src/readers/ReadersManager.cpp \
+	/home/dark/Desktop/data-collection-phase/src/readers/SpeedReader.cpp \
+	/home/dark/Desktop/data-collection-phase/src/readers/SteeringReader.cpp \
+	/home/dark/Desktop/data-collection-phase/src/readers/ThrottleReader.cpp \
+	/home/dark/Desktop/data-collection-phase/src/sync/ClockManager.cpp \
 	/snap/cmake/1479/share/cmake-4.1/Modules/CMakeCInformation.cmake \
 	/snap/cmake/1479/share/cmake-4.1/Modules/CMakeCXXInformation.cmake \
 	/snap/cmake/1479/share/cmake-4.1/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake \
@@ -158,6 +180,7 @@ QtOpenCVApp_autogen/timestamp: \
 	/usr/include/c++/11/bits/vector.tcc \
 	/usr/include/c++/11/cctype \
 	/usr/include/c++/11/cerrno \
+	/usr/include/c++/11/chrono \
 	/usr/include/c++/11/climits \
 	/usr/include/c++/11/clocale \
 	/usr/include/c++/11/cmath \
@@ -324,6 +347,8 @@ QtOpenCVApp_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
 	/usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
 	/usr/include/x86_64-linux-gnu/gnu/stubs.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QObject \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qalgorithms.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qanystringview.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qarraydata.h \
@@ -332,6 +357,7 @@ QtOpenCVApp_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic_cxx11.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbasicatomic.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbasictimer.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbindingstorage.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearray.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayalgorithms.h \
@@ -388,6 +414,7 @@ QtOpenCVApp_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qsystemdetection.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtaggedpointer.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtcore-config.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtimer.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtmetamacros.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtypeinfo.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qutf8stringview.h \

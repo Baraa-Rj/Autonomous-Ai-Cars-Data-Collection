@@ -1,6 +1,8 @@
-#include "headers/readers/IMUReader.h"
+#include "readers/IMUReader.h"
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <cctype>
 
 IMUReader::IMUReader(std::string path) : AbstractDataReader(path) {}
 
@@ -13,7 +15,14 @@ std::list<Data> IMUReader::getDataAt(std::chrono::system_clock::time_point time)
 void IMUReader::loadData(const std::string& filePath) {
     items.clear();
     std::ifstream file(filePath);
+    if (!file.is_open()) return;
+    auto trim = [](std::string& s){
+        auto isws = [](int c){ return std::isspace(c); };
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [&](char c){ return !isws(c); }));
+        s.erase(std::find_if(s.rbegin(), s.rend(), [&](char c){ return !isws(c); }).base(), s.end());
+    };
     std::string line;
+    bool first = true;
     while (std::getline(file, line)) {
         if (line.empty()) continue;
         std::istringstream iss(line);
@@ -25,10 +34,18 @@ void IMUReader::loadData(const std::string& filePath) {
         if (!std::getline(iss, gxStr, ',')) continue;
         if (!std::getline(iss, gyStr, ',')) continue;
         if (!std::getline(iss, gzStr, ',')) continue;
-        auto tp = std::chrono::system_clock::time_point{std::chrono::seconds(std::stoll(tsStr))};
-        std::vector<float> acc{std::stof(axStr), std::stof(ayStr), std::stof(azStr)};
-        std::vector<float> gyr{std::stof(gxStr), std::stof(gyStr), std::stof(gzStr)};
-        IMUData data(tp, acc, gyr);
-        items.push_back(data);
+        trim(tsStr); trim(axStr); trim(ayStr); trim(azStr); trim(gxStr); trim(gyStr); trim(gzStr);
+        if (first && (tsStr == "time_stamp" || tsStr == "timestamp")) { first = false; continue; }
+        first = false;
+        try {
+            double ts = std::stod(tsStr);
+            auto tp = std::chrono::time_point<std::chrono::system_clock>(
+                std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<double>(ts))
+            );
+            std::vector<float> acc{static_cast<float>(std::stod(axStr)), static_cast<float>(std::stod(ayStr)), static_cast<float>(std::stod(azStr))};
+            std::vector<float> gyr{static_cast<float>(std::stod(gxStr)), static_cast<float>(std::stod(gyStr)), static_cast<float>(std::stod(gzStr))};
+            IMUData data(tp, acc, gyr);
+            items.push_back(data);
+        } catch (...) { continue; }
     }
 }

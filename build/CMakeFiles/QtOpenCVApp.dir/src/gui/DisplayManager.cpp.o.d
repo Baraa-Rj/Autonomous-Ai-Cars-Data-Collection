@@ -310,4 +310,12 @@ CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qcursor.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qbitmap.h \
- /usr/include/x86_64-linux-gnu/qt6/QtGui/qkeysequence.h
+ /usr/include/x86_64-linux-gnu/qt6/QtGui/qkeysequence.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtimer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasictimer.h \
+ /home/dark/Desktop/data-collection-phase/headers/gui/../data/Data.h \
+ /home/dark/Desktop/data-collection-phase/headers/gui/../data/DataStore.h \
+ /home/dark/Desktop/data-collection-phase/headers/gui/../sync/ClockManager.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QObject \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qobject.h

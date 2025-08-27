@@ -314,4 +314,13 @@ CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qcursor.h \
  /usr/include/x86_64-linux-gnu/qt6/QtGui/qbitmap.h \
- /usr/include/x86_64-linux-gnu/qt6/QtGui/qkeysequence.h
+ /usr/include/x86_64-linux-gnu/qt6/QtGui/qkeysequence.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qtimer.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasictimer.h \
+ /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/NEA6TVGIBU/../../../headers/gui/../data/Data.h \
+ /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/NEA6TVGIBU/../../../headers/gui/../data/DataStore.h \
+ /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/NEA6TVGIBU/../../../headers/gui/../sync/ClockManager.h \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/QObject \
+ /usr/include/x86_64-linux-gnu/qt6/QtCore/qobject.h \
+ /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/UKVXICZSSY/moc_ClockManager.cpp

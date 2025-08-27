@@ -203,6 +203,222 @@ Simulation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.s
 .PHONY : Simulation.cpp.s
 
+src/data/BrakeData.o: src/data/BrakeData.cpp.o
+.PHONY : src/data/BrakeData.o
+
+# target to build an object file
+src/data/BrakeData.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o
+.PHONY : src/data/BrakeData.cpp.o
+
+src/data/BrakeData.i: src/data/BrakeData.cpp.i
+.PHONY : src/data/BrakeData.i
+
+# target to preprocess a source file
+src/data/BrakeData.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.i
+.PHONY : src/data/BrakeData.cpp.i
+
+src/data/BrakeData.s: src/data/BrakeData.cpp.s
+.PHONY : src/data/BrakeData.s
+
+# target to generate assembly for a file
+src/data/BrakeData.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.s
+.PHONY : src/data/BrakeData.cpp.s
+
+src/data/Data.o: src/data/Data.cpp.o
+.PHONY : src/data/Data.o
+
+# target to build an object file
+src/data/Data.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o
+.PHONY : src/data/Data.cpp.o
+
+src/data/Data.i: src/data/Data.cpp.i
+.PHONY : src/data/Data.i
+
+# target to preprocess a source file
+src/data/Data.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.i
+.PHONY : src/data/Data.cpp.i
+
+src/data/Data.s: src/data/Data.cpp.s
+.PHONY : src/data/Data.s
+
+# target to generate assembly for a file
+src/data/Data.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.s
+.PHONY : src/data/Data.cpp.s
+
+src/data/GpsData.o: src/data/GpsData.cpp.o
+.PHONY : src/data/GpsData.o
+
+# target to build an object file
+src/data/GpsData.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o
+.PHONY : src/data/GpsData.cpp.o
+
+src/data/GpsData.i: src/data/GpsData.cpp.i
+.PHONY : src/data/GpsData.i
+
+# target to preprocess a source file
+src/data/GpsData.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.i
+.PHONY : src/data/GpsData.cpp.i
+
+src/data/GpsData.s: src/data/GpsData.cpp.s
+.PHONY : src/data/GpsData.s
+
+# target to generate assembly for a file
+src/data/GpsData.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.s
+.PHONY : src/data/GpsData.cpp.s
+
+src/data/IMUData.o: src/data/IMUData.cpp.o
+.PHONY : src/data/IMUData.o
+
+# target to build an object file
+src/data/IMUData.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o
+.PHONY : src/data/IMUData.cpp.o
+
+src/data/IMUData.i: src/data/IMUData.cpp.i
+.PHONY : src/data/IMUData.i
+
+# target to preprocess a source file
+src/data/IMUData.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.i
+.PHONY : src/data/IMUData.cpp.i
+
+src/data/IMUData.s: src/data/IMUData.cpp.s
+.PHONY : src/data/IMUData.s
+
+# target to generate assembly for a file
+src/data/IMUData.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.s
+.PHONY : src/data/IMUData.cpp.s
+
+src/data/ImageData.o: src/data/ImageData.cpp.o
+.PHONY : src/data/ImageData.o
+
+# target to build an object file
+src/data/ImageData.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o
+.PHONY : src/data/ImageData.cpp.o
+
+src/data/ImageData.i: src/data/ImageData.cpp.i
+.PHONY : src/data/ImageData.i
+
+# target to preprocess a source file
+src/data/ImageData.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.i
+.PHONY : src/data/ImageData.cpp.i
+
+src/data/ImageData.s: src/data/ImageData.cpp.s
+.PHONY : src/data/ImageData.s
+
+# target to generate assembly for a file
+src/data/ImageData.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.s
+.PHONY : src/data/ImageData.cpp.s
+
+src/data/ImageHandler.o: src/data/ImageHandler.cpp.o
+.PHONY : src/data/ImageHandler.o
+
+# target to build an object file
+src/data/ImageHandler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.o
+.PHONY : src/data/ImageHandler.cpp.o
+
+src/data/ImageHandler.i: src/data/ImageHandler.cpp.i
+.PHONY : src/data/ImageHandler.i
+
+# target to preprocess a source file
+src/data/ImageHandler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.i
+.PHONY : src/data/ImageHandler.cpp.i
+
+src/data/ImageHandler.s: src/data/ImageHandler.cpp.s
+.PHONY : src/data/ImageHandler.s
+
+# target to generate assembly for a file
+src/data/ImageHandler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.s
+.PHONY : src/data/ImageHandler.cpp.s
+
+src/data/SpeedData.o: src/data/SpeedData.cpp.o
+.PHONY : src/data/SpeedData.o
+
+# target to build an object file
+src/data/SpeedData.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.o
+.PHONY : src/data/SpeedData.cpp.o
+
+src/data/SpeedData.i: src/data/SpeedData.cpp.i
+.PHONY : src/data/SpeedData.i
+
+# target to preprocess a source file
+src/data/SpeedData.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.i
+.PHONY : src/data/SpeedData.cpp.i
+
+src/data/SpeedData.s: src/data/SpeedData.cpp.s
+.PHONY : src/data/SpeedData.s
+
+# target to generate assembly for a file
+src/data/SpeedData.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.s
+.PHONY : src/data/SpeedData.cpp.s
+
+src/data/SteeringData.o: src/data/SteeringData.cpp.o
+.PHONY : src/data/SteeringData.o
+
+# target to build an object file
+src/data/SteeringData.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.o
+.PHONY : src/data/SteeringData.cpp.o
+
+src/data/SteeringData.i: src/data/SteeringData.cpp.i
+.PHONY : src/data/SteeringData.i
+
+# target to preprocess a source file
+src/data/SteeringData.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.i
+.PHONY : src/data/SteeringData.cpp.i
+
+src/data/SteeringData.s: src/data/SteeringData.cpp.s
+.PHONY : src/data/SteeringData.s
+
+# target to generate assembly for a file
+src/data/SteeringData.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.s
+.PHONY : src/data/SteeringData.cpp.s
+
+src/data/ThrottleData.o: src/data/ThrottleData.cpp.o
+.PHONY : src/data/ThrottleData.o
+
+# target to build an object file
+src/data/ThrottleData.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.o
+.PHONY : src/data/ThrottleData.cpp.o
+
+src/data/ThrottleData.i: src/data/ThrottleData.cpp.i
+.PHONY : src/data/ThrottleData.i
+
+# target to preprocess a source file
+src/data/ThrottleData.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.i
+.PHONY : src/data/ThrottleData.cpp.i
+
+src/data/ThrottleData.s: src/data/ThrottleData.cpp.s
+.PHONY : src/data/ThrottleData.s
+
+# target to generate assembly for a file
+src/data/ThrottleData.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.s
+.PHONY : src/data/ThrottleData.cpp.s
+
 src/gui/DisplayManager.o: src/gui/DisplayManager.cpp.o
 .PHONY : src/gui/DisplayManager.o
 
@@ -227,6 +443,246 @@ src/gui/DisplayManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.s
 .PHONY : src/gui/DisplayManager.cpp.s
 
+src/readers/AbstractDataReaders.o: src/readers/AbstractDataReaders.cpp.o
+.PHONY : src/readers/AbstractDataReaders.o
+
+# target to build an object file
+src/readers/AbstractDataReaders.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.o
+.PHONY : src/readers/AbstractDataReaders.cpp.o
+
+src/readers/AbstractDataReaders.i: src/readers/AbstractDataReaders.cpp.i
+.PHONY : src/readers/AbstractDataReaders.i
+
+# target to preprocess a source file
+src/readers/AbstractDataReaders.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.i
+.PHONY : src/readers/AbstractDataReaders.cpp.i
+
+src/readers/AbstractDataReaders.s: src/readers/AbstractDataReaders.cpp.s
+.PHONY : src/readers/AbstractDataReaders.s
+
+# target to generate assembly for a file
+src/readers/AbstractDataReaders.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.s
+.PHONY : src/readers/AbstractDataReaders.cpp.s
+
+src/readers/BrakeReader.o: src/readers/BrakeReader.cpp.o
+.PHONY : src/readers/BrakeReader.o
+
+# target to build an object file
+src/readers/BrakeReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.o
+.PHONY : src/readers/BrakeReader.cpp.o
+
+src/readers/BrakeReader.i: src/readers/BrakeReader.cpp.i
+.PHONY : src/readers/BrakeReader.i
+
+# target to preprocess a source file
+src/readers/BrakeReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.i
+.PHONY : src/readers/BrakeReader.cpp.i
+
+src/readers/BrakeReader.s: src/readers/BrakeReader.cpp.s
+.PHONY : src/readers/BrakeReader.s
+
+# target to generate assembly for a file
+src/readers/BrakeReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.s
+.PHONY : src/readers/BrakeReader.cpp.s
+
+src/readers/GpsReader.o: src/readers/GpsReader.cpp.o
+.PHONY : src/readers/GpsReader.o
+
+# target to build an object file
+src/readers/GpsReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.o
+.PHONY : src/readers/GpsReader.cpp.o
+
+src/readers/GpsReader.i: src/readers/GpsReader.cpp.i
+.PHONY : src/readers/GpsReader.i
+
+# target to preprocess a source file
+src/readers/GpsReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.i
+.PHONY : src/readers/GpsReader.cpp.i
+
+src/readers/GpsReader.s: src/readers/GpsReader.cpp.s
+.PHONY : src/readers/GpsReader.s
+
+# target to generate assembly for a file
+src/readers/GpsReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.s
+.PHONY : src/readers/GpsReader.cpp.s
+
+src/readers/IMUReader.o: src/readers/IMUReader.cpp.o
+.PHONY : src/readers/IMUReader.o
+
+# target to build an object file
+src/readers/IMUReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.o
+.PHONY : src/readers/IMUReader.cpp.o
+
+src/readers/IMUReader.i: src/readers/IMUReader.cpp.i
+.PHONY : src/readers/IMUReader.i
+
+# target to preprocess a source file
+src/readers/IMUReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.i
+.PHONY : src/readers/IMUReader.cpp.i
+
+src/readers/IMUReader.s: src/readers/IMUReader.cpp.s
+.PHONY : src/readers/IMUReader.s
+
+# target to generate assembly for a file
+src/readers/IMUReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.s
+.PHONY : src/readers/IMUReader.cpp.s
+
+src/readers/ImageReader.o: src/readers/ImageReader.cpp.o
+.PHONY : src/readers/ImageReader.o
+
+# target to build an object file
+src/readers/ImageReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.o
+.PHONY : src/readers/ImageReader.cpp.o
+
+src/readers/ImageReader.i: src/readers/ImageReader.cpp.i
+.PHONY : src/readers/ImageReader.i
+
+# target to preprocess a source file
+src/readers/ImageReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.i
+.PHONY : src/readers/ImageReader.cpp.i
+
+src/readers/ImageReader.s: src/readers/ImageReader.cpp.s
+.PHONY : src/readers/ImageReader.s
+
+# target to generate assembly for a file
+src/readers/ImageReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.s
+.PHONY : src/readers/ImageReader.cpp.s
+
+src/readers/ReadersManager.o: src/readers/ReadersManager.cpp.o
+.PHONY : src/readers/ReadersManager.o
+
+# target to build an object file
+src/readers/ReadersManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.o
+.PHONY : src/readers/ReadersManager.cpp.o
+
+src/readers/ReadersManager.i: src/readers/ReadersManager.cpp.i
+.PHONY : src/readers/ReadersManager.i
+
+# target to preprocess a source file
+src/readers/ReadersManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.i
+.PHONY : src/readers/ReadersManager.cpp.i
+
+src/readers/ReadersManager.s: src/readers/ReadersManager.cpp.s
+.PHONY : src/readers/ReadersManager.s
+
+# target to generate assembly for a file
+src/readers/ReadersManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.s
+.PHONY : src/readers/ReadersManager.cpp.s
+
+src/readers/SpeedReader.o: src/readers/SpeedReader.cpp.o
+.PHONY : src/readers/SpeedReader.o
+
+# target to build an object file
+src/readers/SpeedReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.o
+.PHONY : src/readers/SpeedReader.cpp.o
+
+src/readers/SpeedReader.i: src/readers/SpeedReader.cpp.i
+.PHONY : src/readers/SpeedReader.i
+
+# target to preprocess a source file
+src/readers/SpeedReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.i
+.PHONY : src/readers/SpeedReader.cpp.i
+
+src/readers/SpeedReader.s: src/readers/SpeedReader.cpp.s
+.PHONY : src/readers/SpeedReader.s
+
+# target to generate assembly for a file
+src/readers/SpeedReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.s
+.PHONY : src/readers/SpeedReader.cpp.s
+
+src/readers/SteeringReader.o: src/readers/SteeringReader.cpp.o
+.PHONY : src/readers/SteeringReader.o
+
+# target to build an object file
+src/readers/SteeringReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.o
+.PHONY : src/readers/SteeringReader.cpp.o
+
+src/readers/SteeringReader.i: src/readers/SteeringReader.cpp.i
+.PHONY : src/readers/SteeringReader.i
+
+# target to preprocess a source file
+src/readers/SteeringReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.i
+.PHONY : src/readers/SteeringReader.cpp.i
+
+src/readers/SteeringReader.s: src/readers/SteeringReader.cpp.s
+.PHONY : src/readers/SteeringReader.s
+
+# target to generate assembly for a file
+src/readers/SteeringReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.s
+.PHONY : src/readers/SteeringReader.cpp.s
+
+src/readers/ThrottleReader.o: src/readers/ThrottleReader.cpp.o
+.PHONY : src/readers/ThrottleReader.o
+
+# target to build an object file
+src/readers/ThrottleReader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.o
+.PHONY : src/readers/ThrottleReader.cpp.o
+
+src/readers/ThrottleReader.i: src/readers/ThrottleReader.cpp.i
+.PHONY : src/readers/ThrottleReader.i
+
+# target to preprocess a source file
+src/readers/ThrottleReader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.i
+.PHONY : src/readers/ThrottleReader.cpp.i
+
+src/readers/ThrottleReader.s: src/readers/ThrottleReader.cpp.s
+.PHONY : src/readers/ThrottleReader.s
+
+# target to generate assembly for a file
+src/readers/ThrottleReader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.s
+.PHONY : src/readers/ThrottleReader.cpp.s
+
+src/sync/ClockManager.o: src/sync/ClockManager.cpp.o
+.PHONY : src/sync/ClockManager.o
+
+# target to build an object file
+src/sync/ClockManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o
+.PHONY : src/sync/ClockManager.cpp.o
+
+src/sync/ClockManager.i: src/sync/ClockManager.cpp.i
+.PHONY : src/sync/ClockManager.i
+
+# target to preprocess a source file
+src/sync/ClockManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.i
+.PHONY : src/sync/ClockManager.cpp.i
+
+src/sync/ClockManager.s: src/sync/ClockManager.cpp.s
+.PHONY : src/sync/ClockManager.s
+
+# target to generate assembly for a file
+src/sync/ClockManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.s
+.PHONY : src/sync/ClockManager.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -244,9 +700,66 @@ help:
 	@echo "... Simulation.o"
 	@echo "... Simulation.i"
 	@echo "... Simulation.s"
+	@echo "... src/data/BrakeData.o"
+	@echo "... src/data/BrakeData.i"
+	@echo "... src/data/BrakeData.s"
+	@echo "... src/data/Data.o"
+	@echo "... src/data/Data.i"
+	@echo "... src/data/Data.s"
+	@echo "... src/data/GpsData.o"
+	@echo "... src/data/GpsData.i"
+	@echo "... src/data/GpsData.s"
+	@echo "... src/data/IMUData.o"
+	@echo "... src/data/IMUData.i"
+	@echo "... src/data/IMUData.s"
+	@echo "... src/data/ImageData.o"
+	@echo "... src/data/ImageData.i"
+	@echo "... src/data/ImageData.s"
+	@echo "... src/data/ImageHandler.o"
+	@echo "... src/data/ImageHandler.i"
+	@echo "... src/data/ImageHandler.s"
+	@echo "... src/data/SpeedData.o"
+	@echo "... src/data/SpeedData.i"
+	@echo "... src/data/SpeedData.s"
+	@echo "... src/data/SteeringData.o"
+	@echo "... src/data/SteeringData.i"
+	@echo "... src/data/SteeringData.s"
+	@echo "... src/data/ThrottleData.o"
+	@echo "... src/data/ThrottleData.i"
+	@echo "... src/data/ThrottleData.s"
 	@echo "... src/gui/DisplayManager.o"
 	@echo "... src/gui/DisplayManager.i"
 	@echo "... src/gui/DisplayManager.s"
+	@echo "... src/readers/AbstractDataReaders.o"
+	@echo "... src/readers/AbstractDataReaders.i"
+	@echo "... src/readers/AbstractDataReaders.s"
+	@echo "... src/readers/BrakeReader.o"
+	@echo "... src/readers/BrakeReader.i"
+	@echo "... src/readers/BrakeReader.s"
+	@echo "... src/readers/GpsReader.o"
+	@echo "... src/readers/GpsReader.i"
+	@echo "... src/readers/GpsReader.s"
+	@echo "... src/readers/IMUReader.o"
+	@echo "... src/readers/IMUReader.i"
+	@echo "... src/readers/IMUReader.s"
+	@echo "... src/readers/ImageReader.o"
+	@echo "... src/readers/ImageReader.i"
+	@echo "... src/readers/ImageReader.s"
+	@echo "... src/readers/ReadersManager.o"
+	@echo "... src/readers/ReadersManager.i"
+	@echo "... src/readers/ReadersManager.s"
+	@echo "... src/readers/SpeedReader.o"
+	@echo "... src/readers/SpeedReader.i"
+	@echo "... src/readers/SpeedReader.s"
+	@echo "... src/readers/SteeringReader.o"
+	@echo "... src/readers/SteeringReader.i"
+	@echo "... src/readers/SteeringReader.s"
+	@echo "... src/readers/ThrottleReader.o"
+	@echo "... src/readers/ThrottleReader.i"
+	@echo "... src/readers/ThrottleReader.s"
+	@echo "... src/sync/ClockManager.o"
+	@echo "... src/sync/ClockManager.i"
+	@echo "... src/sync/ClockManager.s"
 .PHONY : help
 
 

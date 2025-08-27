@@ -1,4 +1,4 @@
-#include "headers/readers/ReadersManager.h"
+#include "readers/ReadersManager.h"
 
 ReadersManager::ReadersManager() {}
 

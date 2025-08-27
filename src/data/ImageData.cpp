@@ -1,4 +1,4 @@
-#include "headers/data/ImageData.h"
+#include "data/ImageData.h"
 
 ImageData::ImageData(std::chrono::system_clock::time_point timestamp, std::string path, CameraPosition position)
     : Data(timestamp), path(std::move(path)), position(position) {}

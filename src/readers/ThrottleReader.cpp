@@ -1,6 +1,8 @@
-#include "headers/readers/ThrottleReader.h"
+#include "readers/ThrottleReader.h"
 #include <fstream>
 #include <sstream>
+#include <algorithm>
+#include <cctype>
 
 ThrottleReader::ThrottleReader(std::string path) : AbstractDataReader(path) {}
 
@@ -13,16 +15,31 @@ std::list<Data> ThrottleReader::getDataAt(std::chrono::system_clock::time_point 
 void ThrottleReader::loadData(const std::string& filePath) {
     items.clear();
     std::ifstream file(filePath);
+    if (!file.is_open()) return;
+    auto trim = [](std::string& s){
+        auto isws = [](int c){ return std::isspace(c); };
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [&](char c){ return !isws(c); }));
+        s.erase(std::find_if(s.rbegin(), s.rend(), [&](char c){ return !isws(c); }).base(), s.end());
+    };
     std::string line;
+    bool first = true;
     while (std::getline(file, line)) {
         if (line.empty()) continue;
         std::istringstream iss(line);
         std::string tsStr, posStr;
         if (!std::getline(iss, tsStr, ',')) continue;
         if (!std::getline(iss, posStr, ',')) continue;
-        auto tp = std::chrono::system_clock::time_point{std::chrono::seconds(std::stoll(tsStr))};
-        float position = std::stof(posStr);
-        ThrottleData data(tp, position);
-        items.push_back(data);
+        trim(tsStr); trim(posStr);
+        if (first && (tsStr == "time_stamp" || tsStr == "timestamp")) { first = false; continue; }
+        first = false;
+        try {
+            double ts = std::stod(tsStr);
+            auto tp = std::chrono::time_point<std::chrono::system_clock>(
+                std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<double>(ts))
+            );
+            float position = static_cast<float>(std::stod(posStr));
+            ThrottleData data(tp, position);
+            items.push_back(data);
+        } catch (...) { continue; }
     }
 }

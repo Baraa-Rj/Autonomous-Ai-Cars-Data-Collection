@@ -282,6 +282,12 @@
 			"Mu",
 			"NEA6TVGIBU/moc_DisplayManager.cpp",
 			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/headers/sync/ClockManager.h",
+			"Mu",
+			"UKVXICZSSY/moc_ClockManager.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -340,7 +346,102 @@
 	[
 		[ "/home/dark/Desktop/data-collection-phase/Simulation.cpp", "Mu", null ],
 		[
+			"/home/dark/Desktop/data-collection-phase/src/data/BrakeData.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/data/Data.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/data/GpsData.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/data/IMUData.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/data/ImageData.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/data/ImageHandler.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/data/SpeedData.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/data/SteeringData.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/data/ThrottleData.cpp",
+			"Mu",
+			null
+		],
+		[
 			"/home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/readers/AbstractDataReaders.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/readers/BrakeReader.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/readers/GpsReader.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/readers/IMUReader.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/readers/ImageReader.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/readers/ReadersManager.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/readers/SpeedReader.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/readers/SteeringReader.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/readers/ThrottleReader.cpp",
+			"Mu",
+			null
+		],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/sync/ClockManager.cpp",
 			"Mu",
 			null
 		]

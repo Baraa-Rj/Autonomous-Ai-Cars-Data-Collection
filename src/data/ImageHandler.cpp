@@ -1,4 +1,4 @@
-#include "headers/data/ImageHandler.h"
+#include "data/ImageHandler.h"
 
 cv::Mat ImageHandler::load(const std::string& path) {
     return cv::imread(path);

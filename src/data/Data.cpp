@@ -1,4 +1,4 @@
-#include "headers/data/Data.h"
+#include "data/Data.h"
 
 Data::Data(std::chrono::system_clock::time_point timestamp) : timestamp(timestamp) {}
 

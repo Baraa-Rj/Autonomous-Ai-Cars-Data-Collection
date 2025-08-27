@@ -1,6 +1,6 @@
-#include "headers/data/BrakeData.h"
+#include "data/BrakeData.h"
 
-BrakeData::BrakeData(std::DateTime timestamp, float pressure) : Data(timestamp), pressure(pressure) {}
+BrakeData::BrakeData(std::chrono::system_clock::time_point timestamp, float pressure) : Data(timestamp), pressure(pressure) {}
 
 BrakeData::~BrakeData() {}
 

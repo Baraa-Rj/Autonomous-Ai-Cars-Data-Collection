@@ -1,6 +1,6 @@
-#include "headers/data/SteeringData.h"
+#include "data/SteeringData.h"
 
-SteeringData::SteeringData(std::DateTime timestamp, float angle) : Data(timestamp), angle(angle) {}
+SteeringData::SteeringData(std::chrono::system_clock::time_point timestamp, float angle) : Data(timestamp), angle(angle) {}
 
 SteeringData::~SteeringData() {}
 
