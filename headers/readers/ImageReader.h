@@ -1,11 +1,13 @@
 #pragma once
 
 #include "AbstractDataReader.h"
+#include "../data/ImageData.h"
+#include "../data/ImageHandler.h"
 
 class ImageReader : public AbstractDataReader{
     public:
     ImageReader(std::string path);
     ~ImageReader();
-    std::list<Data> getDataAt(std::DateTime time);
-    void loadData(std::string path);
-}
+    std::list<Data> getDataAt(std::chrono::system_clock::time_point time) const;
+    void loadData(const std::string& path) override;
+};
