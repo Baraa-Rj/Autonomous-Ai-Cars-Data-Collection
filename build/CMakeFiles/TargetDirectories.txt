@@ -1,0 +1,5 @@
+/home/dark/Desktop/data-collection-phase/build/CMakeFiles/QtOpenCVApp.dir
+/home/dark/Desktop/data-collection-phase/build/CMakeFiles/edit_cache.dir
+/home/dark/Desktop/data-collection-phase/build/CMakeFiles/rebuild_cache.dir
+/home/dark/Desktop/data-collection-phase/build/CMakeFiles/QtOpenCVApp_autogen_timestamp_deps.dir
+/home/dark/Desktop/data-collection-phase/build/CMakeFiles/QtOpenCVApp_autogen.dir
