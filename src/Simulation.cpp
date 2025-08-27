@@ -14,8 +14,9 @@ void Simulation::init() {
     
     clock->setFps(30);
     
-    display->autoSetupFromSampleData();
-    display->computeGlobalTimeline();
+    // ReadersManager now loads all data in its constructor
+    display->setReadersManager(readers_manager.get());
+    display->initializeTimeline();
     
     connect(clock.get(), &ClockManager::ticked, display.get(), &DisplayManager::updateDisplay);
     

@@ -2,7 +2,7 @@
 #include <opencv2/opencv.hpp>
 
 DisplayManager::DisplayManager(QWidget* parent)
-    : QWidget(parent) {
+    : QWidget(parent), readersManager(nullptr) {
     setWindowTitle("Data Collection Phase");
     resize(800, 600);
     dataStore = new DataStore();
@@ -94,115 +94,60 @@ void DisplayManager::connectUi() {
     }
 }
 
-void DisplayManager::buildCameraIndex(Camera cam, const QString& dir) {
-    QDir d(dir);
-    QStringList filters = {"*.jpg", "*.jpeg", "*.png"};
-    QFileInfoList files = d.entryInfoList(filters, QDir::Files, QDir::Name);
-    QRegularExpression re(R"(^(?<ts>\d+(?:\.\d+)?))");
-    QVector<CameraFrame> frames;
-    frames.reserve(files.size());
-    for (const QFileInfo& fi : files) {
-        QString base = fi.completeBaseName();
-        auto m = re.match(base);
-        if (!m.hasMatch()) continue;
-        bool ok = false;
-        double secs = m.captured("ts").toDouble(&ok);
-        if (!ok) continue;
-        auto tp = std::chrono::time_point<std::chrono::system_clock>(
-            std::chrono::duration_cast<std::chrono::system_clock::duration>(
-                std::chrono::duration<double>(secs))
-        );
-        frames.push_back({tp, fi.absoluteFilePath()});
-    }
-    std::sort(frames.begin(), frames.end(), [](const CameraFrame& a, const CameraFrame& b){ return a.ts < b.ts; });
-    cameraFrames[cam] = std::move(frames);
-}
 
-const DisplayManager::CameraFrame* DisplayManager::findFrame(const QVector<CameraFrame>& frames, std::chrono::system_clock::time_point t) const {
-    int l = 0, r = frames.size();
-    while (l < r) {
-        int m = (l + r) / 2;
-        if (frames[m].ts <= t) l = m + 1; else r = m;
-    }
-    return l ? &frames[l - 1] : nullptr;
-}
-
-QImage DisplayManager::matToQImage(const cv::Mat& mat) {
-    if (mat.type() == CV_8UC3) {
-        QImage img(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_BGR888);
-        return img.copy();
-    }
-    if (mat.type() == CV_8UC1) {
-        QImage img(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_Grayscale8);
-        return img.copy();
-    }
-    return {};
-}
-
-void DisplayManager::setImageOnLabel(QLabel* lbl, const QString& path) {
-    if (!lbl) return;
-    cv::Mat m = cv::imread(path.toStdString(), cv::IMREAD_COLOR);
-    if (m.empty()) return;
-    QImage q = matToQImage(m);
-    if (q.isNull()) return;
-    QPixmap pm = QPixmap::fromImage(q).scaled(lbl->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    if (!pm.isNull()) lbl->setPixmap(pm);
-}
 
 void DisplayManager::updateCameras(std::chrono::system_clock::time_point t) {
-    auto lf = findFrame(cameraFrames[Camera::Left],  t);
-    auto ff = findFrame(cameraFrames[Camera::Front], t);
-    auto rf = findFrame(cameraFrames[Camera::Right], t);
-    auto bf = findFrame(cameraFrames[Camera::Back],  t);
-    if (lf && lblCamLeft)  setImageOnLabel(lblCamLeft,  lf->path);
-    if (ff && lblCamFront) setImageOnLabel(lblCamFront, ff->path);
-    if (rf && lblCamRight) setImageOnLabel(lblCamRight, rf->path);
-    if (bf && lblCamBack)  setImageOnLabel(lblCamBack,  bf->path);
+    if (!readersManager) return;
+    
+    auto updateCamera = [&](DataType imageType, QLabel* label) {
+        auto imageReader = static_cast<ImageReader*>(readersManager->getReader(imageType));
+        if (imageReader) {
+            auto imageData = imageReader->latestAt(t);
+            if (imageData) {
+                ImageHandler::setImageOnLabel(label, QString::fromStdString(imageData->getPath()));
+            }
+        }
+    };
+
+    updateCamera(DataType::LEFT_IMAGE, lblCamLeft);
+    updateCamera(DataType::FRONT_IMAGE, lblCamFront);
+    updateCamera(DataType::RIGHT_IMAGE, lblCamRight);
+    updateCamera(DataType::BACK_IMAGE, lblCamBack);
 }
 
-void DisplayManager::autoSetupFromSampleData() {
-    
-    QString base = QDir::currentPath() + "/sample_data";
-    QString gps = base + "/gps.csv";
-    QString speed = base + "/speed.csv";
-    QString brake = base + "/brake.csv";
-    QString throttle = base + "/throttle.csv";
-    QString steering = base + "/steering.csv";
-    QString imu = base + "/imu.csv";
-    ReadersManager rm;
-    if (QFileInfo::exists(gps)) { gpsReader.reset(static_cast<GpsReader*>(rm.createReader(DataType::GPS, gps.toStdString()))); if (gpsReader) gpsReader->loadData(gps.toStdString()); }
-    if (QFileInfo::exists(speed)) { speedReader.reset(static_cast<SpeedReader*>(rm.createReader(DataType::SPEED, speed.toStdString()))); if (speedReader) speedReader->loadData(speed.toStdString()); }
-    if (QFileInfo::exists(brake)) { brakeReader.reset(static_cast<BrakeReader*>(rm.createReader(DataType::BRAKE, brake.toStdString()))); if (brakeReader) brakeReader->loadData(brake.toStdString()); }
-    if (QFileInfo::exists(throttle)) { throttleReader.reset(static_cast<ThrottleReader*>(rm.createReader(DataType::THROTTLE, throttle.toStdString()))); if (throttleReader) throttleReader->loadData(throttle.toStdString()); }
-    if (QFileInfo::exists(steering)) { steeringReader.reset(static_cast<SteeringReader*>(rm.createReader(DataType::STEERING, steering.toStdString()))); if (steeringReader) steeringReader->loadData(steering.toStdString()); }
-    if (QFileInfo::exists(imu)) { imuReader.reset(static_cast<IMUReader*>(rm.createReader(DataType::IMU, imu.toStdString()))); if (imuReader) imuReader->loadData(imu.toStdString()); }
+void DisplayManager::setReadersManager(ReadersManager* rm) {
+    readersManager = rm;
+}
 
-    
-    struct CamEntry { Camera cam; const char* name; } entries[] = {
-        {Camera::Left,  "left"},
-        {Camera::Front, "front"},
-        {Camera::Right, "right"},
-        {Camera::Back,  "back"},
-    };
-    for (const auto& e : entries) {
-        QString dir = base + "/3d_images/" + e.name;
-        if (QDir(dir).exists()) buildCameraIndex(e.cam, dir);
+void DisplayManager::initializeTimeline() {
+    if (readersManager) {
+        globalStart = readersManager->getGlobalStart();
+        globalEnd = readersManager->getGlobalEnd();
+        currentTime = globalStart;
     }
 }
 
 void DisplayManager::updateSidebar(std::chrono::system_clock::time_point t) {
+    if (!readersManager) return;
+    
     auto fmt = [](double v){ return QString::number(v, 'f', 3); };
+    
+    // Update DataStore with latest data
+    auto gpsReader = static_cast<GpsReader*>(readersManager->getReader(DataType::GPS));
+    auto speedReader = static_cast<SpeedReader*>(readersManager->getReader(DataType::SPEED));
+    auto brakeReader = static_cast<BrakeReader*>(readersManager->getReader(DataType::BRAKE));
+    auto throttleReader = static_cast<ThrottleReader*>(readersManager->getReader(DataType::THROTTLE));
+    auto steeringReader = static_cast<SteeringReader*>(readersManager->getReader(DataType::STEERING));
+    auto imuReader = static_cast<IMUReader*>(readersManager->getReader(DataType::IMU));
     
     if (gpsReader)   { auto g  = gpsReader->latestAt(t);   if (g)  dataStore->addData(DataType::GPS, *g); }
     if (speedReader) { auto s  = speedReader->latestAt(t); if (s)  dataStore->addData(DataType::SPEED, *s); }
     if (brakeReader) { auto br = brakeReader->latestAt(t); if (br) dataStore->addData(DataType::BRAKE, *br); }
     if (throttleReader){auto th = throttleReader->latestAt(t); if (th) dataStore->addData(DataType::THROTTLE, *th); }
     if (steeringReader){auto st = steeringReader->latestAt(t); if (st) dataStore->addData(DataType::STEERING, *st); }
-    if (imuReader)    { auto im = imuReader->latestAt(t); if (im) {} }
+    if (imuReader)    { auto im = imuReader->latestAt(t); if (im) dataStore->addData(DataType::IMU, *im); }
 
-    
-    
-    
+    // Update GUI labels
     if (gpsReader) {
         auto g = gpsReader->latestAt(t);
         if (g) {
@@ -245,7 +190,7 @@ void DisplayManager::updateSidebar(std::chrono::system_clock::time_point t) {
         }
     }
 
-    
+    // Update time display
     auto secs = std::chrono::duration<double>(t.time_since_epoch()).count();
     lblTime->setText(QString("t: %1").arg(QString::number(secs, 'f', 3)));
 }

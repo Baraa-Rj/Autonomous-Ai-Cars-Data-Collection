@@ -63,13 +63,7 @@ protected:
     QLabel *lblTime{nullptr};
 
     
-    std::unique_ptr<GpsReader> gpsReader;
-    std::unique_ptr<SpeedReader> speedReader;
-    std::unique_ptr<BrakeReader> brakeReader;
-    std::unique_ptr<ThrottleReader> throttleReader;
-    std::unique_ptr<SteeringReader> steeringReader;
-    std::unique_ptr<IMUReader> imuReader;
-
+    ReadersManager* readersManager;
     std::chrono::system_clock::time_point globalStart;
     std::chrono::system_clock::time_point globalEnd;
 public:
@@ -86,18 +80,14 @@ public:
     int getFps() const;
 
 public:
-    void autoSetupFromSampleData();
-    void computeGlobalTimeline();
+    void setReadersManager(ReadersManager* rm);
+    void initializeTimeline();
 
 private:
     void buildUi();
-    void connectUi();
-    void buildCameraIndex(Camera cam, const QString& dir);
-    const CameraFrame* findFrame(const QVector<CameraFrame>& frames, std::chrono::system_clock::time_point t) const;
     void updateCameras(std::chrono::system_clock::time_point t);
     void updateSidebar(std::chrono::system_clock::time_point t);
-    static QImage matToQImage(const cv::Mat& mat);
-    static void setImageOnLabel(QLabel* lbl, const QString& path);
+    const CameraFrame* findFrame(const QVector<CameraFrame>& frames, std::chrono::system_clock::time_point t) const;
 
 };
 
