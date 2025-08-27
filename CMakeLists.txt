@@ -1,56 +1,57 @@
 cmake_minimum_required(VERSION 3.16)
-project(data-collection-phase)
+project(data-collection-phase VERSION 1.0.0 LANGUAGES CXX)
 
+# Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
-
+# Find required packages
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 find_package(OpenCV REQUIRED)
 
+# Enable Qt MOC (Meta Object Compiler)
 set(CMAKE_AUTOMOC ON)
 
+# Set global include directories
+include_directories(${CMAKE_SOURCE_DIR}/headers)
+
+# Add subdirectories (each with their own CMakeLists.txt)
+add_subdirectory(src/data)
+add_subdirectory(src/gui)  
+add_subdirectory(src/readers)
+add_subdirectory(src/sync)
+add_subdirectory(src/services)
+add_subdirectory(src/factories)
+
+# Main executable
 add_executable(QtOpenCVApp
     Simulation.cpp
     headers/Simulation.h
     src/Simulation.cpp
-    # GUI
-    headers/gui/DisplayManager.h
-    src/gui/DisplayManager.cpp
-    # Sync
-    headers/sync/ClockManager.h
-    src/sync/ClockManager.cpp
-    # Data
-    src/data/Data.cpp
-    src/data/DataStore.cpp
-    src/data/BrakeData.cpp
-    src/data/SpeedData.cpp
-    src/data/GpsData.cpp
-    src/data/ImageData.cpp
-    src/data/ImageHandler.cpp
-    src/data/IMUData.cpp
-    src/data/SteeringData.cpp
-    src/data/ThrottleData.cpp
-    # Readers
-    src/readers/AbstractDataReaders.cpp
-    src/readers/BrakeReader.cpp
-    src/readers/GpsReader.cpp
-    src/readers/ImageReader.cpp
-    src/readers/IMUReader.cpp
-    src/readers/ReadersManager.cpp
-    src/readers/SpeedReader.cpp
-    src/readers/SteeringReader.cpp
-    src/readers/ThrottleReader.cpp
-        src/data/BrakeData.cpp
 )
 
+# Link all component libraries to main executable
+target_link_libraries(QtOpenCVApp 
+    PRIVATE
+    DataComponents
+    GuiComponents
+    ReadersComponents
+    SyncComponents
+    ServicesComponents
+    FactoriesComponents
+    Qt6::Core 
+    Qt6::Gui
+    Qt6::Widgets
+    ${OpenCV_LIBS}
+)
+
+# Include directories for main executable
 target_include_directories(QtOpenCVApp PRIVATE
     ${CMAKE_SOURCE_DIR}/headers
     ${CMAKE_SOURCE_DIR}/headers/gui
-)
-
-target_link_libraries(QtOpenCVApp 
-    Qt6::Core 
-    Qt6::Widgets
-    ${OpenCV_LIBS}
+    ${CMAKE_SOURCE_DIR}/headers/data
+    ${CMAKE_SOURCE_DIR}/headers/readers
+    ${CMAKE_SOURCE_DIR}/headers/sync
+    ${CMAKE_SOURCE_DIR}/headers/services
+    ${CMAKE_SOURCE_DIR}/headers/factories
 )

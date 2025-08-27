@@ -1,22 +1,15 @@
 #pragma once
 
 #include <QWidget>
-#include <QLabel>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QTimer>
 #include <chrono>
+#include <memory>
 #include "data/DataStore.h"
 #include "data/Data.h"
+#include "gui/UIBuilder.h"
+#include "gui/DataPresenter.h"
 
 class ReadersManager;
-class GpsReader;
-class SpeedReader;
-class BrakeReader;
-class ThrottleReader;
-class SteeringReader;
-class IMUReader;
+class TimelineManager;
 
 class DisplayManager : public QWidget {
     Q_OBJECT
@@ -24,38 +17,13 @@ class DisplayManager : public QWidget {
 private:
     DataStore* dataStore;
     ReadersManager* readersManager;
+    TimelineManager* timelineManager;
     std::chrono::system_clock::time_point currentTime;
-    std::chrono::system_clock::time_point globalStart;
-    std::chrono::system_clock::time_point globalEnd;
     int fps{30};
     
-    // UI Elements
-    QLabel* lblGpsLat;
-    QLabel* lblGpsLon;
-    QLabel* lblGpsAlt;
-    QLabel* lblSpeed;
-    QLabel* lblBrake;
-    QLabel* lblThrottle;
-    QLabel* lblSteering;
-    QLabel* lblAccX;
-    QLabel* lblAccY;
-    QLabel* lblAccZ;
-    QLabel* lblGyrX;
-    QLabel* lblGyrY;
-    QLabel* lblGyrZ;
-    QLabel* lblTime;
-    QLabel* lblCamLeft;
-    QLabel* lblCamFront;
-    QLabel* lblCamRight;
-    QLabel* lblCamBack;
-    
-    // Reader pointers for optimization
-    GpsReader* gpsReader;
-    SpeedReader* speedReader;
-    BrakeReader* brakeReader;
-    ThrottleReader* throttleReader;
-    SteeringReader* steeringReader;
-    IMUReader* imuReader;
+    // Composition - single responsibility components
+    UIComponents uiComponents;
+    std::unique_ptr<DataPresenter> dataPresenter;
     
 public:
     explicit DisplayManager(QWidget* parent = nullptr);
@@ -71,17 +39,8 @@ public:
     int getFps() const;
     
     void setReadersManager(ReadersManager* rm);
-    void initializeTimeline();
-    
-private:
-    void buildUi();
-    void connectUi();
-    void updateCameras(std::chrono::system_clock::time_point t);
-    void updateSidebar(std::chrono::system_clock::time_point t);
-    void computeGlobalTimeline();
+    void setTimelineManager(TimelineManager* tm);
     
 public slots:
     void updateDisplay(std::chrono::system_clock::time_point time);
 };
-
-

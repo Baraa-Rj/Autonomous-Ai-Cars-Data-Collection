@@ -1,5 +1,4 @@
-#include "readers/ReadersManager.h"
-#include "sync/TimelineManager.h"
+#include "services/DataLoaderService.h"
 #include "readers/AbstractDataReader.h"
 #include "readers/BrakeReader.h"
 #include "readers/GpsReader.h"
@@ -12,41 +11,10 @@
 #include <QFileInfo>
 #include <iostream>
 
-ReadersManager::ReadersManager(const std::string& dataPath) 
-    : baseDataPath(dataPath) {
-    timelineManager = std::make_unique<TimelineManager>();
-}
+DataLoaderService::DataLoaderService(const std::string& dataPath) 
+    : baseDataPath(dataPath) {}
 
-void ReadersManager::loadAllData() {
-    std::cout << "Loading data..." << std::endl;
-    
-    loadCSVData();
-    loadImageData();
-    
-    // Delegate timeline computation to TimelineManager
-    timelineManager->computeGlobalTimeline(readers);
-    
-    std::cout << "Data loading completed" << std::endl;
-}
-
-AbstractDataReader* ReadersManager::getReader(DataType type) {
-    auto it = readers.find(type);
-    return (it != readers.end()) ? it->second.get() : nullptr;
-}
-
-std::chrono::system_clock::time_point ReadersManager::getGlobalStart() const {
-    return timelineManager->getGlobalStart();
-}
-
-std::chrono::system_clock::time_point ReadersManager::getGlobalEnd() const {
-    return timelineManager->getGlobalEnd();
-}
-
-TimelineManager* ReadersManager::getTimelineManager() const {
-    return timelineManager.get();
-}
-
-void ReadersManager::loadCSVData() {
+void DataLoaderService::loadCSVData(std::map<DataType, std::unique_ptr<AbstractDataReader>>& readers) {
     std::pair<DataType, std::string> csvFiles[] = {
         {DataType::GPS, getCSVPath(DataType::GPS)},
         {DataType::SPEED, getCSVPath(DataType::SPEED)},
@@ -92,7 +60,7 @@ void ReadersManager::loadCSVData() {
     }
 }
 
-void ReadersManager::loadImageData() {
+void DataLoaderService::loadImageData(std::map<DataType, std::unique_ptr<AbstractDataReader>>& readers) {
     std::pair<DataType, std::string> imageDirs[] = {
         {DataType::LEFT_IMAGE, getImageDirPath(DataType::LEFT_IMAGE)},
         {DataType::FRONT_IMAGE, getImageDirPath(DataType::FRONT_IMAGE)},
@@ -110,7 +78,7 @@ void ReadersManager::loadImageData() {
     }
 }
 
-std::string ReadersManager::getCSVPath(DataType type) const {
+std::string DataLoaderService::getCSVPath(DataType type) const {
     switch (type) {
         case DataType::GPS: return baseDataPath + "/gps.csv";
         case DataType::SPEED: return baseDataPath + "/speed.csv";
@@ -122,7 +90,7 @@ std::string ReadersManager::getCSVPath(DataType type) const {
     }
 }
 
-std::string ReadersManager::getImageDirPath(DataType type) const {
+std::string DataLoaderService::getImageDirPath(DataType type) const {
     std::string imageBase = baseDataPath + "/3d_images";
     switch (type) {
         case DataType::LEFT_IMAGE: return imageBase + "/left";

@@ -14,9 +14,10 @@ void Simulation::init() {
     
     clock->setFps(30);
     
-    // ReadersManager now loads all data in its constructor
+    // LoadersManager now loads all data in its constructor
+    readers_manager->loadAllData();
     display->setReadersManager(readers_manager.get());
-    display->initializeTimeline();
+    display->setTimelineManager(readers_manager->getTimelineManager());
     
     QObject::connect(clock.get(), &ClockManager::ticked, display.get(), &DisplayManager::updateDisplay);
     
