@@ -8,7 +8,7 @@ ThrottleReader::ThrottleReader(std::string path) : AbstractDataReader(path) {}
 
 ThrottleReader::~ThrottleReader() {}
 
-std::list<Data> ThrottleReader::getDataAt(std::chrono::system_clock::time_point time) const {
+std::list<std::shared_ptr<Data>> ThrottleReader::getDataAt(std::chrono::system_clock::time_point time) const {
     return AbstractDataReader::getDataAt(time);
 }
 
@@ -39,9 +39,9 @@ void ThrottleReader::loadData(const std::string& filePath) {
                 std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<double>(ts))
             );
             float position = static_cast<float>(std::stod(posStr));
-            ThrottleData data(tp, position);
+            auto data = std::make_shared<ThrottleData>(tp, position);
             items.push_back(data);
-            records.push_back(data);
+            records.push_back(*data);
         } catch (...) { continue; }
     }
 }

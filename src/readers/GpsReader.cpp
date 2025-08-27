@@ -8,7 +8,7 @@ GpsReader::GpsReader(std::string path) : AbstractDataReader(path) {}
 
 GpsReader::~GpsReader() {}
 
-std::list<Data> GpsReader::getDataAt(std::chrono::system_clock::time_point time) const {
+std::list<std::shared_ptr<Data>> GpsReader::getDataAt(std::chrono::system_clock::time_point time) const {
     return AbstractDataReader::getDataAt(time);
 }
 
@@ -42,9 +42,9 @@ void GpsReader::loadData(const std::string& filePath) {
             std::chrono::system_clock::time_point tp = (ts > 1000000000000LL)
                 ? std::chrono::system_clock::time_point{std::chrono::milliseconds(ts)}
                 : std::chrono::system_clock::time_point{std::chrono::seconds(ts)};
-            GpsData gps(tp, std::stof(latStr), std::stof(lonStr), std::stof(altStr));
+            auto gps = std::make_shared<GpsData>(tp, std::stof(latStr), std::stof(lonStr), std::stof(altStr));
             items.push_back(gps);
-            records.push_back(gps);
+            records.push_back(*gps);
             ++parsed;
         } catch (...) {
             continue;

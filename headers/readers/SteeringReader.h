@@ -9,7 +9,7 @@ class SteeringReader : public AbstractDataReader{
     public:
     SteeringReader(std::string path);
     ~SteeringReader();
-    std::list<Data> getDataAt(std::chrono::system_clock::time_point time) const;
+    std::list<std::shared_ptr<Data>> getDataAt(std::chrono::system_clock::time_point time) const override;
     void loadData(const std::string& path) override;
     std::optional<SteeringData> latestAt(std::chrono::system_clock::time_point t) const;
 private:

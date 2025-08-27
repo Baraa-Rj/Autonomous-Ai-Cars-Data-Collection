@@ -8,7 +8,7 @@ SpeedReader::SpeedReader(std::string path) : AbstractDataReader(path) {}
 
 SpeedReader::~SpeedReader() {}
 
-std::list<Data> SpeedReader::getDataAt(std::chrono::system_clock::time_point time) const {
+std::list<std::shared_ptr<Data>> SpeedReader::getDataAt(std::chrono::system_clock::time_point time) const {
     return AbstractDataReader::getDataAt(time);
 }
 
@@ -39,9 +39,9 @@ void SpeedReader::loadData(const std::string& filePath) {
                 std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<double>(ts))
             );
             float speed = static_cast<float>(std::stod(speedStr));
-            SpeedData data(tp, speed);
+            auto data = std::make_shared<SpeedData>(tp, speed);
             items.push_back(data);
-            records.push_back(data);
+            records.push_back(*data);
         } catch (...) { continue; }
     }
 }

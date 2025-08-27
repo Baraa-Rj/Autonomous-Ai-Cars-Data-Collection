@@ -70,8 +70,8 @@ void ReadersManager::computeGlobalTimeline() {
         auto data = reader->getAllData();
         if (data.empty()) continue;
         
-        auto start = data.front().getTimestamp();
-        auto end = data.back().getTimestamp();
+        auto start = data.front()->getTimestamp();
+        auto end = data.back()->getTimestamp();
         
         if (!init) {
             globalStart = start;

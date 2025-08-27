@@ -8,7 +8,7 @@ SteeringReader::SteeringReader(std::string path) : AbstractDataReader(path) {}
 
 SteeringReader::~SteeringReader() {}
 
-std::list<Data> SteeringReader::getDataAt(std::chrono::system_clock::time_point time) const {
+std::list<std::shared_ptr<Data>> SteeringReader::getDataAt(std::chrono::system_clock::time_point time) const {
     return AbstractDataReader::getDataAt(time);
 }
 
@@ -39,9 +39,9 @@ void SteeringReader::loadData(const std::string& filePath) {
                 std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<double>(ts))
             );
             float angle = static_cast<float>(std::stod(angleStr));
-            SteeringData data(tp, angle);
+            auto data = std::make_shared<SteeringData>(tp, angle);
             items.push_back(data);
-            records.push_back(data);
+            records.push_back(*data);
         } catch (...) { continue; }
     }
 }

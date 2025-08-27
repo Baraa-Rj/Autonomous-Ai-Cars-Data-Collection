@@ -41,6 +41,7 @@ add_executable(QtOpenCVApp
     src/readers/SpeedReader.cpp
     src/readers/SteeringReader.cpp
     src/readers/ThrottleReader.cpp
+        src/data/BrakeData.cpp
 )
 
 target_include_directories(QtOpenCVApp PRIVATE

@@ -18,7 +18,7 @@ void Simulation::init() {
     display->setReadersManager(readers_manager.get());
     display->initializeTimeline();
     
-    connect(clock.get(), &ClockManager::ticked, display.get(), &DisplayManager::updateDisplay);
+    QObject::connect(clock.get(), &ClockManager::ticked, display.get(), &DisplayManager::updateDisplay);
     
     std::cout << "Simulation initialized successfully" << std::endl;
 }

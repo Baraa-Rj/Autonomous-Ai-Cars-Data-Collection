@@ -8,6 +8,6 @@ class ImageReader : public AbstractDataReader{
     public:
     ImageReader(std::string path);
     ~ImageReader();
-    std::list<Data> getDataAt(std::chrono::system_clock::time_point time) const;
+    std::list<std::shared_ptr<Data>> getDataAt(std::chrono::system_clock::time_point time) const override;
     void loadData(const std::string& path) override;
 };

@@ -1,94 +1,87 @@
 #pragma once
 
 #include <QWidget>
-#include <QTimer>
-#include <list>
-#include <chrono>
 #include <QLabel>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QMap>
-#include <QVector>
-#include <QString>
-#include <QRegularExpression>
-#include <QFileInfo>
-#include <QDir>
-#include <QFileDialog>
-#include <QTabWidget>
-#include <QGridLayout>
-#include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QTimer>
+#include <chrono>
+#include "data/DataStore.h"
+#include "data/Data.h"
 
-#include "../data/Data.h"
-#include "../data/DataStore.h"
-#include "../sync/ClockManager.h"
-#include "../readers/GpsReader.h"
-#include "../readers/SpeedReader.h"
-#include "../readers/BrakeReader.h"
-#include "../readers/ThrottleReader.h"
-#include "../readers/SteeringReader.h"
-#include "../readers/IMUReader.h"
-#include "../readers/ReadersManager.h"
-
-
-namespace cv { class Mat; }
+class ReadersManager;
+class GpsReader;
+class SpeedReader;
+class BrakeReader;
+class ThrottleReader;
+class SteeringReader;
+class IMUReader;
 
 class DisplayManager : public QWidget {
     Q_OBJECT
-protected:
-    DataStore* dataStore{nullptr};
-    int fps{30};
-    std::chrono::system_clock::time_point currentTime;
-    QTimer* timer{nullptr};
-    ClockManager* clockManager{nullptr};
-
     
-    QLabel *lblGpsLat{nullptr}, *lblGpsLon{nullptr}, *lblGpsAlt{nullptr};
-    QLabel *lblSpeed{nullptr}, *lblBrake{nullptr}, *lblThrottle{nullptr}, *lblSteering{nullptr};
-    QLabel *lblAccX{nullptr}, *lblAccY{nullptr}, *lblAccZ{nullptr};
-    QLabel *lblGyrX{nullptr}, *lblGyrY{nullptr}, *lblGyrZ{nullptr};
-
-    
-    enum class Camera { Left, Front, Right, Back };
-    QLabel *lblCamLeft{nullptr}, *lblCamFront{nullptr}, *lblCamRight{nullptr}, *lblCamBack{nullptr};
-    QPushButton *btnPickLeft{nullptr}, *btnPickFront{nullptr}, *btnPickRight{nullptr}, *btnPickBack{nullptr};
-    QLabel *lblPathLeft{nullptr}, *lblPathFront{nullptr}, *lblPathRight{nullptr}, *lblPathBack{nullptr};
-
-    struct CameraFrame { std::chrono::system_clock::time_point ts; QString path; };
-    QMap<Camera, QVector<CameraFrame>> cameraFrames;
-
-    
-    QLineEdit *edGps{nullptr}, *edSpeed{nullptr}, *edBrake{nullptr}, *edThrottle{nullptr}, *edSteering{nullptr}, *edImu{nullptr};
-    QPushButton *btnLoadCsv{nullptr}, *btnPlay{nullptr}, *btnPause{nullptr};
-    QLabel *lblTime{nullptr};
-
-    
+private:
+    DataStore* dataStore;
     ReadersManager* readersManager;
+    std::chrono::system_clock::time_point currentTime;
     std::chrono::system_clock::time_point globalStart;
     std::chrono::system_clock::time_point globalEnd;
+    int fps{30};
+    
+    // UI Elements
+    QLabel* lblGpsLat;
+    QLabel* lblGpsLon;
+    QLabel* lblGpsAlt;
+    QLabel* lblSpeed;
+    QLabel* lblBrake;
+    QLabel* lblThrottle;
+    QLabel* lblSteering;
+    QLabel* lblAccX;
+    QLabel* lblAccY;
+    QLabel* lblAccZ;
+    QLabel* lblGyrX;
+    QLabel* lblGyrY;
+    QLabel* lblGyrZ;
+    QLabel* lblTime;
+    QLabel* lblCamLeft;
+    QLabel* lblCamFront;
+    QLabel* lblCamRight;
+    QLabel* lblCamBack;
+    
+    // Reader pointers for optimization
+    GpsReader* gpsReader;
+    SpeedReader* speedReader;
+    BrakeReader* brakeReader;
+    ThrottleReader* throttleReader;
+    SteeringReader* steeringReader;
+    IMUReader* imuReader;
+    
 public:
     explicit DisplayManager(QWidget* parent = nullptr);
     ~DisplayManager() override = default;
-    void displayFrame(std::list<Data> dataItems);
-    bool renderData(std::list<Data> dataItems);
-    void updateDisplay(std::chrono::system_clock::time_point time);
-
+    
+    void displayFrame(std::list<std::shared_ptr<Data>> dataItems);
+    bool renderData(std::list<std::shared_ptr<Data>> dataItems);
+    
     void setDataStore(DataStore* dataStore);
     DataStore* getDataStore();
-
+    
     void setFps(int fps);
     int getFps() const;
-
-public:
+    
     void setReadersManager(ReadersManager* rm);
     void initializeTimeline();
-
+    
 private:
     void buildUi();
+    void connectUi();
     void updateCameras(std::chrono::system_clock::time_point t);
     void updateSidebar(std::chrono::system_clock::time_point t);
-    const CameraFrame* findFrame(const QVector<CameraFrame>& frames, std::chrono::system_clock::time_point t) const;
-
+    void computeGlobalTimeline();
+    
+public slots:
+    void updateDisplay(std::chrono::system_clock::time_point time);
 };
 
 

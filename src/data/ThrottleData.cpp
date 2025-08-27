@@ -1,4 +1,4 @@
-#include "data/ThorttleData.h"
+#include "data/ThrottleData.h"
 #include "data/DataStore.h"
 
 ThrottleData::ThrottleData(std::chrono::system_clock::time_point timestamp, float position) : Data(timestamp), position(position) {}

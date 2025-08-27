@@ -8,7 +8,7 @@ IMUReader::IMUReader(std::string path) : AbstractDataReader(path) {}
 
 IMUReader::~IMUReader() {}
 
-std::list<Data> IMUReader::getDataAt(std::chrono::system_clock::time_point time) const {
+std::list<std::shared_ptr<Data>> IMUReader::getDataAt(std::chrono::system_clock::time_point time) const {
     return AbstractDataReader::getDataAt(time);
 }
 
@@ -45,9 +45,9 @@ void IMUReader::loadData(const std::string& filePath) {
             );
             std::vector<float> acc{static_cast<float>(std::stod(axStr)), static_cast<float>(std::stod(ayStr)), static_cast<float>(std::stod(azStr))};
             std::vector<float> gyr{static_cast<float>(std::stod(gxStr)), static_cast<float>(std::stod(gyStr)), static_cast<float>(std::stod(gzStr))};
-            IMUData data(tp, acc, gyr);
+            auto data = std::make_shared<IMUData>(tp, acc, gyr);
             items.push_back(data);
-            records.push_back(data);
+            records.push_back(*data);
         } catch (...) { continue; }
     }
 }

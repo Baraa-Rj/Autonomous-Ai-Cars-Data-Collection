@@ -10,7 +10,7 @@ ImageReader::ImageReader(std::string path) : AbstractDataReader(path) {}
 
 ImageReader::~ImageReader() {}
 
-std::list<Data> ImageReader::getDataAt(std::chrono::system_clock::time_point time) const {
+std::list<std::shared_ptr<Data>> ImageReader::getDataAt(std::chrono::system_clock::time_point time) const {
     return AbstractDataReader::getDataAt(time);
 }
 
@@ -47,7 +47,7 @@ void ImageReader::loadData(const std::string& filePath) {
         std::sort(temp.begin(), temp.end(), [](const ImageData& a, const ImageData& b){
             return a.getTimestamp() < b.getTimestamp();
         });
-        for (const auto& d : temp) items.push_back(d);
+        for (const auto& d : temp) items.push_back(std::make_shared<ImageData>(d));
         return;
     }
 

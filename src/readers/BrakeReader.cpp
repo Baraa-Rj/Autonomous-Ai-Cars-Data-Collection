@@ -8,7 +8,7 @@ BrakeReader::BrakeReader(std::string path) : AbstractDataReader(path) {}
 
 BrakeReader::~BrakeReader() {}
 
-std::list<Data> BrakeReader::getDataAt(std::chrono::system_clock::time_point time) const {
+std::list<std::shared_ptr<Data>> BrakeReader::getDataAt(std::chrono::system_clock::time_point time) const {
     return AbstractDataReader::getDataAt(time);
 }
 
@@ -39,9 +39,9 @@ void BrakeReader::loadData(const std::string& filePath) {
                 std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<double>(ts))
             );
             float pressure = static_cast<float>(std::stod(pressureStr));
-            BrakeData data(tp, pressure);
+            auto data = std::make_shared<BrakeData>(tp, pressure);
             items.push_back(data);
-            records.push_back(data);
+            records.push_back(*data);
         } catch (...) { continue; }
     }
 }

@@ -1,6 +1,8 @@
 #pragma once
 #include <opencv2/opencv.hpp>
 #include <QImage>
+#include <QLabel>
+#include <QString>
 #include <string>
 
 class ImageHandler {
