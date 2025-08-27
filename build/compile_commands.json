@@ -1,14 +1,20 @@
 [
 {
   "directory": "/home/dark/Desktop/data-collection-phase/build",
-  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/opencv4 -g -std=gnu++17 -fPIC -o CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o -c /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/mocs_compilation.cpp",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/include -I/home/dark/Desktop/data-collection-phase/headers -I/home/dark/Desktop/data-collection-phase/headers/gui -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/opencv4 -g -std=gnu++17 -fPIC -o CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o -c /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/mocs_compilation.cpp",
   "file": "/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/mocs_compilation.cpp",
   "output": "CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o"
 },
 {
   "directory": "/home/dark/Desktop/data-collection-phase/build",
-  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/opencv4 -g -std=gnu++17 -fPIC -o CMakeFiles/QtOpenCVApp.dir/main.cpp.o -c /home/dark/Desktop/data-collection-phase/main.cpp",
-  "file": "/home/dark/Desktop/data-collection-phase/main.cpp",
-  "output": "CMakeFiles/QtOpenCVApp.dir/main.cpp.o"
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/include -I/home/dark/Desktop/data-collection-phase/headers -I/home/dark/Desktop/data-collection-phase/headers/gui -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/opencv4 -g -std=gnu++17 -fPIC -o CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o -c /home/dark/Desktop/data-collection-phase/Simulation.cpp",
+  "file": "/home/dark/Desktop/data-collection-phase/Simulation.cpp",
+  "output": "CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o"
+},
+{
+  "directory": "/home/dark/Desktop/data-collection-phase/build",
+  "command": "/usr/bin/g++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/include -I/home/dark/Desktop/data-collection-phase/headers -I/home/dark/Desktop/data-collection-phase/headers/gui -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/opencv4 -g -std=gnu++17 -fPIC -o CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o -c /home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp",
+  "file": "/home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp",
+  "output": "CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o"
 }
 ]

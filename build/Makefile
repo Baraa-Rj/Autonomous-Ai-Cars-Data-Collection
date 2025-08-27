@@ -179,29 +179,53 @@ QtOpenCVApp_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.s
 .PHONY : QtOpenCVApp_autogen/mocs_compilation.cpp.s
 
-main.o: main.cpp.o
-.PHONY : main.o
+Simulation.o: Simulation.cpp.o
+.PHONY : Simulation.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/main.cpp.o
-.PHONY : main.cpp.o
+Simulation.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o
+.PHONY : Simulation.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+Simulation.i: Simulation.cpp.i
+.PHONY : Simulation.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/main.cpp.i
-.PHONY : main.cpp.i
+Simulation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.i
+.PHONY : Simulation.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+Simulation.s: Simulation.cpp.s
+.PHONY : Simulation.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/main.cpp.s
-.PHONY : main.cpp.s
+Simulation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.s
+.PHONY : Simulation.cpp.s
+
+src/gui/DisplayManager.o: src/gui/DisplayManager.cpp.o
+.PHONY : src/gui/DisplayManager.o
+
+# target to build an object file
+src/gui/DisplayManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o
+.PHONY : src/gui/DisplayManager.cpp.o
+
+src/gui/DisplayManager.i: src/gui/DisplayManager.cpp.i
+.PHONY : src/gui/DisplayManager.i
+
+# target to preprocess a source file
+src/gui/DisplayManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.i
+.PHONY : src/gui/DisplayManager.cpp.i
+
+src/gui/DisplayManager.s: src/gui/DisplayManager.cpp.s
+.PHONY : src/gui/DisplayManager.s
+
+# target to generate assembly for a file
+src/gui/DisplayManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.s
+.PHONY : src/gui/DisplayManager.cpp.s
 
 # Help Target
 help:
@@ -217,9 +241,12 @@ help:
 	@echo "... QtOpenCVApp_autogen/mocs_compilation.o"
 	@echo "... QtOpenCVApp_autogen/mocs_compilation.i"
 	@echo "... QtOpenCVApp_autogen/mocs_compilation.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... Simulation.o"
+	@echo "... Simulation.i"
+	@echo "... Simulation.s"
+	@echo "... src/gui/DisplayManager.o"
+	@echo "... src/gui/DisplayManager.i"
+	@echo "... src/gui/DisplayManager.s"
 .PHONY : help
 
 

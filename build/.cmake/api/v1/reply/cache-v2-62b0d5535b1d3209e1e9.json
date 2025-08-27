@@ -430,6 +430,18 @@
 			"value" : "/snap/cmake/1479/bin/ccmake"
 		},
 		{
+			"name" : "CMAKE_ERROR_DEPRECATED",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Whether to issue deprecation errors for macros and functions."
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "FALSE"
+		},
+		{
 			"name" : "CMAKE_EXECUTABLE_FORMAT",
 			"properties" : 
 			[
@@ -1210,6 +1222,30 @@
 			"value" : "/usr/bin/strip"
 		},
 		{
+			"name" : "CMAKE_SUPPRESS_DEVELOPER_ERRORS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Suppress errors that are meant for the author of the CMakeLists.txt files."
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "TRUE"
+		},
+		{
+			"name" : "CMAKE_SUPPRESS_DEVELOPER_WARNINGS",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Suppress Warnings that are meant for the author of the CMakeLists.txt files."
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "TRUE"
+		},
+		{
 			"name" : "CMAKE_TAPI",
 			"properties" : 
 			[
@@ -1251,6 +1287,18 @@
 				}
 			],
 			"type" : "BOOL",
+			"value" : "FALSE"
+		},
+		{
+			"name" : "CMAKE_WARN_DEPRECATED",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Whether to issue warnings for deprecated functionality."
+				}
+			],
+			"type" : "INTERNAL",
 			"value" : "FALSE"
 		},
 		{

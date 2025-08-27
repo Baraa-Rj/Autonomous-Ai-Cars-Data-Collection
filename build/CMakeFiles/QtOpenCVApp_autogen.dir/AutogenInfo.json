@@ -275,7 +275,15 @@
 	"CROSS_CONFIG" : false,
 	"DEP_FILE" : "/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/deps",
 	"DEP_FILE_RULE_NAME" : "QtOpenCVApp_autogen/timestamp",
-	"HEADERS" : [],
+	"HEADERS" : 
+	[
+		[
+			"/home/dark/Desktop/data-collection-phase/headers/gui/DisplayManager.h",
+			"Mu",
+			"NEA6TVGIBU/moc_DisplayManager.cpp",
+			null
+		]
+	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/mocs_compilation.cpp",
@@ -289,6 +297,8 @@
 	],
 	"MOC_INCLUDES" : 
 	[
+		"/home/dark/Desktop/data-collection-phase/headers",
+		"/home/dark/Desktop/data-collection-phase/headers/gui",
 		"/usr/include/x86_64-linux-gnu/qt6/QtCore",
 		"/usr/include/x86_64-linux-gnu/qt6",
 		"/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++",
@@ -328,7 +338,12 @@
 	"SETTINGS_FILE" : "/home/dark/Desktop/data-collection-phase/build/CMakeFiles/QtOpenCVApp_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[ "/home/dark/Desktop/data-collection-phase/main.cpp", "Mu", null ]
+		[ "/home/dark/Desktop/data-collection-phase/Simulation.cpp", "Mu", null ],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp",
+			"Mu",
+			null
+		]
 	],
 	"USE_BETTER_GRAPH" : false,
 	"VERBOSITY" : 0

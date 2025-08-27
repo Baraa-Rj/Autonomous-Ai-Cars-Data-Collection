@@ -10,7 +10,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "" "QtOpenCVApp_autogen/timestamp" "custom" "QtOpenCVApp_autogen/deps"
   "/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/mocs_compilation.cpp" "CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o.d"
-  "/home/dark/Desktop/data-collection-phase/main.cpp" "CMakeFiles/QtOpenCVApp.dir/main.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/main.cpp.o.d"
+  "/home/dark/Desktop/data-collection-phase/Simulation.cpp" "CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o.d"
+  "/home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp" "CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

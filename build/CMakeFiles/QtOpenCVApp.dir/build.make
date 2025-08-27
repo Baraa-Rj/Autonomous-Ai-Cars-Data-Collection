@@ -92,30 +92,46 @@ CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.s: cmake_for
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/mocs_compilation.cpp -o CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.s
 
-CMakeFiles/QtOpenCVApp.dir/main.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
-CMakeFiles/QtOpenCVApp.dir/main.cpp.o: /home/dark/Desktop/data-collection-phase/main.cpp
-CMakeFiles/QtOpenCVApp.dir/main.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/QtOpenCVApp.dir/main.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/main.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/main.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/main.cpp.o -c /home/dark/Desktop/data-collection-phase/main.cpp
+CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
+CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o: /home/dark/Desktop/data-collection-phase/Simulation.cpp
+CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o -c /home/dark/Desktop/data-collection-phase/Simulation.cpp
 
-CMakeFiles/QtOpenCVApp.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/QtOpenCVApp.dir/main.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/dark/Desktop/data-collection-phase/main.cpp > CMakeFiles/QtOpenCVApp.dir/main.cpp.i
+CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/dark/Desktop/data-collection-phase/Simulation.cpp > CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.i
 
-CMakeFiles/QtOpenCVApp.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVApp.dir/main.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dark/Desktop/data-collection-phase/main.cpp -o CMakeFiles/QtOpenCVApp.dir/main.cpp.s
+CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dark/Desktop/data-collection-phase/Simulation.cpp -o CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.s
+
+CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
+CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o: /home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp
+CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o -c /home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp
+
+CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp > CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.i
+
+CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp -o CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.s
 
 # Object files for target QtOpenCVApp
 QtOpenCVApp_OBJECTS = \
 "CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o" \
-"CMakeFiles/QtOpenCVApp.dir/main.cpp.o"
+"CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o" \
+"CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o"
 
 # External object files for target QtOpenCVApp
 QtOpenCVApp_EXTERNAL_OBJECTS =
 
 QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o
-QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/main.cpp.o
+QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o
+QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o
 QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/build.make
 QtOpenCVApp: /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.2.4
 QtOpenCVApp: /usr/lib/x86_64-linux-gnu/libopencv_stitching.so.4.5.4d
@@ -177,7 +193,7 @@ QtOpenCVApp: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.5.4d
 QtOpenCVApp: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.5.4d
 QtOpenCVApp: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.5.4d
 QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable QtOpenCVApp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable QtOpenCVApp"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/QtOpenCVApp.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
