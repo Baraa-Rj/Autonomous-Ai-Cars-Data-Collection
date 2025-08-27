@@ -278,6 +278,12 @@
 	"HEADERS" : 
 	[
 		[
+			"/home/dark/Desktop/data-collection-phase/headers/Simulation.h",
+			"Mu",
+			"K6S233IZAZ/moc_Simulation.cpp",
+			null
+		],
+		[
 			"/home/dark/Desktop/data-collection-phase/headers/gui/DisplayManager.h",
 			"Mu",
 			"NEA6TVGIBU/moc_DisplayManager.cpp",
@@ -345,6 +351,11 @@
 	"SOURCES" : 
 	[
 		[ "/home/dark/Desktop/data-collection-phase/Simulation.cpp", "Mu", null ],
+		[
+			"/home/dark/Desktop/data-collection-phase/src/Simulation.cpp",
+			"Mu",
+			null
+		],
 		[
 			"/home/dark/Desktop/data-collection-phase/src/data/BrakeData.cpp",
 			"Mu",

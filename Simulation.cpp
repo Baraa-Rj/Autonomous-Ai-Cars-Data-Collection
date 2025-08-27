@@ -1,9 +1,12 @@
 #include <QApplication>
-#include "headers/gui/DisplayManager.h"
+#include "Simulation.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    DisplayManager w;
-    w.show();
+    
+    Simulation simulation;
+    simulation.init();
+    simulation.run();
+    
     return app.exec();
 }

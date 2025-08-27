@@ -12,6 +12,8 @@ set(CMAKE_AUTOMOC ON)
 
 add_executable(QtOpenCVApp
     Simulation.cpp
+    headers/Simulation.h
+    src/Simulation.cpp
     # GUI
     headers/gui/DisplayManager.h
     src/gui/DisplayManager.cpp

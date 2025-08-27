@@ -404,6 +404,8 @@ CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o: \
  /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/NEA6TVGIBU/../../../headers/gui/../sync/ClockManager.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/QObject \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qobject.h \
+ /usr/include/c++/11/thread /usr/include/c++/11/bits/std_thread.h \
+ /usr/include/c++/11/bits/this_thread_sleep.h \
  /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/NEA6TVGIBU/../../../headers/gui/../readers/GpsReader.h \
  /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/NEA6TVGIBU/../../../headers/gui/../readers/AbstractDataReader.h \
  /home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/NEA6TVGIBU/../../../headers/gui/../readers/../data/GpsData.h \

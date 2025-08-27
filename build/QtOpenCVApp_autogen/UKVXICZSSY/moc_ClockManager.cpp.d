@@ -149,6 +149,7 @@
   /usr/include/c++/11/streambuf \
   /usr/include/c++/11/string \
   /usr/include/c++/11/string_view \
+  /usr/include/c++/11/thread \
   /usr/include/c++/11/tr1/bessel_function.tcc \
   /usr/include/c++/11/tr1/beta_function.tcc \
   /usr/include/c++/11/tr1/ell_integral.tcc \
@@ -272,7 +273,6 @@
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/QObject \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qalgorithms.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qanystringview.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qarraydata.h \
@@ -281,7 +281,6 @@
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic_cxx11.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasicatomic.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasictimer.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbindingstorage.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearray.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayalgorithms.h \
@@ -330,7 +329,6 @@
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qsystemdetection.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtaggedpointer.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtcore-config.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qtimer.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtmetamacros.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtypeinfo.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qutf8stringview.h \

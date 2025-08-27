@@ -269,8 +269,6 @@ CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qobject_impl.h \
  /usr/include/x86_64-linux-gnu/qt6/QtCore/qbindingstorage.h \
  /usr/include/c++/11/chrono /usr/include/c++/11/ratio \
- /usr/include/c++/11/ctime \
- /usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer \
- /usr/include/x86_64-linux-gnu/qt6/QtCore/qtimer.h \
- /usr/include/x86_64-linux-gnu/qt6/QtCore/qbasictimer.h \
- /usr/include/x86_64-linux-gnu/qt6/QtCore/qobject.h
+ /usr/include/c++/11/ctime /usr/include/c++/11/thread \
+ /usr/include/c++/11/bits/std_thread.h \
+ /usr/include/c++/11/bits/this_thread_sleep.h

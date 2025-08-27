@@ -201,6 +201,7 @@
   /usr/include/c++/11/string \
   /usr/include/c++/11/string_view \
   /usr/include/c++/11/system_error \
+  /usr/include/c++/11/thread \
   /usr/include/c++/11/tr1/bessel_function.tcc \
   /usr/include/c++/11/tr1/beta_function.tcc \
   /usr/include/c++/11/tr1/ell_integral.tcc \

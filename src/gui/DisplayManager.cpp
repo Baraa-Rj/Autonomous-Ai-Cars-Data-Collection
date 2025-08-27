@@ -6,20 +6,9 @@ DisplayManager::DisplayManager(QWidget* parent)
     setWindowTitle("Data Collection Phase");
     resize(800, 600);
     dataStore = new DataStore();
-    fps = 30;
     currentTime = std::chrono::system_clock::now();
-    clockManager = new ClockManager(this);
-    clockManager->setFps(fps);
-    connect(clockManager, &ClockManager::ticked, this, [this](std::chrono::system_clock::time_point t){
-        currentTime = t;
-        updateCameras(currentTime);
-        updateSidebar(currentTime);
-        this->update();
-    });
-    clockManager->start();
 
     buildUi();
-    connectUi();
 }
 
 
@@ -276,7 +265,39 @@ void DisplayManager::computeGlobalTimeline() {
     if (brakeReader) consider(brakeReader->getAllData());
     if (throttleReader) consider(throttleReader->getAllData());
     if (steeringReader) consider(steeringReader->getAllData());
-    
 }
 
+void DisplayManager::displayFrame(std::list<Data> dataItems) {
+    for (const auto& data : dataItems) {
+        dataStore->addData(data.getType(), data);
+    }
+    updateDisplay(currentTime);
+}
 
+bool DisplayManager::renderData(std::list<Data> dataItems) {
+    displayFrame(dataItems);
+    return true;
+}
+
+void DisplayManager::updateDisplay(std::chrono::system_clock::time_point time) {
+    currentTime = time;
+    updateCameras(currentTime);
+    updateSidebar(currentTime);
+    this->update();
+}
+
+void DisplayManager::setDataStore(DataStore* ds) {
+    dataStore = ds;
+}
+
+DataStore* DisplayManager::getDataStore() {
+    return dataStore;
+}
+
+void DisplayManager::setFps(int f) {
+    fps = f;
+}
+
+int DisplayManager::getFps() const {
+    return fps;
+}

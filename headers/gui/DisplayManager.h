@@ -77,6 +77,7 @@ public:
     ~DisplayManager() override = default;
     void displayFrame(std::list<Data> dataItems);
     bool renderData(std::list<Data> dataItems);
+    void updateDisplay(std::chrono::system_clock::time_point time);
 
     void setDataStore(DataStore* dataStore);
     DataStore* getDataStore();

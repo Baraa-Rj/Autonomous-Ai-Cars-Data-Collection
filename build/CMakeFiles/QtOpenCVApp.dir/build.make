@@ -106,10 +106,24 @@ CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dark/Desktop/data-collection-phase/Simulation.cpp -o CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.s
 
+CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
+CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o: /home/dark/Desktop/data-collection-phase/src/Simulation.cpp
+CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o -c /home/dark/Desktop/data-collection-phase/src/Simulation.cpp
+
+CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/dark/Desktop/data-collection-phase/src/Simulation.cpp > CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.i
+
+CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/dark/Desktop/data-collection-phase/src/Simulation.cpp -o CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.s
+
 CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o: /home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp
 CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o -c /home/dark/Desktop/data-collection-phase/src/gui/DisplayManager.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.i: cmake_force
@@ -123,7 +137,7 @@ CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o: /home/dark/Desktop/data-collection-phase/src/sync/ClockManager.cpp
 CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o -c /home/dark/Desktop/data-collection-phase/src/sync/ClockManager.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.i: cmake_force
@@ -137,7 +151,7 @@ CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/Data.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/Data.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.i: cmake_force
@@ -151,7 +165,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/DataStore.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/DataStore.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.i: cmake_force
@@ -165,7 +179,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/BrakeData.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/BrakeData.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.i: cmake_force
@@ -179,7 +193,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/SpeedData.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/SpeedData.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.i: cmake_force
@@ -193,7 +207,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/SpeedData.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/GpsData.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/GpsData.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.i: cmake_force
@@ -207,7 +221,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/ImageData.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/ImageData.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.i: cmake_force
@@ -221,7 +235,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/ImageHandler.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/ImageHandler.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.i: cmake_force
@@ -235,7 +249,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/ImageHandler.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/IMUData.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/IMUData.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.i: cmake_force
@@ -249,7 +263,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/SteeringData.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/SteeringData.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.i: cmake_force
@@ -263,7 +277,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/SteeringData.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.o: /home/dark/Desktop/data-collection-phase/src/data/ThrottleData.cpp
 CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.o -c /home/dark/Desktop/data-collection-phase/src/data/ThrottleData.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.i: cmake_force
@@ -277,7 +291,7 @@ CMakeFiles/QtOpenCVApp.dir/src/data/ThrottleData.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.o: /home/dark/Desktop/data-collection-phase/src/readers/AbstractDataReaders.cpp
 CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.o -c /home/dark/Desktop/data-collection-phase/src/readers/AbstractDataReaders.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.i: cmake_force
@@ -291,7 +305,7 @@ CMakeFiles/QtOpenCVApp.dir/src/readers/AbstractDataReaders.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.o: /home/dark/Desktop/data-collection-phase/src/readers/BrakeReader.cpp
 CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.o -c /home/dark/Desktop/data-collection-phase/src/readers/BrakeReader.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.i: cmake_force
@@ -305,7 +319,7 @@ CMakeFiles/QtOpenCVApp.dir/src/readers/BrakeReader.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.o: /home/dark/Desktop/data-collection-phase/src/readers/GpsReader.cpp
 CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.o -c /home/dark/Desktop/data-collection-phase/src/readers/GpsReader.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.i: cmake_force
@@ -319,7 +333,7 @@ CMakeFiles/QtOpenCVApp.dir/src/readers/GpsReader.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.o: /home/dark/Desktop/data-collection-phase/src/readers/ImageReader.cpp
 CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.o -c /home/dark/Desktop/data-collection-phase/src/readers/ImageReader.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.i: cmake_force
@@ -333,7 +347,7 @@ CMakeFiles/QtOpenCVApp.dir/src/readers/ImageReader.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.o: /home/dark/Desktop/data-collection-phase/src/readers/IMUReader.cpp
 CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.o -c /home/dark/Desktop/data-collection-phase/src/readers/IMUReader.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.i: cmake_force
@@ -347,7 +361,7 @@ CMakeFiles/QtOpenCVApp.dir/src/readers/IMUReader.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.o: /home/dark/Desktop/data-collection-phase/src/readers/ReadersManager.cpp
 CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.o -c /home/dark/Desktop/data-collection-phase/src/readers/ReadersManager.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.i: cmake_force
@@ -361,7 +375,7 @@ CMakeFiles/QtOpenCVApp.dir/src/readers/ReadersManager.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.o: /home/dark/Desktop/data-collection-phase/src/readers/SpeedReader.cpp
 CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.o -c /home/dark/Desktop/data-collection-phase/src/readers/SpeedReader.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.i: cmake_force
@@ -375,7 +389,7 @@ CMakeFiles/QtOpenCVApp.dir/src/readers/SpeedReader.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.o: /home/dark/Desktop/data-collection-phase/src/readers/SteeringReader.cpp
 CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.o -c /home/dark/Desktop/data-collection-phase/src/readers/SteeringReader.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.i: cmake_force
@@ -389,7 +403,7 @@ CMakeFiles/QtOpenCVApp.dir/src/readers/SteeringReader.cpp.s: cmake_force
 CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/flags.make
 CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.o: /home/dark/Desktop/data-collection-phase/src/readers/ThrottleReader.cpp
 CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.o: CMakeFiles/QtOpenCVApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.o"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.o -MF CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.o.d -o CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.o -c /home/dark/Desktop/data-collection-phase/src/readers/ThrottleReader.cpp
 
 CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.i: cmake_force
@@ -404,6 +418,7 @@ CMakeFiles/QtOpenCVApp.dir/src/readers/ThrottleReader.cpp.s: cmake_force
 QtOpenCVApp_OBJECTS = \
 "CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o" \
 "CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o" \
+"CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o" \
 "CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o" \
 "CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o" \
 "CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o" \
@@ -431,6 +446,7 @@ QtOpenCVApp_EXTERNAL_OBJECTS =
 
 QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o
 QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o
+QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o
 QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/src/gui/DisplayManager.cpp.o
 QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/src/sync/ClockManager.cpp.o
 QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o
@@ -513,7 +529,7 @@ QtOpenCVApp: /usr/lib/x86_64-linux-gnu/libopencv_photo.so.4.5.4d
 QtOpenCVApp: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.4.5.4d
 QtOpenCVApp: /usr/lib/x86_64-linux-gnu/libopencv_core.so.4.5.4d
 QtOpenCVApp: CMakeFiles/QtOpenCVApp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking CXX executable QtOpenCVApp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/dark/Desktop/data-collection-phase/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Linking CXX executable QtOpenCVApp"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/QtOpenCVApp.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

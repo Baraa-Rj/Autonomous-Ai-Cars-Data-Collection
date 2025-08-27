@@ -6,6 +6,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/QtOpenCVApp.dir/QtOpenCVApp_autogen/mocs_compilation.cpp.o.d"
   "CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o"
   "CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o.d"
+  "CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o"
+  "CMakeFiles/QtOpenCVApp.dir/src/Simulation.cpp.o.d"
   "CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o"
   "CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o.d"
   "CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o"
