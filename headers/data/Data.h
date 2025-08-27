@@ -1,12 +1,14 @@
-#include pragma once 
+#pragma once
 
-class Data{
-    protected:
-        std::DateTime timestamp;
+#include <chrono>
 
-    public:
-        Data(std::DateTime timestamp);
-        virtual ~Data();
-      std::DateTime getTimestamp() const;
+class Data {
+protected:
+    std::chrono::system_clock::time_point timestamp;
 
-}
+public:
+    explicit Data(std::chrono::system_clock::time_point timestamp);
+    virtual ~Data();
+
+    std::chrono::system_clock::time_point getTimestamp() const;
+};

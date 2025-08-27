@@ -1,6 +1,6 @@
-#include "headers/data/ThrottleData.h"
+#include "headers/data/ThorttleData.h"
 
-ThrottleData::ThrottleData(std::DateTime timestamp, float position) : Data(timestamp), position(position) {}
+ThrottleData::ThrottleData(std::chrono::system_clock::time_point timestamp, float position) : Data(timestamp), position(position) {}
 
 ThrottleData::~ThrottleData() {}
 

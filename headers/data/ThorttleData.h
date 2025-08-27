@@ -2,16 +2,14 @@
 
 #include "Data.h"
 
-class ThorttleData : public Data{
-    protected:
-        float position;
+class ThrottleData : public Data {
+protected:
+    float position;
 
-        public:
-            ThorttleData(std::DateTime timestamp, float position);
-            ~ThorttleData();
-            float getPosition() const;
+public:
+    ThrottleData(std::chrono::system_clock::time_point timestamp, float position);
+    ~ThrottleData();
+    float getPosition() const;
 
-            void setPosition(float position);
-
-            
-}
+    void setPosition(float position);
+};

@@ -1,23 +1,25 @@
 #include "headers/sync/ClockManager.h"
 
-ClockManager::ClockManager() {}
+ClockManager::ClockManager(QObject* parent) : QObject(parent) {}
 
-ClockManager::~ClockManager() {}
+ClockManager::~ClockManager() { delete timer; }
 
 void ClockManager::start() {
-    currentTime = std::DateTime::now();
+    currentTime = std::chrono::system_clock::now();
     timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &ClockManager::tick);
+    connect(timer, &QTimer::timeout, this, [this]() { this->tick(); });
 }
-std::DateTime ClockManager::tick() {
+std::chrono::system_clock::time_point ClockManager::tick() {
+    currentTime = std::chrono::system_clock::now();
     return currentTime;
 }
 void ClockManager::setFps(int fps) {
     this->fps = fps;
 }
-int ClockManager::getFps() {
+int ClockManager::getFps() const {
     return fps;
 }
-void ClockManager::setCurrentTime(std::DateTime time) {
+void ClockManager::setCurrentTime(std::chrono::system_clock::time_point time) {
     currentTime = time;
 }
+std::chrono::system_clock::time_point ClockManager::getCurrentTime() const { return currentTime; }

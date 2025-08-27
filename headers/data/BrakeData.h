@@ -2,17 +2,16 @@
 
 #include "Data.h"
 
-class BrakeData : public Data{
-    protected:
-        float pressure;
-        
-        public: 
-            BrakeData(std::DateTime timestamp, float pressure);
-            ~BrakeData();
+class BrakeData : public Data {
+protected:
+    float pressure;
 
-            float getPressure() const;
+public:
+    BrakeData(std::chrono::system_clock::time_point timestamp, float pressure);
+    ~BrakeData();
 
-            void setPressure(float pressure);
+    float getPressure() const;
 
-            void print() const;
-}
+    void setPressure(float pressure);
+    void print() const;
+};

@@ -1,6 +1,7 @@
 #include "headers/data/IMUData.h"
 
-IMUData::IMUData(std::DateTime timestamp, std::vector<float> acceleration, std::vector<float> gyroscope) : Data(timestamp), acceleration(acceleration), gyroscope(gyroscope) {}
+IMUData::IMUData(std::chrono::system_clock::time_point timestamp, std::vector<float> acceleration, std::vector<float> gyroscope)
+    : Data(timestamp), acceleration(std::move(acceleration)), gyroscope(std::move(gyroscope)) {}
 
 IMUData::~IMUData() {}
 

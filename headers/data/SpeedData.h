@@ -2,17 +2,15 @@
 
 #include "Data.h"
 
-class SpeedData : public Data{
-    protected:
-        float speed;
+class SpeedData : public Data {
+protected:
+    float speed;
 
-        public:
-            SpeedData(std::DateTime timestamp, float speed);
-            ~SpeedData();
+public:
+    SpeedData(std::chrono::system_clock::time_point timestamp, float speed);
+    ~SpeedData();
 
-            float getSpeed() const;
+    float getSpeed() const;
 
-            void setSpeed(float speed);
-
-
-}
+    void setSpeed(float speed);
+};
