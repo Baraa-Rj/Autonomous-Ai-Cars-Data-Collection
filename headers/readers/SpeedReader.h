@@ -2,6 +2,8 @@
 
 #include "AbstractDataReader.h"
 #include "../data/SpeedData.h"
+#include <vector>
+#include <optional>
 
 class SpeedReader : public AbstractDataReader{
     public:
@@ -9,4 +11,7 @@ class SpeedReader : public AbstractDataReader{
     ~SpeedReader();
     std::list<Data> getDataAt(std::chrono::system_clock::time_point time) const;
     void loadData(const std::string& path) override;
+    std::optional<SpeedData> latestAt(std::chrono::system_clock::time_point t) const;
+private:
+    std::vector<SpeedData> records;
 };

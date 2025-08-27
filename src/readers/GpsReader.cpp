@@ -14,6 +14,7 @@ std::list<Data> GpsReader::getDataAt(std::chrono::system_clock::time_point time)
 
 void GpsReader::loadData(const std::string& filePath) {
     items.clear();
+    records.clear();
     std::ifstream file(filePath);
     if (!file.is_open()) {
         std::perror(("Failed to open " + filePath).c_str());
@@ -43,10 +44,22 @@ void GpsReader::loadData(const std::string& filePath) {
                 : std::chrono::system_clock::time_point{std::chrono::seconds(ts)};
             GpsData gps(tp, std::stof(latStr), std::stof(lonStr), std::stof(altStr));
             items.push_back(gps);
+            records.push_back(gps);
             ++parsed;
         } catch (...) {
             continue;
         }
     }
     std::cout << "GpsReader parsed rows: " << parsed << std::endl;
+}
+
+std::optional<GpsData> GpsReader::latestAt(std::chrono::system_clock::time_point t) const {
+    if (records.empty()) return std::nullopt;
+    size_t l = 0, r = records.size();
+    while (l < r) {
+        size_t m = (l + r) / 2;
+        if (records[m].getTimestamp() <= t) l = m + 1; else r = m;
+    }
+    if (l == 0) return std::nullopt;
+    return records[l - 1];
 }

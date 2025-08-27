@@ -14,6 +14,7 @@ std::list<Data> BrakeReader::getDataAt(std::chrono::system_clock::time_point tim
 
 void BrakeReader::loadData(const std::string& filePath) {
     items.clear();
+    records.clear();
     std::ifstream file(filePath);
     if (!file.is_open()) return;
     auto trim = [](std::string& s){
@@ -40,6 +41,18 @@ void BrakeReader::loadData(const std::string& filePath) {
             float pressure = static_cast<float>(std::stod(pressureStr));
             BrakeData data(tp, pressure);
             items.push_back(data);
+            records.push_back(data);
         } catch (...) { continue; }
     }
+}
+
+std::optional<BrakeData> BrakeReader::latestAt(std::chrono::system_clock::time_point t) const {
+    if (records.empty()) return std::nullopt;
+    size_t l = 0, r = records.size();
+    while (l < r) {
+        size_t m = (l + r) / 2;
+        if (records[m].getTimestamp() <= t) l = m + 1; else r = m;
+    }
+    if (l == 0) return std::nullopt;
+    return records[l - 1];
 }

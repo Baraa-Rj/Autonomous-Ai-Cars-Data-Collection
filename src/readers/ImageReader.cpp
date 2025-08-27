@@ -3,6 +3,8 @@
 #include <sstream>
 #include <algorithm>
 #include <cctype>
+#include <filesystem>
+#include <regex>
 
 ImageReader::ImageReader(std::string path) : AbstractDataReader(path) {}
 
@@ -12,38 +14,41 @@ std::list<Data> ImageReader::getDataAt(std::chrono::system_clock::time_point tim
     return AbstractDataReader::getDataAt(time);
 }
 
+static std::chrono::system_clock::time_point tp_from_seconds_double(double secs) {
+    return std::chrono::time_point<std::chrono::system_clock>(
+        std::chrono::duration_cast<std::chrono::system_clock::duration>(
+            std::chrono::duration<double>(secs))
+    );
+}
+
 void ImageReader::loadData(const std::string& filePath) {
     items.clear();
-    std::ifstream file(filePath);
-    if (!file.is_open()) return;
-    auto trim = [](std::string& s){
-        auto isws = [](int c){ return std::isspace(c); };
-        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [&](char c){ return !isws(c); }));
-        s.erase(std::find_if(s.rbegin(), s.rend(), [&](char c){ return !isws(c); }).base(), s.end());
-    };
-    std::string line;
-    bool first = true;
-    while (std::getline(file, line)) {
-        if (line.empty()) continue;
-        std::istringstream iss(line);
-        std::string tsStr, pathStr, posStr;
-        if (!std::getline(iss, tsStr, ',')) continue;
-        if (!std::getline(iss, pathStr, ',')) continue;
-        if (!std::getline(iss, posStr, ',')) posStr = "FRONT";
-        trim(tsStr); trim(pathStr); trim(posStr);
-        if (first && (tsStr == "time_stamp" || tsStr == "timestamp")) { first = false; continue; }
-        first = false;
-        try {
-            double ts = std::stod(tsStr);
-            auto tp = std::chrono::time_point<std::chrono::system_clock>(
-                std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::duration<double>(ts))
-            );
-            ImageData::CameraPosition pos = ImageData::CameraPosition::FRONT;
-            if (posStr == "REAR") pos = ImageData::CameraPosition::REAR;
-            else if (posStr == "LEFT") pos = ImageData::CameraPosition::LEFT;
-            else if (posStr == "RIGHT") pos = ImageData::CameraPosition::RIGHT;
-            ImageData data(tp, pathStr, pos);
-            items.push_back(data);
-        } catch (...) { continue; }
+
+    namespace fs = std::filesystem;
+    std::error_code ec;
+    if (fs::is_directory(filePath, ec) && !ec) {
+        std::regex re("^([0-9]+(?:\\.[0-9]+)?)");
+        std::vector<ImageData> temp;
+        for (const auto& entry : fs::directory_iterator(filePath)) {
+            if (!entry.is_regular_file()) continue;
+            const auto ext = entry.path().extension().string();
+            std::string lowerExt = ext; std::transform(lowerExt.begin(), lowerExt.end(), lowerExt.begin(), ::tolower);
+            if (lowerExt != ".jpg" && lowerExt != ".jpeg" && lowerExt != ".png") continue;
+            const std::string name = entry.path().stem().string();
+            std::smatch m;
+            if (!std::regex_search(name, m, re)) continue;
+            try {
+                double secs = std::stod(m[1].str());
+                auto tp = tp_from_seconds_double(secs);
+                ImageData data(tp, entry.path().string(), ImageData::CameraPosition::FRONT);
+                temp.push_back(data);
+            } catch (...) { continue; }
+        }
+        std::sort(temp.begin(), temp.end(), [](const ImageData& a, const ImageData& b){
+            return a.getTimestamp() < b.getTimestamp();
+        });
+        for (const auto& d : temp) items.push_back(d);
+        return;
     }
-}
+
+    }

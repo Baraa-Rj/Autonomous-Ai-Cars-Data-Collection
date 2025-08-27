@@ -14,6 +14,7 @@ std::list<Data> SpeedReader::getDataAt(std::chrono::system_clock::time_point tim
 
 void SpeedReader::loadData(const std::string& filePath) {
     items.clear();
+    records.clear();
     std::ifstream file(filePath);
     if (!file.is_open()) return;
     auto trim = [](std::string& s){
@@ -40,6 +41,18 @@ void SpeedReader::loadData(const std::string& filePath) {
             float speed = static_cast<float>(std::stod(speedStr));
             SpeedData data(tp, speed);
             items.push_back(data);
+            records.push_back(data);
         } catch (...) { continue; }
     }
+}
+
+std::optional<SpeedData> SpeedReader::latestAt(std::chrono::system_clock::time_point t) const {
+    if (records.empty()) return std::nullopt;
+    size_t l = 0, r = records.size();
+    while (l < r) {
+        size_t m = (l + r) / 2;
+        if (records[m].getTimestamp() <= t) l = m + 1; else r = m;
+    }
+    if (l == 0) return std::nullopt;
+    return records[l - 1];
 }

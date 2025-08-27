@@ -10,6 +10,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o.d"
   "CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o"
   "CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o.d"
+  "CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o"
+  "CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o.d"
   "CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o"
   "CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o.d"
   "CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o"

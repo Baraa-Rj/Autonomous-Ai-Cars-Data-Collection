@@ -20,6 +20,7 @@ add_executable(QtOpenCVApp
     src/sync/ClockManager.cpp
     # Data
     src/data/Data.cpp
+    src/data/DataStore.cpp
     src/data/BrakeData.cpp
     src/data/SpeedData.cpp
     src/data/GpsData.cpp

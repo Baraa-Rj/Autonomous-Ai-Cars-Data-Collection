@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "data-collection-phase",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "QtOpenCVApp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QtOpenCVApp-Debug-8ae1c1b5dfa14c2c582b.json",
+					"name" : "QtOpenCVApp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "QtOpenCVApp_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QtOpenCVApp_autogen-Debug-cda9168a4b09e188156f.json",
+					"name" : "QtOpenCVApp_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "QtOpenCVApp_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QtOpenCVApp_autogen_timestamp_deps-Debug-7ada4ed4dc12a8d7244b.json",
+					"name" : "QtOpenCVApp_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/dark/Desktop/data-collection-phase/build",
+		"source" : "/home/dark/Desktop/data-collection-phase"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 8
+	}
+}

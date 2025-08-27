@@ -13,7 +13,9 @@
 
 class ReadersManager{
     public:
-    ReadersManager();
-    ~ReadersManager();
-    AbstractDataReader* createReader(DataType type, std::string path);
+    ReadersManager() = default;
+    ~ReadersManager() = default;
+    AbstractDataReader* createReader(DataType type, const std::string& path);
 };
+
+

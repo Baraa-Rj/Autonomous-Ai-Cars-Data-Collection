@@ -251,6 +251,30 @@ src/data/Data.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.s
 .PHONY : src/data/Data.cpp.s
 
+src/data/DataStore.o: src/data/DataStore.cpp.o
+.PHONY : src/data/DataStore.o
+
+# target to build an object file
+src/data/DataStore.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o
+.PHONY : src/data/DataStore.cpp.o
+
+src/data/DataStore.i: src/data/DataStore.cpp.i
+.PHONY : src/data/DataStore.i
+
+# target to preprocess a source file
+src/data/DataStore.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.i
+.PHONY : src/data/DataStore.cpp.i
+
+src/data/DataStore.s: src/data/DataStore.cpp.s
+.PHONY : src/data/DataStore.s
+
+# target to generate assembly for a file
+src/data/DataStore.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/QtOpenCVApp.dir/build.make CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.s
+.PHONY : src/data/DataStore.cpp.s
+
 src/data/GpsData.o: src/data/GpsData.cpp.o
 .PHONY : src/data/GpsData.o
 
@@ -706,6 +730,9 @@ help:
 	@echo "... src/data/Data.o"
 	@echo "... src/data/Data.i"
 	@echo "... src/data/Data.s"
+	@echo "... src/data/DataStore.o"
+	@echo "... src/data/DataStore.i"
+	@echo "... src/data/DataStore.s"
 	@echo "... src/data/GpsData.o"
 	@echo "... src/data/GpsData.i"
 	@echo "... src/data/GpsData.s"

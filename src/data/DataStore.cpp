@@ -1,9 +1,5 @@
 #include "data/DataStore.h"
 
-DataStore::DataStore() {}
-
-DataStore::~DataStore() {}
-
 void DataStore::addData(DataType type, Data data) {
-    dataItems[type] = data;
+    dataItems.insert_or_assign(type, data);
 }

@@ -14,6 +14,7 @@ std::list<Data> IMUReader::getDataAt(std::chrono::system_clock::time_point time)
 
 void IMUReader::loadData(const std::string& filePath) {
     items.clear();
+    records.clear();
     std::ifstream file(filePath);
     if (!file.is_open()) return;
     auto trim = [](std::string& s){
@@ -46,6 +47,18 @@ void IMUReader::loadData(const std::string& filePath) {
             std::vector<float> gyr{static_cast<float>(std::stod(gxStr)), static_cast<float>(std::stod(gyStr)), static_cast<float>(std::stod(gzStr))};
             IMUData data(tp, acc, gyr);
             items.push_back(data);
+            records.push_back(data);
         } catch (...) { continue; }
     }
+}
+
+std::optional<IMUData> IMUReader::latestAt(std::chrono::system_clock::time_point t) const {
+    if (records.empty()) return std::nullopt;
+    size_t l = 0, r = records.size();
+    while (l < r) {
+        size_t m = (l + r) / 2;
+        if (records[m].getTimestamp() <= t) l = m + 1; else r = m;
+    }
+    if (l == 0) return std::nullopt;
+    return records[l - 1];
 }

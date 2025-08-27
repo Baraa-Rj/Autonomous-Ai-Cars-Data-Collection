@@ -13,6 +13,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/dark/Desktop/data-collection-phase/Simulation.cpp" "CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/Simulation.cpp.o.d"
   "/home/dark/Desktop/data-collection-phase/src/data/BrakeData.cpp" "CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/src/data/BrakeData.cpp.o.d"
   "/home/dark/Desktop/data-collection-phase/src/data/Data.cpp" "CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/src/data/Data.cpp.o.d"
+  "/home/dark/Desktop/data-collection-phase/src/data/DataStore.cpp" "CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/src/data/DataStore.cpp.o.d"
   "/home/dark/Desktop/data-collection-phase/src/data/GpsData.cpp" "CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/src/data/GpsData.cpp.o.d"
   "/home/dark/Desktop/data-collection-phase/src/data/IMUData.cpp" "CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/src/data/IMUData.cpp.o.d"
   "/home/dark/Desktop/data-collection-phase/src/data/ImageData.cpp" "CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o" "gcc" "CMakeFiles/QtOpenCVApp.dir/src/data/ImageData.cpp.o.d"

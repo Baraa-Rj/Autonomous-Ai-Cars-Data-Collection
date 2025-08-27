@@ -10,6 +10,7 @@ enum class DataType{
     BACK_IMAGE,
     GPS,
     IMU,
+    SPEED,
     STEERING,
     BRAKE,
     THROTTLE
