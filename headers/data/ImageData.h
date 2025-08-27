@@ -19,6 +19,7 @@ public:
     void setPath(std::string path);
     void setPosition(CameraPosition position);
     cv::Mat loadImage();
+    DataType getType() const override;
 
 private:
     CameraPosition position;

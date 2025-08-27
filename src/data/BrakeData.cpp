@@ -1,4 +1,5 @@
 #include "data/BrakeData.h"
+#include "data/DataStore.h"
 
 BrakeData::BrakeData(std::chrono::system_clock::time_point timestamp, float pressure) : Data(timestamp), pressure(pressure) {}
 
@@ -10,4 +11,8 @@ float BrakeData::getPressure() const {
 
 void BrakeData::setPressure(float pressure) {
     this->pressure = pressure;
+}
+
+DataType BrakeData::getType() const {
+    return DataType::BRAKE;
 }

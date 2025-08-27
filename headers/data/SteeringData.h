@@ -13,4 +13,5 @@ public:
     float getAngle() const;
 
     void setAngle(float angle);
+    DataType getType() const override;
 };

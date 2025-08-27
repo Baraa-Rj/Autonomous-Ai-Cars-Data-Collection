@@ -17,4 +17,5 @@ public:
 
     void setAcceleration(const std::vector<float>& acceleration);
     void setGyroscope(const std::vector<float>& gyroscope);
+    DataType getType() const override;
 };

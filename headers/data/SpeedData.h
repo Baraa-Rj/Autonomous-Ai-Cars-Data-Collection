@@ -13,4 +13,5 @@ public:
     float getSpeed() const;
 
     void setSpeed(float speed);
+    DataType getType() const override;
 };

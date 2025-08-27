@@ -85,6 +85,10 @@ public:
     void setFps(int fps);
     int getFps() const;
 
+public:
+    void autoSetupFromSampleData();
+    void computeGlobalTimeline();
+
 private:
     void buildUi();
     void connectUi();
@@ -92,8 +96,6 @@ private:
     const CameraFrame* findFrame(const QVector<CameraFrame>& frames, std::chrono::system_clock::time_point t) const;
     void updateCameras(std::chrono::system_clock::time_point t);
     void updateSidebar(std::chrono::system_clock::time_point t);
-    void computeGlobalTimeline();
-    void autoSetupFromSampleData();
     static QImage matToQImage(const cv::Mat& mat);
     static void setImageOnLabel(QLabel* lbl, const QString& path);
 

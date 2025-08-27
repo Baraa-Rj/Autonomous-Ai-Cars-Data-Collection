@@ -12,4 +12,5 @@ public:
     float getPosition() const;
 
     void setPosition(float position);
+    DataType getType() const override;
 };

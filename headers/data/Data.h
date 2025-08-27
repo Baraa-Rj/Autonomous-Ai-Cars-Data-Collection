@@ -2,6 +2,8 @@
 
 #include <chrono>
 
+enum class DataType;
+
 class Data {
 protected:
     std::chrono::system_clock::time_point timestamp;
@@ -11,4 +13,5 @@ public:
     virtual ~Data();
 
     std::chrono::system_clock::time_point getTimestamp() const;
+    virtual DataType getType() const = 0;
 };

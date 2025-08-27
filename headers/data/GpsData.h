@@ -19,4 +19,5 @@ public:
     void setLatitude(float latitude);
     void setLongitude(float longitude);
     void setAltitude(float altitude);
+    DataType getType() const override;
 };

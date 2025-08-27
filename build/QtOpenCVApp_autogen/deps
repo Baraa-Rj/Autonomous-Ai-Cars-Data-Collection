@@ -5,6 +5,7 @@ QtOpenCVApp_autogen/timestamp: \
 	/home/dark/Desktop/data-collection-phase/build/CMakeFiles/4.1.0/CMakeCXXCompiler.cmake \
 	/home/dark/Desktop/data-collection-phase/build/CMakeFiles/4.1.0/CMakeSystem.cmake \
 	/home/dark/Desktop/data-collection-phase/build/QtOpenCVApp_autogen/moc_predefs.h \
+	/home/dark/Desktop/data-collection-phase/headers/Simulation.h \
 	/home/dark/Desktop/data-collection-phase/headers/data/BrakeData.h \
 	/home/dark/Desktop/data-collection-phase/headers/data/Data.h \
 	/home/dark/Desktop/data-collection-phase/headers/data/DataStore.h \
@@ -26,6 +27,7 @@ QtOpenCVApp_autogen/timestamp: \
 	/home/dark/Desktop/data-collection-phase/headers/readers/SteeringReader.h \
 	/home/dark/Desktop/data-collection-phase/headers/readers/ThrottleReader.h \
 	/home/dark/Desktop/data-collection-phase/headers/sync/ClockManager.h \
+	/home/dark/Desktop/data-collection-phase/src/Simulation.cpp \
 	/home/dark/Desktop/data-collection-phase/src/data/BrakeData.cpp \
 	/home/dark/Desktop/data-collection-phase/src/data/Data.cpp \
 	/home/dark/Desktop/data-collection-phase/src/data/DataStore.cpp \

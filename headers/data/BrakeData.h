@@ -14,4 +14,5 @@ public:
 
     void setPressure(float pressure);
     void print() const;
+    DataType getType() const override;
 };

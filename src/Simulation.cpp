@@ -1,5 +1,6 @@
 #include "Simulation.h"
 #include <QApplication>
+#include <QObject>
 #include <iostream>
 
 Simulation::Simulation() {

@@ -1,4 +1,5 @@
 #include "data/GpsData.h"
+#include "data/DataStore.h"
 
 GpsData::GpsData(std::chrono::system_clock::time_point timestamp, float latitude, float longitude, float altitude)
     : Data(timestamp), latitude(latitude), longitude(longitude), altitude(altitude) {}
@@ -27,4 +28,8 @@ void GpsData::setLongitude(float longitude) {
 
 void GpsData::setAltitude(float altitude) {
     this->altitude = altitude;
+}
+
+DataType GpsData::getType() const {
+    return DataType::GPS;
 }
