@@ -1,0 +1,43 @@
+# Build directory
+build/
+
+# IDE files
+.vscode/
+.qtcreator
+.user
+.pro.user*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Compiled Object files
+*.o
+*.obj
+*.so
+*.dll
+*.a
+*.lib
+
+# Qt MOC files
+moc_*.cpp
+moc_*.h
+
+# Debug/Release build directories  
+Debug/
+Release/
+MinSizeRel/
+RelWithDebInfo/
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+_deps/
