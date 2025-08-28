@@ -9,9 +9,9 @@
 #include <thread>
 #include <atomic>
 #include <QObject>
-#include <QThread>
-#include <QThreadPool>
 #include <shared_mutex>
+#include <condition_variable>
+#include <vector>
 #include "data/GPSData.h"
 #include "data/IMUData.h"
 #include "data/SpeedData.h"
@@ -20,14 +20,8 @@
 #include "data/SteeringData.h"
 #include "data/ImageData.h"
 
-class DataLoadingTask;
-class ImageLoadingTask;
-
 class DataManager : public QObject {
     Q_OBJECT
-
-    friend class DataLoadingTask;
-    friend class ImageLoadingTask;
 
 public:
     explicit DataManager(QObject* parent = nullptr);
@@ -63,17 +57,14 @@ private:
     SensorDataStore dataStore;
     ClockManager clockManager;
     
-    // Threading support
     mutable std::shared_mutex dataStoreMutex;
     mutable std::mutex clockManagerMutex;
     std::atomic<bool> isLoading{false};
     std::atomic<bool> cancelLoadingFlag{false};
-    QThreadPool* threadPool;
     
     bool loadCSVData(const std::string& filePath, SensorType type);
     bool loadImageData(const std::string& dirPath, const std::string& cameraName);
     
-    // Threaded loading functions
     void loadCSVDataAsync(const std::string& filePath, SensorType type, std::atomic<int>& completedTasks, int totalTasks);
     void loadImageDataAsync(const std::string& dirPath, const std::string& cameraName, std::atomic<int>& completedTasks, int totalTasks);
 };

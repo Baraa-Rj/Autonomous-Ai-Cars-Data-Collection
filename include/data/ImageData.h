@@ -18,46 +18,11 @@ public:
     ImageData(double ts, const std::string& path) 
         : Data(ts), filepath(path) {}
     
-    // Copy constructor
     ImageData(const ImageData& other)
         : Data(other.timestamp), filepath(other.filepath), image(other.image.clone())
     {
         loaded.store(other.loaded.load());
-        loading.store(false); // Don't copy loading state
-    }
-    
-    // Move constructor
-    ImageData(ImageData&& other) noexcept
-        : Data(other.timestamp), filepath(std::move(other.filepath)), 
-          image(std::move(other.image)), loadingFuture(std::move(other.loadingFuture))
-    {
-        loaded.store(other.loaded.exchange(false));
-        loading.store(other.loading.exchange(false));
-    }
-    
-    // Copy assignment
-    ImageData& operator=(const ImageData& other) {
-        if (this != &other) {
-            Data::timestamp = other.timestamp;
-            filepath = other.filepath;
-            image = other.image.clone();
-            loaded.store(other.loaded.load());
-            loading.store(false); // Don't copy loading state
-        }
-        return *this;
-    }
-    
-    // Move assignment
-    ImageData& operator=(ImageData&& other) noexcept {
-        if (this != &other) {
-            Data::timestamp = other.timestamp;
-            filepath = std::move(other.filepath);
-            image = std::move(other.image);
-            loadingFuture = std::move(other.loadingFuture);
-            loaded.store(other.loaded.exchange(false));
-            loading.store(other.loading.exchange(false));
-        }
-        return *this;
+        loading.store(false); 
     }
     
     std::string toString() const override;

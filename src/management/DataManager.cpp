@@ -6,51 +6,9 @@
 #include <future>
 #include <thread>
 #include <QApplication>
-#include <QRunnable>
-#include <QThreadPool>
-
-// Custom QRunnable for data loading tasks
-class DataLoadingTask : public QRunnable {
-public:
-    DataLoadingTask(DataManager* manager, const std::string& path, SensorType type, 
-                   std::atomic<int>& completed, int total)
-        : dataManager(manager), filePath(path), sensorType(type), 
-          completedTasks(completed), totalTasks(total) {}
-    
-    void run() override {
-        dataManager->loadCSVDataAsync(filePath, sensorType, completedTasks, totalTasks);
-    }
-    
-private:
-    DataManager* dataManager;
-    std::string filePath;
-    SensorType sensorType;
-    std::atomic<int>& completedTasks;
-    int totalTasks;
-};
-
-class ImageLoadingTask : public QRunnable {
-public:
-    ImageLoadingTask(DataManager* manager, const std::string& path, const std::string& camera,
-                    std::atomic<int>& completed, int total)
-        : dataManager(manager), dirPath(path), cameraName(camera),
-          completedTasks(completed), totalTasks(total) {}
-    
-    void run() override {
-        dataManager->loadImageDataAsync(dirPath, cameraName, completedTasks, totalTasks);
-    }
-    
-private:
-    DataManager* dataManager;
-    std::string dirPath;
-    std::string cameraName;
-    std::atomic<int>& completedTasks;
-    int totalTasks;
-};
 
 DataManager::DataManager(QObject* parent) 
-    : QObject(parent), threadPool(QThreadPool::globalInstance()) {
-    threadPool->setMaxThreadCount(std::thread::hardware_concurrency());
+    : QObject(parent) {
 }
 
 void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
@@ -71,44 +29,44 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
     // Use a separate thread to coordinate the loading process
     std::thread([this, dataDirectory]() {
         try {
-            // Total tasks: 6 CSV files + 4 image directories
             const int totalTasks = 10;
             std::atomic<int> completedTasks{0};
+            std::vector<std::thread> workers;
             
-            // Submit CSV loading tasks
-            std::vector<std::string> csvFiles = {
-                dataDirectory + "/gps.csv",
-                dataDirectory + "/imu.csv", 
-                dataDirectory + "/speed.csv",
-                dataDirectory + "/brake.csv",
-                dataDirectory + "/throttle.csv",
-                dataDirectory + "/steering.csv"
+            // CSV loading tasks
+            std::vector<std::pair<std::string, SensorType>> csvTasks = {
+                {dataDirectory + "/gps.csv", SensorType::GPS},
+                {dataDirectory + "/imu.csv", SensorType::IMU},
+                {dataDirectory + "/speed.csv", SensorType::SPEED},
+                {dataDirectory + "/brake.csv", SensorType::BRAKE},
+                {dataDirectory + "/throttle.csv", SensorType::THROTTLE},
+                {dataDirectory + "/steering.csv", SensorType::STEERING}
             };
             
-            std::vector<SensorType> sensorTypes = {
-                SensorType::GPS, SensorType::IMU, SensorType::SPEED,
-                SensorType::BRAKE, SensorType::THROTTLE, SensorType::STEERING
-            };
-            
-            // Submit CSV loading tasks to thread pool
-            for (size_t i = 0; i < csvFiles.size(); ++i) {
+            // Launch CSV loading threads
+            for (const auto& [filePath, sensorType] : csvTasks) {
                 if (cancelLoadingFlag.load()) break;
-                threadPool->start(new DataLoadingTask(this, csvFiles[i], sensorTypes[i], 
-                                                    completedTasks, totalTasks));
+                
+                workers.emplace_back([this, filePath, sensorType, &completedTasks, totalTasks]() {
+                    loadCSVDataAsync(filePath, sensorType, completedTasks, totalTasks);
+                });
             }
             
-            // Submit image loading tasks
-            std::vector<std::pair<std::string, std::string>> imageDirs = {
+            // Image loading tasks
+            std::vector<std::pair<std::string, std::string>> imageTasks = {
                 {dataDirectory + "/3d_images/front", "front"},
                 {dataDirectory + "/3d_images/back", "back"},
                 {dataDirectory + "/3d_images/left", "left"},
                 {dataDirectory + "/3d_images/right", "right"}
             };
             
-            for (const auto& [dirPath, cameraName] : imageDirs) {
+            // Launch image loading threads
+            for (const auto& [dirPath, cameraName] : imageTasks) {
                 if (cancelLoadingFlag.load()) break;
-                threadPool->start(new ImageLoadingTask(this, dirPath, cameraName,
-                                                     completedTasks, totalTasks));
+                
+                workers.emplace_back([this, dirPath, cameraName, &completedTasks, totalTasks]() {
+                    loadImageDataAsync(dirPath, cameraName, completedTasks, totalTasks);
+                });
             }
             
             // Monitor progress
@@ -122,8 +80,12 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
             }
             
-            // Wait for all tasks to complete
-            threadPool->waitForDone();
+            // Wait for all threads to complete
+            for (auto& worker : workers) {
+                if (worker.joinable()) {
+                    worker.join();
+                }
+            }
             
             if (!cancelLoadingFlag.load()) {
                 emit dataLoadingProgress(100);
