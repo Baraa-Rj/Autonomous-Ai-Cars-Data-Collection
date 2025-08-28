@@ -62,9 +62,9 @@ private:
     std::atomic<bool> isLoading{false};
     std::atomic<bool> cancelLoadingFlag{false};
     
-    bool loadCSVData(const std::string& filePath, SensorType type);
+    bool loadCSVData(const std::string& filePath, DataType type);
     bool loadImageData(const std::string& dirPath, const std::string& cameraName);
     
-    void loadCSVDataAsync(const std::string& filePath, SensorType type, std::atomic<int>& completedTasks, int totalTasks);
+    void loadCSVDataAsync(const std::string& filePath, DataType type, std::atomic<int>& completedTasks, int totalTasks);
     void loadImageDataAsync(const std::string& dirPath, const std::string& cameraName, std::atomic<int>& completedTasks, int totalTasks);
 };

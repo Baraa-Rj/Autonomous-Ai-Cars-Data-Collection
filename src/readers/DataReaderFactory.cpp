@@ -8,44 +8,44 @@
 #include "readers/ImageDataReader.h"
 #include <algorithm>
 
-std::unique_ptr<DataReader> DataReaderFactory::createReader(SensorType type) {
+std::unique_ptr<DataReader> DataReaderFactory::createReader(DataType type) {
     switch (type) {
-        case SensorType::GPS:
+        case DataType::GPS:
             return std::make_unique<GPSDataReader>();
-        case SensorType::IMU:
+        case DataType::IMU:
             return std::make_unique<IMUDataReader>();
-        case SensorType::SPEED:
+        case DataType::SPEED:
             return std::make_unique<SpeedDataReader>();
-        case SensorType::BRAKE:
+        case DataType::BRAKE:
             return std::make_unique<BrakeDataReader>();
-        case SensorType::THROTTLE:
+        case DataType::THROTTLE:
             return std::make_unique<ThrottleDataReader>();
-        case SensorType::STEERING:
+        case DataType::STEERING:
             return std::make_unique<SteeringDataReader>();
-        case SensorType::IMAGE:
+        case DataType::IMAGE:
             return std::make_unique<ImageDataReader>();
         default:
             return nullptr;
     }
 }
 
-SensorType DataReaderFactory::getSensorTypeFromFilename(const std::string& filename) {
+DataType DataReaderFactory::getDataTypeFromFilename(const std::string& filename) {
     std::string lowerFilename = filename;
     std::transform(lowerFilename.begin(), lowerFilename.end(), lowerFilename.begin(), ::tolower);
     
     if (lowerFilename.find("gps") != std::string::npos) {
-        return SensorType::GPS;
+        return DataType::GPS;
     } else if (lowerFilename.find("imu") != std::string::npos) {
-        return SensorType::IMU;
+        return DataType::IMU;
     } else if (lowerFilename.find("speed") != std::string::npos) {
-        return SensorType::SPEED;
+        return DataType::SPEED;
     } else if (lowerFilename.find("brake") != std::string::npos) {
-        return SensorType::BRAKE;
+        return DataType::BRAKE;
     } else if (lowerFilename.find("throttle") != std::string::npos) {
-        return SensorType::THROTTLE;
+        return DataType::THROTTLE;
     } else if (lowerFilename.find("steering") != std::string::npos) {
-        return SensorType::STEERING;
+        return DataType::STEERING;
     } else {
-        return SensorType::IMAGE; // Default for directories
+        return DataType::IMAGE; // Default for directories
     }
 }

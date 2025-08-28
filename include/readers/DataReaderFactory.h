@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-enum class SensorType {
+enum class DataType {
     GPS,
     IMU, 
     SPEED,
@@ -15,6 +15,6 @@ enum class SensorType {
 
 class DataReaderFactory {
 public:
-    static std::unique_ptr<DataReader> createReader(SensorType type);
-    static SensorType getSensorTypeFromFilename(const std::string& filename);
+    static std::unique_ptr<DataReader> createReader(DataType type);
+    static DataType getDataTypeFromFilename(const std::string& filename);
 };

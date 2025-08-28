@@ -32,13 +32,13 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
             std::atomic<int> completedTasks{0};
             std::vector<std::thread> workers;
             
-            std::vector<std::pair<std::string, SensorType>> csvTasks = {
-                {dataDirectory + "/gps.csv", SensorType::GPS},
-                {dataDirectory + "/imu.csv", SensorType::IMU},
-                {dataDirectory + "/speed.csv", SensorType::SPEED},
-                {dataDirectory + "/brake.csv", SensorType::BRAKE},
-                {dataDirectory + "/throttle.csv", SensorType::THROTTLE},
-                {dataDirectory + "/steering.csv", SensorType::STEERING}
+            std::vector<std::pair<std::string, DataType>> csvTasks = {
+                {dataDirectory + "/gps.csv", DataType::GPS},
+                {dataDirectory + "/imu.csv", DataType::IMU},
+                {dataDirectory + "/speed.csv", DataType::SPEED},
+                {dataDirectory + "/brake.csv", DataType::BRAKE},
+                {dataDirectory + "/throttle.csv", DataType::THROTTLE},
+                {dataDirectory + "/steering.csv", DataType::STEERING}
             };
             
             for (const auto& [filePath, sensorType] : csvTasks) {
@@ -106,23 +106,23 @@ bool DataManager::loadAllSensorData(const std::string& dataDirectory) {
     
     try {
         emit dataLoadingProgress(10);
-        if (!loadCSVData(dataDirectory + "/gps.csv", SensorType::GPS)) return false;
+        if (!loadCSVData(dataDirectory + "/gps.csv", DataType::GPS)) return false;
         
         emit dataLoadingProgress(20);
-        if (!loadCSVData(dataDirectory + "/imu.csv", SensorType::IMU)) return false;
-        
+        if (!loadCSVData(dataDirectory + "/imu.csv", DataType::IMU)) return false;
+
         emit dataLoadingProgress(30);
-        if (!loadCSVData(dataDirectory + "/speed.csv", SensorType::SPEED)) return false;
-        
+        if (!loadCSVData(dataDirectory + "/speed.csv", DataType::SPEED)) return false;
+
         emit dataLoadingProgress(40);
-        if (!loadCSVData(dataDirectory + "/brake.csv", SensorType::BRAKE)) return false;
+        if (!loadCSVData(dataDirectory + "/brake.csv", DataType::BRAKE)) return false;
         
         emit dataLoadingProgress(50);
-        if (!loadCSVData(dataDirectory + "/throttle.csv", SensorType::THROTTLE)) return false;
-        
+        if (!loadCSVData(dataDirectory + "/throttle.csv", DataType::THROTTLE)) return false;
+
         emit dataLoadingProgress(60);
-        if (!loadCSVData(dataDirectory + "/steering.csv", SensorType::STEERING)) return false;
-        
+        if (!loadCSVData(dataDirectory + "/steering.csv", DataType::STEERING)) return false;
+
         emit dataLoadingProgress(70);
         if (!loadImageData(dataDirectory + "/3d_images/front", "front")) return false;
         
@@ -147,7 +147,7 @@ bool DataManager::loadAllSensorData(const std::string& dataDirectory) {
     }
 }
 
-bool DataManager::loadCSVData(const std::string& filePath, SensorType type) {
+bool DataManager::loadCSVData(const std::string& filePath, DataType type) {
     if (!std::filesystem::exists(filePath)) {
         std::cout << "Warning: File not found: " << filePath << std::endl;
         return true; 
@@ -163,7 +163,7 @@ bool DataManager::loadCSVData(const std::string& filePath, SensorType type) {
         auto rawData = reader->readCSV(filePath);
         
         switch (type) {
-            case SensorType::GPS:
+            case DataType::GPS:
                 for (auto& data : rawData) {
                     auto gpsData = dynamic_cast<GPSData*>(data.get());
                     if (gpsData) {
@@ -172,7 +172,7 @@ bool DataManager::loadCSVData(const std::string& filePath, SensorType type) {
                     }
                 }
                 break;
-            case SensorType::IMU:
+            case DataType::IMU:
                 for (auto& data : rawData) {
                     auto imuData = dynamic_cast<IMUData*>(data.get());
                     if (imuData) {
@@ -181,7 +181,7 @@ bool DataManager::loadCSVData(const std::string& filePath, SensorType type) {
                     }
                 }
                 break;
-            case SensorType::SPEED:
+            case DataType::SPEED:
                 for (auto& data : rawData) {
                     auto speedData = dynamic_cast<SpeedData*>(data.get());
                     if (speedData) {
@@ -190,7 +190,7 @@ bool DataManager::loadCSVData(const std::string& filePath, SensorType type) {
                     }
                 }
                 break;
-            case SensorType::BRAKE:
+            case DataType::BRAKE:
                 for (auto& data : rawData) {
                     auto brakeData = dynamic_cast<BrakeData*>(data.get());
                     if (brakeData) {
@@ -199,7 +199,7 @@ bool DataManager::loadCSVData(const std::string& filePath, SensorType type) {
                     }
                 }
                 break;
-            case SensorType::THROTTLE:
+            case DataType::THROTTLE:
                 for (auto& data : rawData) {
                     auto throttleData = dynamic_cast<ThrottleData*>(data.get());
                     if (throttleData) {
@@ -208,7 +208,7 @@ bool DataManager::loadCSVData(const std::string& filePath, SensorType type) {
                     }
                 }
                 break;
-            case SensorType::STEERING:
+            case DataType::STEERING:
                 for (auto& data : rawData) {
                     auto steeringData = dynamic_cast<SteeringData*>(data.get());
                     if (steeringData) {
@@ -351,7 +351,7 @@ ImageData* DataManager::getCurrentRightImage(double timestamp) const {
 }
 
 
-void DataManager::loadCSVDataAsync(const std::string& filePath, SensorType type, 
+void DataManager::loadCSVDataAsync(const std::string& filePath, DataType type, 
                                    std::atomic<int>& completedTasks, int totalTasks) {
     if (cancelLoadingFlag.load()) {
         completedTasks.fetch_add(1);
@@ -377,7 +377,7 @@ void DataManager::loadCSVDataAsync(const std::string& filePath, SensorType type,
             std::unique_lock<std::shared_mutex> lock(dataStoreMutex);
             
             switch (type) {
-                case SensorType::GPS:
+                case DataType::GPS:
                     for (auto& data : rawData) {
                         if (auto gpsData = dynamic_cast<GPSData*>(data.get())) {
                             {
@@ -388,7 +388,7 @@ void DataManager::loadCSVDataAsync(const std::string& filePath, SensorType type,
                         }
                     }
                     break;
-                case SensorType::IMU:
+                case DataType::IMU:
                     for (auto& data : rawData) {
                         if (auto imuData = dynamic_cast<IMUData*>(data.get())) {
                             {
@@ -399,7 +399,7 @@ void DataManager::loadCSVDataAsync(const std::string& filePath, SensorType type,
                         }
                     }
                     break;
-                case SensorType::SPEED:
+                case DataType::SPEED:
                     for (auto& data : rawData) {
                         if (auto speedData = dynamic_cast<SpeedData*>(data.get())) {
                             {
@@ -410,7 +410,7 @@ void DataManager::loadCSVDataAsync(const std::string& filePath, SensorType type,
                         }
                     }
                     break;
-                case SensorType::BRAKE:
+                case DataType::BRAKE:
                     for (auto& data : rawData) {
                         if (auto brakeData = dynamic_cast<BrakeData*>(data.get())) {
                             {
@@ -421,7 +421,7 @@ void DataManager::loadCSVDataAsync(const std::string& filePath, SensorType type,
                         }
                     }
                     break;
-                case SensorType::THROTTLE:
+                case DataType::THROTTLE:
                     for (auto& data : rawData) {
                         if (auto throttleData = dynamic_cast<ThrottleData*>(data.get())) {
                             {
@@ -432,7 +432,7 @@ void DataManager::loadCSVDataAsync(const std::string& filePath, SensorType type,
                         }
                     }
                     break;
-                case SensorType::STEERING:
+                case DataType::STEERING:
                     for (auto& data : rawData) {
                         if (auto steeringData = dynamic_cast<SteeringData*>(data.get())) {
                             {
