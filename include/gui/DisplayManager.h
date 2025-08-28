@@ -22,7 +22,6 @@ public:
 
 private slots:
     void loadData();
-    void cancelLoading();
     void onDataLoaded();
     void onDataLoadingProgress(int percentage);
     void onDataLoadingError(const QString& error);
@@ -66,7 +65,6 @@ private:
     QGroupBox* controlPanel;
     QHBoxLayout* controlLayout;
     QPushButton* loadButton;
-    QPushButton* cancelButton;
     QPushButton* playPauseButton;
     QSlider* timeSlider;
     QLabel* timeLabel;

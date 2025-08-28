@@ -141,10 +141,6 @@ void DisplayManager::setupControlPanel() {
     loadButton->setMaximumWidth(100);
     connect(loadButton, &QPushButton::clicked, this, &DisplayManager::loadData);
     
-    cancelButton = new QPushButton("Cancel");
-    cancelButton->setMaximumWidth(80);
-    cancelButton->setEnabled(false);
-    connect(cancelButton, &QPushButton::clicked, this, &DisplayManager::cancelLoading);
     
     playPauseButton = new QPushButton("Play");
     playPauseButton->setMaximumWidth(80);
@@ -164,7 +160,6 @@ void DisplayManager::setupControlPanel() {
     progressBar->setMaximumHeight(20);
     
     controlLayout->addWidget(loadButton);
-    controlLayout->addWidget(cancelButton);
     controlLayout->addWidget(playPauseButton);
     controlLayout->addWidget(timeSlider, 1);
     controlLayout->addWidget(timeLabel);
@@ -179,24 +174,15 @@ void DisplayManager::loadData() {
     if (dataDir.isEmpty()) return;
     
     loadButton->setEnabled(false);
-    cancelButton->setEnabled(true);
     progressBar->setVisible(true);
     progressBar->setValue(0);
     
     dataManager->loadAllSensorDataAsync(dataDir.toStdString());
 }
 
-void DisplayManager::cancelLoading() {
-    dataManager->cancelLoading();
-    loadButton->setEnabled(true);
-    cancelButton->setEnabled(false);
-    progressBar->setVisible(false);
-    QMessageBox::information(this, "Cancelled", "Data loading was cancelled.");
-}
 
 void DisplayManager::onDataLoaded() {
     loadButton->setEnabled(true);
-    cancelButton->setEnabled(false);
     playPauseButton->setEnabled(true);
     timeSlider->setEnabled(true);
     progressBar->setVisible(false);
@@ -224,7 +210,6 @@ void DisplayManager::onDataLoadingProgress(int percentage) {
 
 void DisplayManager::onDataLoadingError(const QString& error) {
     loadButton->setEnabled(true);
-    cancelButton->setEnabled(false);
     progressBar->setVisible(false);
     QMessageBox::critical(this, "Error", "Failed to load data:\n" + error);
 }

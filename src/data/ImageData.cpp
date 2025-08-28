@@ -28,10 +28,10 @@ void ImageData::loadImageAsync() {
     if (loaded.load() || loading.load()) return;
     
     loading.store(true);
-    loadingFuture = std::async(std::launch::async, [this]() {
+    std::thread([this]() {
         loadImage();
         loading.store(false);
-    });
+    }).detach();
 }
 
 void ImageData::releaseImage() {

@@ -2,12 +2,11 @@
 #include "core/Data.h"
 #include <opencv2/opencv.hpp>
 #include <mutex>
-#include <future>
+#include <atomic>
 
 class ImageData : public Data {
 private:
     mutable std::mutex imageMutex;
-    std::future<void> loadingFuture;
     
 public:
     std::string filepath;
