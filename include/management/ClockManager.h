@@ -48,19 +48,18 @@ private:
 template<typename T>
 T* ClockManager::findClosestData(const std::vector<T>& dataVector) const {
     if (dataVector.empty()) return nullptr;
-
+    
     double currentTs = getCurrentTimestamp();
     
-    const T* closestData = nullptr;
-    double minDifference = std::numeric_limits<double>::max();
+    auto it = std::lower_bound(dataVector.begin(), dataVector.end(), currentTs,
+        [](const T& data, double timestamp) {
+            return data.timestamp < timestamp;
+        });
     
-    for (const auto& data : dataVector) {
-        double difference = std::abs(data.timestamp - currentTs);
-        if (difference < minDifference) {
-            minDifference = difference;
-            closestData = &data;
-        }
+    if (it == dataVector.begin()) {
+        return const_cast<T*>(&(*it));
     }
     
-    return const_cast<T*>(closestData);
+    --it;
+    return const_cast<T*>(&(*it));
 }
