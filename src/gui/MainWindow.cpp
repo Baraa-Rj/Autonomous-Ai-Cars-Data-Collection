@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(dataManager.get(), &DataManager::dataLoadingError, this, &MainWindow::onDataLoadingError);
     
     connect(playbackTimer.get(), &QTimer::timeout, this, &MainWindow::updateDisplay);
-    playbackTimer->setInterval(50);
+    playbackTimer->setInterval(33);
     
     setWindowTitle("Car Status Visualization");
     setMinimumSize(1000, 600);
@@ -321,7 +321,7 @@ void MainWindow::updateImageDisplays(double timestamp) {
     auto rightImg = dataManager->getCurrentRightImage(timestamp);
     
     if (frontImg && !frontImg->isLoaded() && !frontImg->isLoading()) {
-        frontImg->loadImageAsync();
+        frontImg->loadImageAsync();   
     }
     if (backImg && !backImg->isLoaded() && !backImg->isLoading()) {
         backImg->loadImageAsync();

@@ -26,14 +26,12 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
     cancelLoadingFlag.store(false);
     clearData();
     
-    // Use a separate thread to coordinate the loading process
     std::thread([this, dataDirectory]() {
         try {
             const int totalTasks = 10;
             std::atomic<int> completedTasks{0};
             std::vector<std::thread> workers;
             
-            // CSV loading tasks
             std::vector<std::pair<std::string, SensorType>> csvTasks = {
                 {dataDirectory + "/gps.csv", SensorType::GPS},
                 {dataDirectory + "/imu.csv", SensorType::IMU},
@@ -43,7 +41,6 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
                 {dataDirectory + "/steering.csv", SensorType::STEERING}
             };
             
-            // Launch CSV loading threads
             for (const auto& [filePath, sensorType] : csvTasks) {
                 if (cancelLoadingFlag.load()) break;
                 
@@ -52,7 +49,6 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
                 });
             }
             
-            // Image loading tasks
             std::vector<std::pair<std::string, std::string>> imageTasks = {
                 {dataDirectory + "/3d_images/front", "front"},
                 {dataDirectory + "/3d_images/back", "back"},
@@ -60,7 +56,6 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
                 {dataDirectory + "/3d_images/right", "right"}
             };
             
-            // Launch image loading threads
             for (const auto& [dirPath, cameraName] : imageTasks) {
                 if (cancelLoadingFlag.load()) break;
                 
@@ -69,7 +64,6 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
                 });
             }
             
-            // Monitor progress
             int lastProgress = 0;
             while (completedTasks.load() < totalTasks && !cancelLoadingFlag.load()) {
                 int currentProgress = (completedTasks.load() * 100) / totalTasks;
@@ -80,7 +74,6 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
             }
             
-            // Wait for all threads to complete
             for (auto& worker : workers) {
                 if (worker.joinable()) {
                     worker.join();
@@ -112,7 +105,6 @@ bool DataManager::loadAllSensorData(const std::string& dataDirectory) {
     clearData();
     
     try {
-        // Load CSV files
         emit dataLoadingProgress(10);
         if (!loadCSVData(dataDirectory + "/gps.csv", SensorType::GPS)) return false;
         
@@ -131,7 +123,6 @@ bool DataManager::loadAllSensorData(const std::string& dataDirectory) {
         emit dataLoadingProgress(60);
         if (!loadCSVData(dataDirectory + "/steering.csv", SensorType::STEERING)) return false;
         
-        // Load image data
         emit dataLoadingProgress(70);
         if (!loadImageData(dataDirectory + "/3d_images/front", "front")) return false;
         
@@ -159,7 +150,7 @@ bool DataManager::loadAllSensorData(const std::string& dataDirectory) {
 bool DataManager::loadCSVData(const std::string& filePath, SensorType type) {
     if (!std::filesystem::exists(filePath)) {
         std::cout << "Warning: File not found: " << filePath << std::endl;
-        return true; // Continue loading other files
+        return true; 
     }
     
     auto reader = DataReaderFactory::createReader(type);
@@ -242,7 +233,7 @@ bool DataManager::loadCSVData(const std::string& filePath, SensorType type) {
 bool DataManager::loadImageData(const std::string& dirPath, const std::string& cameraName) {
     if (!std::filesystem::exists(dirPath)) {
         std::cout << "Warning: Image directory not found: " << dirPath << std::endl;
-        return true; // Continue loading other directories
+        return true; 
     }
     
     auto imageReader = std::make_unique<ImageDataReader>();
@@ -250,12 +241,12 @@ bool DataManager::loadImageData(const std::string& dirPath, const std::string& c
     try {
         auto rawData = imageReader->readFromDirectory(dirPath);
         std::cout << "Loading " << rawData.size() << " images from " << cameraName << " camera" << std::endl;
-        
-        // Store image metadata only (lazy loading - images loaded on demand)
         if (cameraName == "front") {
             for (auto& data : rawData) {
                 auto imageData = dynamic_cast<ImageData*>(data.get());
+                std::cout << "Loading front image at timestamp: " << imageData << std::endl;
                 if (imageData) {
+                    std::cout << "Loading front image at timestamp: " << imageData->timestamp << std::endl;
                     clockManager.updateRange(imageData->timestamp);
                     dataStore.front_images.emplace_back(*imageData);
                 }
@@ -286,7 +277,7 @@ bool DataManager::loadImageData(const std::string& dirPath, const std::string& c
             }
         }
         
-        QApplication::processEvents(); // Keep UI responsive
+        QApplication::processEvents(); 
         return true;
         
     } catch (const std::exception& e) {
@@ -308,56 +299,55 @@ void DataManager::clearData() {
 }
 
 
-// Getter implementations - now using ClockManager for data searching
 
 GPSData* DataManager::getCurrentGPS(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.gps_data, timestamp);
+    return clockManager.findClosestData(dataStore.gps_data);
 }
 
 IMUData* DataManager::getCurrentIMU(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.imu_data, timestamp);
+    return clockManager.findClosestData(dataStore.imu_data);
 }
 
 SpeedData* DataManager::getCurrentSpeed(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.speed_data, timestamp);
+    return clockManager.findClosestData(dataStore.speed_data);
 }
 
 BrakeData* DataManager::getCurrentBrake(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.brake_data, timestamp);
+    return clockManager.findClosestData(dataStore.brake_data);
 }
 
 ThrottleData* DataManager::getCurrentThrottle(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.throttle_data, timestamp);
+    return clockManager.findClosestData(dataStore.throttle_data);
 }
 
 SteeringData* DataManager::getCurrentSteering(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.steering_data, timestamp);
+    return clockManager.findClosestData(dataStore.steering_data);
 }
 
 ImageData* DataManager::getCurrentFrontImage(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.front_images, timestamp);
+    return clockManager.findClosestData(dataStore.front_images);
 }
 
 ImageData* DataManager::getCurrentBackImage(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.back_images, timestamp);
+    return clockManager.findClosestData(dataStore.back_images   );
 }
 
 ImageData* DataManager::getCurrentLeftImage(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.left_images, timestamp);
+    return clockManager.findClosestData(dataStore.left_images);
 }
 
 ImageData* DataManager::getCurrentRightImage(double timestamp) const {
     std::shared_lock<std::shared_mutex> lock(dataStoreMutex);
-    return clockManager.findClosestData(dataStore.right_images, timestamp);
+    return clockManager.findClosestData(dataStore.right_images);
 }
 
 
@@ -383,9 +373,7 @@ void DataManager::loadCSVDataAsync(const std::string& filePath, SensorType type,
         }
         
         auto rawData = reader->readCSV(filePath);
-        
-        // Thread-safe data storage
-        {
+                {
             std::unique_lock<std::shared_mutex> lock(dataStoreMutex);
             
             switch (type) {
@@ -487,7 +475,6 @@ void DataManager::loadImageDataAsync(const std::string& dirPath, const std::stri
         std::cout << "Loading " << rawData.size() << " images from " << cameraName 
                   << " camera in parallel" << std::endl;
         
-        // Thread-safe image data storage
         {
             std::unique_lock<std::shared_mutex> lock(dataStoreMutex);
             

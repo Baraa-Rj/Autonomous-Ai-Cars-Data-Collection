@@ -69,7 +69,7 @@ double ClockManager::getProgressPercentage() const {
 void ClockManager::setProgressPercentage(double percentage) {
     if (!hasValidRange()) return;
     
-    percentage = std::max(0.0, std::min(1.0, percentage)); // Clamp to [0,1]
+    percentage = std::max(0.0, std::min(1.0, percentage)); 
     double targetTime = minTimestamp + (maxTimestamp - minTimestamp) * percentage;
     setCurrentTimestamp(targetTime);
 }
