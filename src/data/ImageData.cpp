@@ -1,22 +1,43 @@
 #include "data/ImageData.h"
 #include <sstream>
+#include <thread>
+#include <iostream>
 
 std::string ImageData::toString() const {
     std::ostringstream oss;
-    oss << "Image: " << filepath << " (loaded: " << (loaded ? "yes" : "no") << ")";
+    oss << "Image: " << filepath << " (loaded: " << (loaded.load() ? "yes" : "no") << ")";
     return oss.str();
 }
 
 void ImageData::loadImage() {
-    if (!loaded) {
-        image = cv::imread(filepath);
-        loaded = !image.empty();
+    if (loaded.load()) return;
+    
+    std::lock_guard<std::mutex> lock(imageMutex);
+    if (loaded.load()) return; 
+    
+    cv::Mat tempImage = cv::imread(filepath);
+    if (!tempImage.empty()) {
+        image = std::move(tempImage);
+        loaded.store(true);
+    } else {
+        std::cerr << "Failed to load image: " << filepath << std::endl;
     }
 }
 
+void ImageData::loadImageAsync() {
+    if (loaded.load() || loading.load()) return;
+    
+    loading.store(true);
+    loadingFuture = std::async(std::launch::async, [this]() {
+        loadImage();
+        loading.store(false);
+    });
+}
+
 void ImageData::releaseImage() {
-    if (loaded) {
+    std::lock_guard<std::mutex> lock(imageMutex);
+    if (loaded.load()) {
         image.release();
-        loaded = false;
+        loaded.store(false);
     }
 }

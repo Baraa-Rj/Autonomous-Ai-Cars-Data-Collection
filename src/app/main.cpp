@@ -5,12 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    
-    // Set application properties
-    app.setApplicationName("Car Status Visualization");
-    app.setApplicationVersion("1.0");
-    app.setOrganizationName("Vehicle Data Systems");
-    
+    app.setApplicationName("Car Visualization");    
     try {
         MainWindow window;
         window.show();

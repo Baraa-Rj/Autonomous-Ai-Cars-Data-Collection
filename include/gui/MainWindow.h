@@ -10,6 +10,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtCore/QTimer>
 #include <opencv2/opencv.hpp>
+#include <memory>
 #include "management/DataManager.h"
 
 class MainWindow : public QMainWindow {
@@ -21,6 +22,7 @@ public:
 
 private slots:
     void loadData();
+    void cancelLoading();
     void onDataLoaded();
     void onDataLoadingProgress(int percentage);
     void onDataLoadingError(const QString& error);
@@ -64,14 +66,15 @@ private:
     QGroupBox* controlPanel;
     QHBoxLayout* controlLayout;
     QPushButton* loadButton;
+    QPushButton* cancelButton;
     QPushButton* playPauseButton;
     QSlider* timeSlider;
     QLabel* timeLabel;
     QProgressBar* progressBar;
     
     // Core components
-    DataManager* dataManager;
-    QTimer* playbackTimer;
+    std::unique_ptr<DataManager> dataManager;
+    std::unique_ptr<QTimer> playbackTimer;
     
     // Playback state
     bool isPlaying;

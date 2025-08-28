@@ -16,7 +16,6 @@ set(SOURCES
     
     # Data Management
     src/management/DataManager.cpp
-    src/management/SensorDataStore.cpp
     src/management/ClockManager.cpp
     
     # GUI
@@ -47,10 +46,9 @@ set(HEADERS
     # Core
     include/core/Data.h
     
-    # Data Management
     include/management/DataManager.h
-    include/management/SensorDataStore.h
     include/management/ClockManager.h
+    include/management/SensorDataStore.h
     
     # GUI
     include/gui/MainWindow.h

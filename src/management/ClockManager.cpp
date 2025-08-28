@@ -6,13 +6,10 @@ ClockManager::ClockManager()
     : minTimestamp(0.0), maxTimestamp(0.0), currentTimestamp(0.0) {
 }
 
-// Range Management
 void ClockManager::updateRange(double timestamp) {
     if (minTimestamp == 0.0 && maxTimestamp == 0.0) {
-        // First timestamp - initialize both
         minTimestamp = maxTimestamp = timestamp;
     } else {
-        // Update min/max efficiently
         if (timestamp < minTimestamp) minTimestamp = timestamp;
         if (timestamp > maxTimestamp) maxTimestamp = timestamp;
     }
@@ -32,7 +29,6 @@ bool ClockManager::hasValidRange() const {
     return maxTimestamp > minTimestamp;
 }
 
-// Current Position Management
 void ClockManager::setCurrentTimestamp(double timestamp) {
     currentTimestamp = clampToRange(timestamp);
 }
@@ -49,7 +45,6 @@ double ClockManager::clampToRange(double timestamp) const {
     return timestamp;
 }
 
-// Timeline/Slider Conversion
 void ClockManager::setProgressFromSlider(int sliderValue) {
     if (!hasValidRange()) return;
     
@@ -79,7 +74,6 @@ void ClockManager::setProgressPercentage(double percentage) {
     setCurrentTimestamp(targetTime);
 }
 
-// Utility Functions
 bool ClockManager::isValidTimestamp(double timestamp) const {
     return hasValidRange() && timestamp >= minTimestamp && timestamp <= maxTimestamp;
 }
@@ -99,7 +93,6 @@ std::string ClockManager::formatDuration() const {
     return formatTime(totalSeconds);
 }
 
-// Private Helper Functions
 std::string ClockManager::formatTime(int totalSeconds) const {
     int hours = totalSeconds / 3600;
     int minutes = (totalSeconds % 3600) / 60;
