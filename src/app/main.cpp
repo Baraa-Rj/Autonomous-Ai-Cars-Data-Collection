@@ -1,5 +1,5 @@
 #include <QtWidgets/QApplication>
-#include "gui/MainWindow.h"
+#include "gui/DisplayManager.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setApplicationName("Car Visualization");    
     try {
-        MainWindow window;
+        DisplayManager window;
         window.show();
         
         return app.exec();

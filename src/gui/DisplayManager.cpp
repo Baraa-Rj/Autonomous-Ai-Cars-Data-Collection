@@ -1,4 +1,4 @@
-#include "gui/MainWindow.h"
+#include "gui/DisplayManager.h"
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -7,7 +7,7 @@
 #include <opencv2/imgproc.hpp>
 #include <memory>
 
-MainWindow::MainWindow(QWidget *parent)
+DisplayManager::DisplayManager(QWidget *parent)
     : QMainWindow(parent)
     , centralWidget(nullptr)
     , dataManager(std::make_unique<DataManager>(this))
@@ -17,11 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     setupUI();
     
-    connect(dataManager.get(), &DataManager::dataLoaded, this, &MainWindow::onDataLoaded);
-    connect(dataManager.get(), &DataManager::dataLoadingProgress, this, &MainWindow::onDataLoadingProgress);
-    connect(dataManager.get(), &DataManager::dataLoadingError, this, &MainWindow::onDataLoadingError);
+    connect(dataManager.get(), &DataManager::dataLoaded, this, &DisplayManager::onDataLoaded);
+    connect(dataManager.get(), &DataManager::dataLoadingProgress, this, &DisplayManager::onDataLoadingProgress);
+    connect(dataManager.get(), &DataManager::dataLoadingError, this, &DisplayManager::onDataLoadingError);
     
-    connect(playbackTimer.get(), &QTimer::timeout, this, &MainWindow::updateDisplay);
+    connect(playbackTimer.get(), &QTimer::timeout, this, &DisplayManager::updateDisplay);
     playbackTimer->setInterval(33);
     
     setWindowTitle("Car Status Visualization");
@@ -29,10 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
     resize(1200, 700);
 }
 
-MainWindow::~MainWindow() {
+DisplayManager::~DisplayManager() {
 }
 
-void MainWindow::setupUI() {
+void DisplayManager::setupUI() {
     centralWidget = new QWidget;
     setCentralWidget(centralWidget);
     
@@ -54,7 +54,7 @@ void MainWindow::setupUI() {
     contentLayout->setSpacing(10);
 }
 
-void MainWindow::setupSensorPanel() {
+void DisplayManager::setupSensorPanel() {
     sensorPanel = new QGroupBox("Sensor Data");
     sensorLayout = new QVBoxLayout(sensorPanel);
     
@@ -93,7 +93,7 @@ void MainWindow::setupSensorPanel() {
     sensorLayout->addStretch();
 }
 
-void MainWindow::setupImagePanel() {
+void DisplayManager::setupImagePanel() {
     imagePanel = new QGroupBox("Camera Feeds");
     imageLayout = new QGridLayout(imagePanel);
     
@@ -131,7 +131,7 @@ void MainWindow::setupImagePanel() {
     imageLayout->addWidget(backImageLabel, 1, 1);
 }
 
-void MainWindow::setupControlPanel() {
+void DisplayManager::setupControlPanel() {
     controlPanel = new QGroupBox("Controls");
     controlPanel->setMaximumHeight(80);
     controlLayout = new QHBoxLayout(controlPanel);
@@ -139,21 +139,21 @@ void MainWindow::setupControlPanel() {
     
     loadButton = new QPushButton("Load Data");
     loadButton->setMaximumWidth(100);
-    connect(loadButton, &QPushButton::clicked, this, &MainWindow::loadData);
+    connect(loadButton, &QPushButton::clicked, this, &DisplayManager::loadData);
     
     cancelButton = new QPushButton("Cancel");
     cancelButton->setMaximumWidth(80);
     cancelButton->setEnabled(false);
-    connect(cancelButton, &QPushButton::clicked, this, &MainWindow::cancelLoading);
+    connect(cancelButton, &QPushButton::clicked, this, &DisplayManager::cancelLoading);
     
     playPauseButton = new QPushButton("Play");
     playPauseButton->setMaximumWidth(80);
     playPauseButton->setEnabled(false);
-    connect(playPauseButton, &QPushButton::clicked, this, &MainWindow::playPause);
+    connect(playPauseButton, &QPushButton::clicked, this, &DisplayManager::playPause);
     
     timeSlider = new QSlider(Qt::Horizontal);
     timeSlider->setEnabled(false);
-    connect(timeSlider, &QSlider::valueChanged, this, &MainWindow::onTimeSliderChanged);
+    connect(timeSlider, &QSlider::valueChanged, this, &DisplayManager::onTimeSliderChanged);
     
     timeLabel = new QLabel("00:00 / 00:00");
     timeLabel->setMinimumWidth(80);
@@ -171,7 +171,7 @@ void MainWindow::setupControlPanel() {
     controlLayout->addWidget(progressBar);
 }
 
-void MainWindow::loadData() {
+void DisplayManager::loadData() {
     QString dataDir = QFileDialog::getExistingDirectory(this, 
                                                        "Select Data Directory", 
                                                        QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
@@ -186,7 +186,7 @@ void MainWindow::loadData() {
     dataManager->loadAllSensorDataAsync(dataDir.toStdString());
 }
 
-void MainWindow::cancelLoading() {
+void DisplayManager::cancelLoading() {
     dataManager->cancelLoading();
     loadButton->setEnabled(true);
     cancelButton->setEnabled(false);
@@ -194,7 +194,7 @@ void MainWindow::cancelLoading() {
     QMessageBox::information(this, "Cancelled", "Data loading was cancelled.");
 }
 
-void MainWindow::onDataLoaded() {
+void DisplayManager::onDataLoaded() {
     loadButton->setEnabled(true);
     cancelButton->setEnabled(false);
     playPauseButton->setEnabled(true);
@@ -218,18 +218,18 @@ void MainWindow::onDataLoaded() {
     QMessageBox::information(this, "Success", "Data loaded successfully!");
 }
 
-void MainWindow::onDataLoadingProgress(int percentage) {
+void DisplayManager::onDataLoadingProgress(int percentage) {
     progressBar->setValue(percentage);
 }
 
-void MainWindow::onDataLoadingError(const QString& error) {
+void DisplayManager::onDataLoadingError(const QString& error) {
     loadButton->setEnabled(true);
     cancelButton->setEnabled(false);
     progressBar->setVisible(false);
     QMessageBox::critical(this, "Error", "Failed to load data:\n" + error);
 }
 
-void MainWindow::playPause() {
+void DisplayManager::playPause() {
     if (isPlaying) {
         playbackTimer->stop();
         playPauseButton->setText("Play");
@@ -241,7 +241,7 @@ void MainWindow::playPause() {
     }
 }
 
-void MainWindow::onTimeSliderChanged(int value) {
+void DisplayManager::onTimeSliderChanged(int value) {
     if (!isPlaying) { 
         ClockManager& clockManager = dataManager->getClockManager();
         
@@ -257,7 +257,7 @@ void MainWindow::onTimeSliderChanged(int value) {
     }
 }
 
-void MainWindow::updateDisplay() {
+void DisplayManager::updateDisplay() {
     if (!isPlaying) return;
     
     ClockManager& clockManager = dataManager->getClockManager();
@@ -282,7 +282,7 @@ void MainWindow::updateDisplay() {
     timeLabel->setText(elapsedTime + " / " + durationTime);
 }
 
-void MainWindow::updateSensorDisplays(double timestamp) {
+void DisplayManager::updateSensorDisplays(double timestamp) {
     auto gps = dataManager->getCurrentGPS(timestamp);
     if (gps) {
         gpsLabel->setText(QString::fromStdString(gps->toString()));
@@ -314,7 +314,7 @@ void MainWindow::updateSensorDisplays(double timestamp) {
     }
 }
 
-void MainWindow::updateImageDisplays(double timestamp) {
+void DisplayManager::updateImageDisplays(double timestamp) {
     auto frontImg = dataManager->getCurrentFrontImage(timestamp);
     auto backImg = dataManager->getCurrentBackImage(timestamp);
     auto leftImg = dataManager->getCurrentLeftImage(timestamp);
@@ -354,7 +354,7 @@ void MainWindow::updateImageDisplays(double timestamp) {
     }
 }
 
-QPixmap MainWindow::matToQPixmap(const cv::Mat& mat) {
+QPixmap DisplayManager::matToQPixmap(const cv::Mat& mat) {
     QImage qimg;
     
     if (mat.channels() == 3) {

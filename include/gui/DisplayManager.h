@@ -13,12 +13,12 @@
 #include <memory>
 #include "management/DataManager.h"
 
-class MainWindow : public QMainWindow {
+class DisplayManager : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    DisplayManager(QWidget *parent = nullptr);
+    ~DisplayManager();
 
 private slots:
     void loadData();

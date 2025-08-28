@@ -19,7 +19,7 @@ set(SOURCES
     src/management/ClockManager.cpp
     
     # GUI
-    src/gui/MainWindow.cpp
+    src/gui/DisplayManager.cpp
     
     # Data Readers
     src/readers/DataReader.cpp
@@ -51,7 +51,7 @@ set(HEADERS
     include/management/SensorDataStore.h
     
     # GUI
-    include/gui/MainWindow.h
+    include/gui/DisplayManager.h
     
     # Data Readers
     include/readers/DataReader.h
