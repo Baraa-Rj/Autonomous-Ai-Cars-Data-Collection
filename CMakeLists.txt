@@ -12,7 +12,7 @@ set(CMAKE_AUTOMOC ON)
 
 set(SOURCES
     # Application
-    src/app/main.cpp
+    src/app/Simulation.cpp
     
     # Data Management
     src/management/DataManager.cpp
@@ -32,7 +32,6 @@ set(SOURCES
     src/readers/SteeringDataReader.cpp
     src/readers/ImageDataReader.cpp
     
-    # Data Types
     src/data/GPSData.cpp
     src/data/IMUData.cpp
     src/data/SpeedData.cpp
