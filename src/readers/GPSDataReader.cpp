@@ -2,18 +2,13 @@
 #include <fstream>
 #include <iostream>
 
-std::vector<std::unique_ptr<Data>> GPSDataReader::readCSV(const std::string& filepath) {
-    std::vector<std::unique_ptr<Data>> data;
-    std::ifstream file(filepath);
-    
-    if (!file.is_open()) {
-        throw std::runtime_error("Cannot open GPS file: " + filepath);
+std::unique_ptr<Data> GPSDataReader::readNext() {
+    if (!fileStream.is_open()) {
+        return nullptr;
     }
     
     std::string line;
-    std::getline(file, line); // Skip header: time_stamp,latitude,longitude,height
-    
-    while (std::getline(file, line)) {
+    while (std::getline(fileStream, line)) {
         if (line.empty()) continue;
         
         auto tokens = splitLine(line);
@@ -28,12 +23,14 @@ std::vector<std::unique_ptr<Data>> GPSDataReader::readCSV(const std::string& fil
             double longitude = parseDouble(tokens[2]);
             double height = parseDouble(tokens[3]);
             
-            data.push_back(std::make_unique<GPSData>(timestamp, latitude, longitude, height));
+            lastData = std::make_unique<GPSData>(timestamp, latitude, longitude, height);
+            return std::make_unique<GPSData>(timestamp, latitude, longitude, height);
         } catch (const std::exception& e) {
             std::cerr << "Error parsing GPS line: " << line << " - " << e.what() << std::endl;
+            continue;
         }
     }
     
-    file.close();
-    return data;
+    return nullptr;
 }
+

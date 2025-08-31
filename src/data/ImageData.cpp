@@ -2,6 +2,7 @@
 #include <sstream>
 #include <thread>
 #include <iostream>
+#include <chrono>
 
 std::string ImageData::toString() const {
     std::ostringstream oss;
@@ -17,7 +18,14 @@ void ImageData::loadImage() {
     
     cv::Mat tempImage = cv::imread(filepath);
     if (!tempImage.empty()) {
-        image = std::move(tempImage);
+        if (tempImage.cols > 800 || tempImage.rows > 600) {
+            cv::Mat resized;
+            double scale = std::min(800.0 / tempImage.cols, 600.0 / tempImage.rows);
+            cv::resize(tempImage, resized, cv::Size(), scale, scale, cv::INTER_AREA);
+            image = std::move(resized);
+        } else {
+            image = std::move(tempImage);
+        }
         loaded.store(true);
     } else {
         std::cerr << "Failed to load image: " << filepath << std::endl;

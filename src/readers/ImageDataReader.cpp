@@ -3,9 +3,12 @@
 #include <iostream>
 #include <algorithm>
 
-std::vector<std::unique_ptr<Data>> ImageDataReader::readCSV(const std::string& filepath) {
-    return std::vector<std::unique_ptr<Data>>();
+std::unique_ptr<Data> ImageDataReader::readNext() {
+    // ImageDataReader doesn't use file streams in the traditional sense
+    // since it reads from directories. Return nullptr for now.
+    return nullptr;
 }
+
 
 std::vector<std::unique_ptr<Data>> ImageDataReader::readFromDirectory(const std::string& dirpath) {
     std::vector<std::unique_ptr<Data>> data;

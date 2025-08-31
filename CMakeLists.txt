@@ -4,7 +4,7 @@ project(CarStatusVisualization VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Network)
 find_package(OpenCV REQUIRED)
 
 # Enable Qt MOC (Meta Object Compiler) for Q_OBJECT classes
@@ -17,9 +17,11 @@ set(SOURCES
     # Data Management
     src/management/DataManager.cpp
     src/management/ClockManager.cpp
+    src/management/SensorDataStore.cpp
     
     # GUI
     src/gui/DisplayManager.cpp
+    src/gui/GPSMapWidget.cpp
     
     # Data Readers
     src/readers/DataReader.cpp
@@ -51,6 +53,7 @@ set(HEADERS
     
     # GUI
     include/gui/DisplayManager.h
+    include/gui/GPSMapWidget.h
     
     # Data Readers
     include/readers/DataReader.h
@@ -76,7 +79,8 @@ set(HEADERS
 add_executable(CarStatusVisualization ${SOURCES} ${HEADERS})
 
 target_include_directories(CarStatusVisualization PRIVATE include)
-target_link_libraries(CarStatusVisualization Qt6::Core Qt6::Widgets ${OpenCV_LIBS})
+target_link_libraries(CarStatusVisualization Qt6::Core Qt6::Widgets Qt6::Network ${OpenCV_LIBS})
 
-# Copy sample data to build directory
+# Copy sample data and map HTML to build directory
 file(COPY sample_data DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY map.html DESTINATION ${CMAKE_BINARY_DIR})

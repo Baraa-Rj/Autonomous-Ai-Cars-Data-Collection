@@ -1,6 +1,35 @@
 #include "readers/DataReader.h"
 #include <sstream>
 #include <stdexcept>
+#include <iostream>
+
+bool DataReader::initializeStream(const std::string& filepath) {
+    closeStream();
+    currentFilepath = filepath;
+    fileStream.open(filepath);
+    headerSkipped = false;
+    
+    if (!fileStream.is_open()) {
+        std::cerr << "Cannot open file: " << filepath << std::endl;
+        return false;
+    }
+    
+    // Skip header line
+    std::string headerLine;
+    if (std::getline(fileStream, headerLine)) {
+        headerSkipped = true;
+    }
+    
+    return true;
+}
+
+void DataReader::closeStream() {
+    if (fileStream.is_open()) {
+        fileStream.close();
+    }
+    lastData.reset();
+    headerSkipped = false;
+}
 
 std::vector<std::string> DataReader::splitLine(const std::string& line, char delimiter) {
     std::vector<std::string> tokens;

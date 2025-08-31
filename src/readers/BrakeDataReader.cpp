@@ -2,18 +2,13 @@
 #include <fstream>
 #include <iostream>
 
-std::vector<std::unique_ptr<Data>> BrakeDataReader::readCSV(const std::string& filepath) {
-    std::vector<std::unique_ptr<Data>> data;
-    std::ifstream file(filepath);
-    
-    if (!file.is_open()) {
-        throw std::runtime_error("Cannot open Brake file: " + filepath);
+std::unique_ptr<Data> BrakeDataReader::readNext() {
+    if (!fileStream.is_open()) {
+        return nullptr;
     }
     
     std::string line;
-    std::getline(file, line); // Skip header: time_stamp,data_value
-    
-    while (std::getline(file, line)) {
+    while (std::getline(fileStream, line)) {
         if (line.empty()) continue;
         
         auto tokens = splitLine(line);
@@ -26,12 +21,14 @@ std::vector<std::unique_ptr<Data>> BrakeDataReader::readCSV(const std::string& f
             double timestamp = parseDouble(tokens[0]);
             double data_value = parseDouble(tokens[1]);
             
-            data.push_back(std::make_unique<BrakeData>(timestamp, data_value));
+            lastData = std::make_unique<BrakeData>(timestamp, data_value);
+            return std::make_unique<BrakeData>(timestamp, data_value);
         } catch (const std::exception& e) {
             std::cerr << "Error parsing Brake line: " << line << " - " << e.what() << std::endl;
+            continue;
         }
     }
     
-    file.close();
-    return data;
+    return nullptr;
 }
+

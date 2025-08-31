@@ -46,6 +46,6 @@ DataType DataReaderFactory::getDataTypeFromFilename(const std::string& filename)
     } else if (lowerFilename.find("steering") != std::string::npos) {
         return DataType::STEERING;
     } else {
-        return DataType::IMAGE; // Default for directories
+        return DataType::IMAGE; 
     }
 }

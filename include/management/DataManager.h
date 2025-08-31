@@ -12,6 +12,7 @@
 #include <shared_mutex>
 #include <condition_variable>
 #include <vector>
+#include <map>
 #include "data/GPSData.h"
 #include "data/IMUData.h"
 #include "data/SpeedData.h"
@@ -27,21 +28,27 @@ public:
     explicit DataManager(QObject* parent = nullptr);
     
     void loadAllSensorDataAsync(const std::string& dataDirectory);
-    bool loadAllSensorData(const std::string& dataDirectory);
     void cancelLoading();
     void clearData();
     
-    GPSData* getCurrentGPS(double timestamp) const;
-    IMUData* getCurrentIMU(double timestamp) const;
-    SpeedData* getCurrentSpeed(double timestamp) const;
-    BrakeData* getCurrentBrake(double timestamp) const;
-    ThrottleData* getCurrentThrottle(double timestamp) const;
-    SteeringData* getCurrentSteering(double timestamp) const;
+    // Get current sensor data (no timestamp needed as we only keep last frame)
+    GPSData* getCurrentGPS() const;
+    IMUData* getCurrentIMU() const;
+    SpeedData* getCurrentSpeed() const;
+    BrakeData* getCurrentBrake() const;
+    ThrottleData* getCurrentThrottle() const;
+    SteeringData* getCurrentSteering() const;
     
-    ImageData* getCurrentFrontImage(double timestamp) const;
-    ImageData* getCurrentBackImage(double timestamp) const;
-    ImageData* getCurrentLeftImage(double timestamp) const;
-    ImageData* getCurrentRightImage(double timestamp) const;
+    ImageData* getCurrentFrontImage() const;
+    ImageData* getCurrentBackImage() const;
+    ImageData* getCurrentLeftImage() const;
+    ImageData* getCurrentRightImage() const;
+    
+    // Update sensor data by reading next values from streams
+    void updateSensorData(double targetTimestamp);
+    
+    // Initialize streaming readers
+    bool initializeStreamingReaders(const std::string& dataDirectory);
     
     ClockManager& getClockManager() { return clockManager; }
     const ClockManager& getClockManager() const { return clockManager; }
@@ -62,9 +69,15 @@ private:
     std::atomic<bool> isLoading{false};
     std::atomic<bool> cancelLoadingFlag{false};
     
-    bool loadCSVData(const std::string& filePath, DataType type);
-    bool loadImageData(const std::string& dirPath, const std::string& cameraName);
+    // Streaming readers for each sensor type
+    std::map<DataType, std::unique_ptr<DataReader>> sensorReaders;
+    std::map<std::string, std::unique_ptr<DataReader>> imageReaders;
     
-    void loadCSVDataAsync(const std::string& filePath, DataType type, std::atomic<int>& completedTasks, int totalTasks);
-    void loadImageDataAsync(const std::string& dirPath, const std::string& cameraName, std::atomic<int>& completedTasks, int totalTasks);
+    // Pre-loaded image file lists for each camera
+    std::map<std::string, std::vector<std::pair<double, std::string>>> imageFilesByCamera;
+    std::map<std::string, size_t> currentImageIndices;
+    
+    // Image streaming support
+    void updateImageDataForTimestamp(double targetTimestamp);
+    void preloadImageFileList(const std::string& cameraName, const std::string& dirPath);
 };

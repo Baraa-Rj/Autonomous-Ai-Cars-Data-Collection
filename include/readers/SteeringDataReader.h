@@ -4,5 +4,5 @@
 
 class SteeringDataReader : public DataReader {
 public:
-    std::vector<std::unique_ptr<Data>> readCSV(const std::string& filepath) override;
+    std::unique_ptr<Data> readNext() override;
 };

@@ -30,4 +30,8 @@ public:
     void releaseImage();
     bool isLoaded() const { return loaded.load(); }
     bool isLoading() const { return loading.load(); }
+    
+    double lastAccessTime{0.0};
+    void updateAccessTime();
+    bool shouldCleanup(double currentTime, double maxAge = 10.0) const;
 };

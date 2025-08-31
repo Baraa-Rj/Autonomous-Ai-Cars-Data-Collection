@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car GPS Tracking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+        .info-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 12px;
+            min-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="info-panel" id="info">
+        <strong>GPS Status</strong><br>
+        Lat: <span id="current-lat">--</span><br>
+        Lon: <span id="current-lon">--</span><br>
+        Alt: <span id="current-alt">--</span>m<br>
+        Speed: <span id="current-speed">--</span> km/h<br>
+        Points: <span id="trajectory-count">0</span>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script>
+        // Initialize the map
+        let map = L.map('map').setView([32.825, 34.989], 16); // Default to sample GPS coordinates
+        
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+        
+        // Car marker and trajectory
+        let carMarker = null;
+        let trajectoryLine = null;
+        let trajectoryPoints = [];
+        
+        // Custom car icon
+        const carIcon = L.divIcon({
+            className: 'car-marker',
+            html: '<div style="background: red; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 4px rgba(0,0,0,0.5);"></div>',
+            iconSize: [16, 16],
+            iconAnchor: [8, 8]
+        });
+        
+        // Functions called from Qt C++
+        window.updateCarPosition = function(lat, lon, alt, timestamp) {
+            // Update car marker
+            if (carMarker) {
+                carMarker.setLatLng([lat, lon]);
+            } else {
+                carMarker = L.marker([lat, lon], {icon: carIcon}).addTo(map);
+                carMarker.bindPopup(`<b>Current Position</b><br>Lat: ${lat.toFixed(6)}<br>Lon: ${lon.toFixed(6)}`);
+            }
+            
+            // Add to trajectory
+            trajectoryPoints.push([lat, lon]);
+            
+            // Update trajectory line
+            if (trajectoryLine) {
+                trajectoryLine.setLatLngs(trajectoryPoints);
+            } else {
+                trajectoryLine = L.polyline(trajectoryPoints, {
+                    color: 'blue',
+                    weight: 3,
+                    opacity: 0.7
+                }).addTo(map);
+            }
+            
+            // Update info panel
+            document.getElementById('current-lat').textContent = lat.toFixed(6);
+            document.getElementById('current-lon').textContent = lon.toFixed(6);
+            document.getElementById('current-alt').textContent = alt.toFixed(1);
+            document.getElementById('trajectory-count').textContent = trajectoryPoints.length;
+            
+            // Center map on car (optional - could be toggled)
+            map.setView([lat, lon], map.getZoom());
+        };
+        
+        window.clearTrajectory = function() {
+            trajectoryPoints = [];
+            if (trajectoryLine) {
+                map.removeLayer(trajectoryLine);
+                trajectoryLine = null;
+            }
+            if (carMarker) {
+                map.removeLayer(carMarker);
+                carMarker = null;
+            }
+            document.getElementById('trajectory-count').textContent = '0';
+        };
+        
+        window.centerOnCar = function() {
+            if (carMarker) {
+                map.setView(carMarker.getLatLng(), 16);
+            }
+        };
+        
+        window.setFollowMode = function(follow) {
+            window.followCar = follow;
+        };
+        
+        // Initialize follow mode
+        window.followCar = true;
+        
+        console.log('Map initialized and ready for GPS data');
+    </script>
+</body>
+</html>

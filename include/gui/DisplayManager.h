@@ -12,6 +12,7 @@
 #include <opencv2/opencv.hpp>
 #include <memory>
 #include "management/DataManager.h"
+#include "gui/GPSMapWidget.h"
 
 class DisplayManager : public QMainWindow {
     Q_OBJECT
@@ -33,15 +34,25 @@ private:
     void setupUI();
     void setupSensorPanel();
     void setupImagePanel();
+    void setupMapPanel();
     void setupControlPanel();
     
     void updateSensorDisplays(double timestamp);
     void updateImageDisplays(double timestamp);
     QPixmap matToQPixmap(const cv::Mat& mat);
     
+    // Cache for scaled pixmaps
+    QPixmap frontPixmapCache;
+    QPixmap backPixmapCache;
+    QPixmap leftPixmapCache;
+    QPixmap rightPixmapCache;
+    ImageData* lastFrontImage;
+    ImageData* lastBackImage;
+    ImageData* lastLeftImage;
+    ImageData* lastRightImage;
+    
     // UI Components
     QWidget* centralWidget;
-    QHBoxLayout* mainLayout;
     
     // Left panel - Sensor data
     QGroupBox* sensorPanel;
@@ -60,6 +71,11 @@ private:
     QLabel* backImageLabel;
     QLabel* leftImageLabel;
     QLabel* rightImageLabel;
+    
+    // GPS Map panel
+    QGroupBox* mapPanel;
+    QVBoxLayout* mapLayout;
+    GPSMapWidget* gpsMapWidget;
     
     // Control panel
     QGroupBox* controlPanel;

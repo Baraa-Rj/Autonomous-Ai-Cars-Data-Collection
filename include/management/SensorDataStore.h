@@ -1,55 +1,70 @@
 #pragma once
-#include "data/GPSData.h"
-#include "data/IMUData.h"
-#include "data/SpeedData.h"
-#include "data/BrakeData.h"
-#include "data/ThrottleData.h"
-#include "data/SteeringData.h"
-#include "data/ImageData.h"
+#include "readers/DataReaderFactory.h"
+#include "core/Data.h"
+#include <map>
+#include <memory>
 #include <vector>
+#include <string>
 
 /**
- * Centralized data storage for all sensor types.
- * Contains vectors of sensor data organized by type for efficient access.
+ * Centralized data storage using map-based approach for memory efficiency.
+ * Stores current data by DataType and provides efficient access methods.
  */
-struct SensorDataStore {
-    // Sensor data vectors
-    std::vector<GPSData> gps_data;
-    std::vector<IMUData> imu_data;
-    std::vector<SpeedData> speed_data;
-    std::vector<BrakeData> brake_data;
-    std::vector<ThrottleData> throttle_data;
-    std::vector<SteeringData> steering_data;
+class SensorDataStore {
+public:
+    /**
+     * Add data for a specific sensor type
+     */
+    void addData(DataType type, std::unique_ptr<Data> data);
     
-    // Image data vectors (one per camera)
-    std::vector<ImageData> front_images;
-    std::vector<ImageData> back_images;
-    std::vector<ImageData> left_images;
-    std::vector<ImageData> right_images;
+    /**
+     * Add data with camera position for image data
+     */
+    void addImageData(const std::string& cameraPosition, std::unique_ptr<Data> data);
+    
+    /**
+     * Get current data by type
+     */
+    Data* getCurrentDataByType(DataType type) const;
+    
+    /**
+     * Get current image data by camera position
+     */
+    Data* getCurrentImageData(const std::string& cameraPosition) const;
+    
+    /**
+     * Get all current data as a list
+     */
+    std::vector<Data*> getCurrentData() const;
     
     /**
      * Clear all stored data
      */
-    void clear() {
-        gps_data.clear();
-        imu_data.clear();
-        speed_data.clear();
-        brake_data.clear();
-        throttle_data.clear();
-        steering_data.clear();
-        front_images.clear();
-        back_images.clear();
-        left_images.clear();
-        right_images.clear();
-    }
+    void clear();
     
     /**
-     * Get total number of data points across all sensors
+     * Get total number of active data points
      */
-    size_t getTotalDataPoints() const {
-        return gps_data.size() + imu_data.size() + speed_data.size() + 
-               brake_data.size() + throttle_data.size() + steering_data.size() +
-               front_images.size() + back_images.size() + 
-               left_images.size() + right_images.size();
-    }
+    size_t getTotalDataPoints() const;
+    
+    // Convenience methods for specific sensor types
+    Data* getCurrentGPS() const { return getCurrentDataByType(DataType::GPS); }
+    Data* getCurrentIMU() const { return getCurrentDataByType(DataType::IMU); }
+    Data* getCurrentSpeed() const { return getCurrentDataByType(DataType::SPEED); }
+    Data* getCurrentBrake() const { return getCurrentDataByType(DataType::BRAKE); }
+    Data* getCurrentThrottle() const { return getCurrentDataByType(DataType::THROTTLE); }
+    Data* getCurrentSteering() const { return getCurrentDataByType(DataType::STEERING); }
+    
+    // Camera convenience methods
+    Data* getCurrentFrontImage() const { return getCurrentImageData("front"); }
+    Data* getCurrentBackImage() const { return getCurrentImageData("back"); }
+    Data* getCurrentLeftImage() const { return getCurrentImageData("left"); }
+    Data* getCurrentRightImage() const { return getCurrentImageData("right"); }
+
+private:
+    // Map from DataType to current sensor data
+    std::map<DataType, std::unique_ptr<Data>> sensorData;
+    
+    // Map from camera position to current image data
+    std::map<std::string, std::unique_ptr<Data>> imageData;
 };

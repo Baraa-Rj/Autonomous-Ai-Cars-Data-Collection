@@ -2,18 +2,13 @@
 #include <fstream>
 #include <iostream>
 
-std::vector<std::unique_ptr<Data>> IMUDataReader::readCSV(const std::string& filepath) {
-    std::vector<std::unique_ptr<Data>> data;
-    std::ifstream file(filepath);
-    
-    if (!file.is_open()) {
-        throw std::runtime_error("Cannot open IMU file: " + filepath);
+std::unique_ptr<Data> IMUDataReader::readNext() {
+    if (!fileStream.is_open()) {
+        return nullptr;
     }
     
     std::string line;
-    std::getline(file, line); // Skip header: time_stamp,x_acc,y_acc,z_acc,pitch,roll,yaw,x_gyro,y_gyro,z_gyro,x_mag,y_mag,z_mag
-    
-    while (std::getline(file, line)) {
+    while (std::getline(fileStream, line)) {
         if (line.empty()) continue;
         
         auto tokens = splitLine(line);
@@ -37,15 +32,20 @@ std::vector<std::unique_ptr<Data>> IMUDataReader::readCSV(const std::string& fil
             double y_mag = parseDouble(tokens[11]);
             double z_mag = parseDouble(tokens[12]);
             
-            data.push_back(std::make_unique<IMUData>(timestamp, x_acc, y_acc, z_acc,
-                                                   pitch, roll, yaw,
-                                                   x_gyro, y_gyro, z_gyro,
-                                                   x_mag, y_mag, z_mag));
+            lastData = std::make_unique<IMUData>(timestamp, x_acc, y_acc, z_acc,
+                                               pitch, roll, yaw,
+                                               x_gyro, y_gyro, z_gyro,
+                                               x_mag, y_mag, z_mag);
+            return std::make_unique<IMUData>(timestamp, x_acc, y_acc, z_acc,
+                                           pitch, roll, yaw,
+                                           x_gyro, y_gyro, z_gyro,
+                                           x_mag, y_mag, z_mag);
         } catch (const std::exception& e) {
             std::cerr << "Error parsing IMU line: " << line << " - " << e.what() << std::endl;
+            continue;
         }
     }
     
-    file.close();
-    return data;
+    return nullptr;
 }
+
