@@ -8,6 +8,8 @@
 #include <QtMath>
 #include <QUrl>
 #include <iostream>
+#include <cmath>
+#include <algorithm>
 
 GPSMapWidget::GPSMapWidget(QWidget *parent)
     : QWidget(parent)
@@ -48,7 +50,26 @@ GPSMapWidget::GPSMapWidget(QWidget *parent)
 }
 
 void GPSMapWidget::updateGPSPosition(const GPSData* gpsData) {
-    if (!gpsData) return;
+    if (!gpsData) {
+        std::cerr << "Warning: updateGPSPosition called with null GPS data" << std::endl;
+        return;
+    }
+    
+    // Validate GPS coordinates
+    if (std::isnan(gpsData->latitude) || std::isnan(gpsData->longitude) || 
+        std::isinf(gpsData->latitude) || std::isinf(gpsData->longitude)) {
+        std::cerr << "Warning: Invalid GPS coordinates: lat=" << gpsData->latitude 
+                  << ", lon=" << gpsData->longitude << std::endl;
+        return;
+    }
+    
+    // Check reasonable GPS bounds
+    if (gpsData->latitude < -90.0 || gpsData->latitude > 90.0 || 
+        gpsData->longitude < -180.0 || gpsData->longitude > 180.0) {
+        std::cerr << "Warning: GPS coordinates out of valid range: lat=" << gpsData->latitude 
+                  << ", lon=" << gpsData->longitude << std::endl;
+        return;
+    }
     
     currentPosition.latitude = gpsData->latitude;
     currentPosition.longitude = gpsData->longitude;
@@ -56,22 +77,32 @@ void GPSMapWidget::updateGPSPosition(const GPSData* gpsData) {
     currentPosition.timestamp = gpsData->timestamp;
     hasCurrentPosition = true;
     
-    // Add to trajectory
-    trajectoryPoints.push_back(currentPosition);
-    
-    // Keep only last 1000 points to avoid memory issues
-    if (trajectoryPoints.size() > 1000) {
-        trajectoryPoints.erase(trajectoryPoints.begin());
+    // Add to trajectory with size limit - use thread-safe access
+    {
+        std::lock_guard<std::mutex> lock(trajectoryMutex);
+        trajectoryPoints.push_back(currentPosition);
+        
+        // Keep only last 1000 points to avoid memory issues
+        if (trajectoryPoints.size() > 1000) {
+            trajectoryPoints.erase(trajectoryPoints.begin());
+        }
     }
     
-    // Update info label
-    QString info = QString("GPS Position\\nLat: %1\\nLon: %2\\nAlt: %3m\\nPoints: %4\\nZoom: %5")
-        .arg(gpsData->latitude, 0, 'f', 6)
-        .arg(gpsData->longitude, 0, 'f', 6)
-        .arg(gpsData->height, 0, 'f', 1)
-        .arg(trajectoryPoints.size())
-        .arg(zoomLevel);
-    infoLabel->setText(info);
+    // Update info label safely
+    if (infoLabel) {
+        size_t pointCount;
+        {
+            std::lock_guard<std::mutex> lock(trajectoryMutex);
+            pointCount = trajectoryPoints.size();
+        }
+        QString info = QString("GPS Position\\nLat: %1\\nLon: %2\\nAlt: %3m\\nPoints: %4\\nZoom: %5")
+            .arg(gpsData->latitude, 0, 'f', 6)
+            .arg(gpsData->longitude, 0, 'f', 6)
+            .arg(gpsData->height, 0, 'f', 1)
+            .arg(pointCount)
+            .arg(zoomLevel);
+        infoLabel->setText(info);
+    }
     
     // Auto-center if in follow mode
     if (followMode) {
@@ -207,25 +238,43 @@ void GPSMapWidget::downloadTile(int x, int y, int z) {
 
 void GPSMapWidget::onTileDownloaded() {
     QNetworkReply* reply = qobject_cast<QNetworkReply*>(sender());
-    if (!reply) return;
+    if (!reply) {
+        std::cerr << "Warning: onTileDownloaded called with null reply" << std::endl;
+        return;
+    }
     
     QString tileKey;
-    // Find the tile key for this reply
+    bool found = false;
+    
+    // Find the tile key for this reply - use safer iteration
     for (auto it = pendingTiles.begin(); it != pendingTiles.end(); ++it) {
         if (it.value() == reply) {
             tileKey = it.key();
             pendingTiles.erase(it);
+            found = true;
             break;
         }
     }
     
+    if (!found) {
+        std::cerr << "Warning: Could not find tile key for completed download" << std::endl;
+        reply->deleteLater();
+        return;
+    }
+    
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray data = reply->readAll();
-        QPixmap pixmap;
-        if (pixmap.loadFromData(data)) {
-            tileCache[tileKey] = pixmap;
-            update(); // Repaint to show new tile
+        if (!data.isEmpty()) {
+            QPixmap pixmap;
+            if (pixmap.loadFromData(data)) {
+                tileCache[tileKey] = pixmap;
+                update(); // Repaint to show new tile
+            } else {
+                std::cerr << "Warning: Failed to load pixmap from tile data" << std::endl;
+            }
         }
+    } else {
+        std::cerr << "Network error downloading tile: " << reply->errorString().toStdString() << std::endl;
     }
     
     reply->deleteLater();
@@ -286,15 +335,21 @@ void GPSMapWidget::drawMapTiles(QPainter& painter) {
 }
 
 void GPSMapWidget::drawTrajectory(QPainter& painter) {
-    if (trajectoryPoints.size() < 2) return;
+    // Create a local copy of trajectory points for thread safety
+    std::vector<GPSPoint> localTrajectory;
+    {
+        std::lock_guard<std::mutex> lock(trajectoryMutex);
+        if (trajectoryPoints.size() < 2) return;
+        localTrajectory = trajectoryPoints; // Copy the vector
+    }
     
-    // Save painter state
+    // Now work with the local copy safely
     painter.save();
     painter.setPen(QPen(QColor(0, 150, 255), 2));
     
-    for (size_t i = 1; i < trajectoryPoints.size(); ++i) {
-        QPoint p1 = gpsToPixel(trajectoryPoints[i-1].latitude, trajectoryPoints[i-1].longitude);
-        QPoint p2 = gpsToPixel(trajectoryPoints[i].latitude, trajectoryPoints[i].longitude);
+    for (size_t i = 1; i < localTrajectory.size(); ++i) {
+        QPoint p1 = gpsToPixel(localTrajectory[i-1].latitude, localTrajectory[i-1].longitude);
+        QPoint p2 = gpsToPixel(localTrajectory[i].latitude, localTrajectory[i].longitude);
         
         // Safety check for extreme coordinates
         if (abs(p1.x()) > 10000 || abs(p1.y()) > 10000 || abs(p2.x()) > 10000 || abs(p2.y()) > 10000) {
@@ -322,6 +377,13 @@ void GPSMapWidget::drawCurrentPosition(QPainter& painter) {
         return; // Don't draw at invalid coordinates
     }
     
+    // Additional validation for current position
+    if (std::isnan(currentPosition.latitude) || std::isnan(currentPosition.longitude) ||
+        std::isinf(currentPosition.latitude) || std::isinf(currentPosition.longitude)) {
+        std::cerr << "Warning: Current position has invalid coordinates" << std::endl;
+        return;
+    }
+    
     QPoint carPos = gpsToPixel(currentPosition.latitude, currentPosition.longitude);
     
     // Debug: print car position occasionally (reduced frequency)
@@ -337,30 +399,50 @@ void GPSMapWidget::drawCurrentPosition(QPainter& painter) {
         return;
     }
     
-    // Only draw if the car position is within the visible map area
-    if (carPos.x() < 5 || carPos.x() > mapWidth + 5 || carPos.y() < 5 || carPos.y() > mapHeight + 5) {
+    // Only draw if the car position is within the visible map area (with some margin)
+    if (carPos.x() < -50 || carPos.x() > mapWidth + 50 || carPos.y() < -50 || carPos.y() > mapHeight + 50) {
         return;
     }
     
     // Save painter state before drawing car
     painter.save();
     
+    // Set anti-aliasing for smooth drawing
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    
     // Draw car as very small red dot
     painter.setBrush(QBrush(QColor(255, 0, 0)));
     painter.setPen(QPen(QColor(255, 255, 255), 1));
     
-    // Draw a small 8x8 pixel circle
-    painter.drawEllipse(carPos.x() - 4, carPos.y() - 4, 8, 8);
+    // Draw a small 8x8 pixel circle with bounds checking
+    int circleX = std::max(1, std::min(mapWidth - 8, carPos.x() - 4));
+    int circleY = std::max(1, std::min(mapHeight - 8, carPos.y() - 4));
+    painter.drawEllipse(circleX, circleY, 8, 8);
     
-    // Draw a small direction indicator
+    // Draw a small direction indicator with bounds checking
     painter.setPen(QPen(QColor(255, 255, 255), 1));
-    painter.drawLine(carPos.x(), carPos.y() - 4, carPos.x(), carPos.y() - 8);
+    int lineStartX = std::max(1, std::min(mapWidth - 1, carPos.x()));
+    int lineStartY = std::max(5, std::min(mapHeight - 1, carPos.y() - 4));
+    int lineEndY = std::max(1, std::min(mapHeight - 1, carPos.y() - 8));
+    painter.drawLine(lineStartX, lineStartY, lineStartX, lineEndY);
     
     // Restore painter state
     painter.restore();
 }
 
 QPoint GPSMapWidget::gpsToPixel(double lat, double lon) const {
+    // Validate input coordinates
+    if (std::isnan(lat) || std::isnan(lon) || std::isinf(lat) || std::isinf(lon)) {
+        std::cerr << "Warning: Invalid GPS coordinates (NaN/Inf): lat=" << lat << ", lon=" << lon << std::endl;
+        return QPoint(mapWidth / 2, mapHeight / 2);
+    }
+    
+    // Check for reasonable GPS coordinate bounds
+    if (lat < -90.0 || lat > 90.0 || lon < -180.0 || lon > 180.0) {
+        std::cerr << "Warning: GPS coordinates out of valid range: lat=" << lat << ", lon=" << lon << std::endl;
+        return QPoint(mapWidth / 2, mapHeight / 2);
+    }
+    
     // Simple linear conversion for small areas - more stable than Web Mercator
     double latDiff = lat - centerLat;
     double lonDiff = lon - centerLon;
@@ -368,8 +450,13 @@ QPoint GPSMapWidget::gpsToPixel(double lat, double lon) const {
     // Scale factor based on zoom level (higher zoom = more detail)
     double pixelsPerDegree = pow(2, zoomLevel - 10) * 1000; // Adjust the scale
     
-    int pixelX = mapWidth / 2 + (int)(lonDiff * pixelsPerDegree) + 5;
-    int pixelY = mapHeight / 2 - (int)(latDiff * pixelsPerDegree) + 5; // Negative because Y increases downward
+    // Calculate pixel coordinates with bounds checking
+    double exactPixelX = mapWidth / 2.0 + (lonDiff * pixelsPerDegree) + 5.0;
+    double exactPixelY = mapHeight / 2.0 - (latDiff * pixelsPerDegree) + 5.0;
+    
+    // Clamp to reasonable bounds to prevent overflow
+    int pixelX = std::max(-50000, std::min(50000, (int)exactPixelX));
+    int pixelY = std::max(-50000, std::min(50000, (int)exactPixelY));
     
     return QPoint(pixelX, pixelY);
 }

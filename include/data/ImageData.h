@@ -31,6 +31,17 @@ public:
     bool isLoaded() const { return loaded.load(); }
     bool isLoading() const { return loading.load(); }
     
+    // Thread-safe image access
+    cv::Mat getImage() const {
+        std::lock_guard<std::mutex> lock(imageMutex);
+        return image.clone(); // Always return a deep copy for thread safety
+    }
+    
+    bool isEmpty() const {
+        std::lock_guard<std::mutex> lock(imageMutex);
+        return image.empty();
+    }
+    
     double lastAccessTime{0.0};
     void updateAccessTime();
     bool shouldCleanup(double currentTime, double maxAge = 10.0) const;

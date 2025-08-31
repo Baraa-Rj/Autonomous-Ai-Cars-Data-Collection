@@ -289,8 +289,10 @@ void DisplayManager::updateSensorDisplays(double timestamp) {
     auto gps = dataManager->getCurrentGPS();
     if (gps) {
         gpsLabel->setText(QString::fromStdString(gps->toString()));
-        // Update GPS map with current position
-        gpsMapWidget->updateGPSPosition(gps);
+        // Update GPS map with current position - add null check for safety
+        if (gpsMapWidget) {
+            gpsMapWidget->updateGPSPosition(gps);
+        }
     }
     
     auto imu = dataManager->getCurrentIMU();
@@ -320,79 +322,65 @@ void DisplayManager::updateSensorDisplays(double timestamp) {
 }
 
 void DisplayManager::updateImageDisplays(double timestamp) {
-    // Limit concurrent image loading to prevent thread overflow
-    static int loadingCount = 0;
-    const int maxConcurrentLoads = 2; // Limit to 2 concurrent image loads
-    
+    // Use synchronous loading to avoid threading issues
     // Image data should be updated by updateSensorData call from updateSensorDisplays
     auto frontImg = dataManager->getCurrentFrontImage();
     auto backImg = dataManager->getCurrentBackImage();
     auto leftImg = dataManager->getCurrentLeftImage();
     auto rightImg = dataManager->getCurrentRightImage();
+
+    // Load one image per update cycle to avoid blocking UI too much
+    static int rotateLoad = 0;
     
-    // Count currently loading images
-    loadingCount = 0;
-    if (frontImg && frontImg->isLoading()) loadingCount++;
-    if (backImg && backImg->isLoading()) loadingCount++;
-    if (leftImg && leftImg->isLoading()) loadingCount++;
-    if (rightImg && rightImg->isLoading()) loadingCount++;
+    if (frontImg && !frontImg->isLoaded() && rotateLoad % 4 == 0) {
+        frontImg->loadImageAsync(); // Now synchronous
+    }
+    if (backImg && !backImg->isLoaded() && rotateLoad % 4 == 1) {
+        backImg->loadImageAsync(); // Now synchronous  
+    }
+    if (leftImg && !leftImg->isLoaded() && rotateLoad % 4 == 2) {
+        leftImg->loadImageAsync(); // Now synchronous
+    }
+    if (rightImg && !rightImg->isLoaded() && rotateLoad % 4 == 3) {
+        rightImg->loadImageAsync(); // Now synchronous
+    }
+    rotateLoad++;
     
-    // Load images with priority: front, back, left, right - but limit concurrent loads
-    if (loadingCount < maxConcurrentLoads) {
-        if (frontImg && !frontImg->isLoaded() && !frontImg->isLoading()) {
-            frontImg->loadImageAsync();
-            loadingCount++;
-        }
-    }
-    if (loadingCount < maxConcurrentLoads) {
-        if (backImg && !backImg->isLoaded() && !backImg->isLoading()) {
-            backImg->loadImageAsync();
-            loadingCount++;
-        }
-    }
-    if (loadingCount < maxConcurrentLoads) {
-        if (leftImg && !leftImg->isLoaded() && !leftImg->isLoading()) {
-            leftImg->loadImageAsync();
-            loadingCount++;
-        }
-    }
-    if (loadingCount < maxConcurrentLoads) {
-        if (rightImg && !rightImg->isLoaded() && !rightImg->isLoading()) {
-            rightImg->loadImageAsync();
-            loadingCount++;
-        }
-    }
-    
-    if (frontImg && frontImg->isLoaded() && !frontImg->image.empty()) {
+    // Display loaded images
+    if (frontImg && frontImg->isLoaded() && !frontImg->isEmpty()) {
         if (lastFrontImage != frontImg || frontPixmapCache.isNull()) {
-            QPixmap pixmap = matToQPixmap(frontImg->image);
+            cv::Mat imageCopy = frontImg->getImage();
+            QPixmap pixmap = matToQPixmap(imageCopy);
             frontPixmapCache = pixmap.scaled(frontImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
             lastFrontImage = frontImg;
         }
         frontImageLabel->setPixmap(frontPixmapCache);
     }
     
-    if (backImg && backImg->isLoaded() && !backImg->image.empty()) {
+    if (backImg && backImg->isLoaded() && !backImg->isEmpty()) {
         if (lastBackImage != backImg || backPixmapCache.isNull()) {
-            QPixmap pixmap = matToQPixmap(backImg->image);
+            cv::Mat imageCopy = backImg->getImage();
+            QPixmap pixmap = matToQPixmap(imageCopy);
             backPixmapCache = pixmap.scaled(backImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
             lastBackImage = backImg;
         }
         backImageLabel->setPixmap(backPixmapCache);
     }
     
-    if (leftImg && leftImg->isLoaded() && !leftImg->image.empty()) {
+    if (leftImg && leftImg->isLoaded() && !leftImg->isEmpty()) {
         if (lastLeftImage != leftImg || leftPixmapCache.isNull()) {
-            QPixmap pixmap = matToQPixmap(leftImg->image);
+            cv::Mat imageCopy = leftImg->getImage();
+            QPixmap pixmap = matToQPixmap(imageCopy);
             leftPixmapCache = pixmap.scaled(leftImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
             lastLeftImage = leftImg;
         }
         leftImageLabel->setPixmap(leftPixmapCache);
     }
     
-    if (rightImg && rightImg->isLoaded() && !rightImg->image.empty()) {
+    if (rightImg && rightImg->isLoaded() && !rightImg->isEmpty()) {
         if (lastRightImage != rightImg || rightPixmapCache.isNull()) {
-            QPixmap pixmap = matToQPixmap(rightImg->image);
+            cv::Mat imageCopy = rightImg->getImage();
+            QPixmap pixmap = matToQPixmap(imageCopy);
             rightPixmapCache = pixmap.scaled(rightImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
             lastRightImage = rightImg;
         }

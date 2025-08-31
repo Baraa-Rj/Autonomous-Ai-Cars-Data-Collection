@@ -14,6 +14,7 @@
 #include <QHash>
 #include <vector>
 #include <cmath>
+#include <mutex>
 #include "data/GPSData.h"
 
 class GPSMapWidget : public QWidget {
@@ -68,6 +69,9 @@ private:
     
     QHash<QString, QPixmap> tileCache;
     QHash<QString, QNetworkReply*> pendingTiles;
+    
+    // Thread safety
+    mutable std::mutex trajectoryMutex;
     
     // Mouse interaction
     bool dragging;

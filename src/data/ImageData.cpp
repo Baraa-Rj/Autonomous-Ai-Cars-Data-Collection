@@ -22,9 +22,9 @@ void ImageData::loadImage() {
             cv::Mat resized;
             double scale = std::min(800.0 / tempImage.cols, 600.0 / tempImage.rows);
             cv::resize(tempImage, resized, cv::Size(), scale, scale, cv::INTER_AREA);
-            image = std::move(resized);
+            image = resized.clone(); // Use clone() instead of move to ensure deep copy
         } else {
-            image = std::move(tempImage);
+            image = tempImage.clone(); // Use clone() instead of move to ensure deep copy
         }
         loaded.store(true);
     } else {
@@ -33,13 +33,9 @@ void ImageData::loadImage() {
 }
 
 void ImageData::loadImageAsync() {
-    if (loaded.load() || loading.load()) return;
-    
-    loading.store(true);
-    std::thread([this]() {
-        loadImage();
-        loading.store(false);
-    }).detach();
+    // Disable async loading for now - load synchronously to avoid threading issues
+    if (loaded.load()) return;
+    loadImage();
 }
 
 void ImageData::releaseImage() {
