@@ -15,7 +15,6 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
         return false;
     }
     
-    // Initialize CSV readers
     std::vector<std::pair<std::string, DataType>> csvFiles = {
         {dataDirectory + "/gps.csv", DataType::GPS},
         {dataDirectory + "/imu.csv", DataType::IMU},
@@ -34,7 +33,6 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
         }
     }
     
-    // Initialize image readers and preload image file lists
     std::vector<std::string> cameras = {"front", "back", "left", "right"};
     for (const std::string& camera : cameras) {
         std::string dirPath = dataDirectory + "/3d_images/" + camera;
@@ -147,7 +145,6 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
     
     std::thread([this, dataDirectory]() {
         try {
-            // Read first data point from each stream to establish baseline
             updateSensorData(0.0);
             
             emit dataLoadingProgress(100);
@@ -173,7 +170,6 @@ void DataManager::clearData() {
     std::unique_lock<std::shared_mutex> lock(dataStoreMutex);
     dataStore.clear();
     
-    // Close all streaming readers
     for (auto& [type, reader] : sensorReaders) {
         if (reader) {
             reader->closeStream();
@@ -182,7 +178,6 @@ void DataManager::clearData() {
     sensorReaders.clear();
     imageReaders.clear();
     
-    // Clear image file lists and indices
     imageFilesByCamera.clear();
     currentImageIndices.clear();
     

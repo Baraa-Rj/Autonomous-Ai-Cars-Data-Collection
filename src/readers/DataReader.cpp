@@ -14,7 +14,6 @@ bool DataReader::initializeStream(const std::string& filepath) {
         return false;
     }
     
-    // Skip header line
     std::string headerLine;
     if (std::getline(fileStream, headerLine)) {
         headerSkipped = true;

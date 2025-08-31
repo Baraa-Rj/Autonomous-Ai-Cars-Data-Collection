@@ -86,13 +86,10 @@ private:
     QLabel* timeLabel;
     QProgressBar* progressBar;
     
-    // Core components
     std::unique_ptr<DataManager> dataManager;
     std::unique_ptr<QTimer> playbackTimer;
     
-    // Playback state
     bool isPlaying;
-    double playbackSpeed; // seconds per second (1.0 = real time)
+    double playbackSpeed;
 };
 
-// MOC file will be generated automatically

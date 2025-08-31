@@ -26,7 +26,7 @@ DisplayManager::DisplayManager(QWidget *parent)
     connect(dataManager.get(), &DataManager::dataLoadingError, this, &DisplayManager::onDataLoadingError);
     
     connect(playbackTimer.get(), &QTimer::timeout, this, &DisplayManager::updateDisplay);
-    playbackTimer->setInterval(33); // ~30 FPS (1000ms / 30 = 33.33ms)
+    playbackTimer->setInterval(33); 
     
     setWindowTitle("Car Status Visualization");
     setMinimumSize(1000, 600);
@@ -133,8 +133,8 @@ void DisplayManager::setupImagePanel() {
     
     imageLayout->addWidget(frontImageLabel, 0, 0);
     imageLayout->addWidget(rightImageLabel, 0, 1);
-    imageLayout->addWidget(leftImageLabel, 1, 0);
-    imageLayout->addWidget(backImageLabel, 1, 1);
+    imageLayout->addWidget(leftImageLabel, 1, 1);
+    imageLayout->addWidget(backImageLabel, 1, 0);
 }
 
 void DisplayManager::setupMapPanel() {
@@ -283,13 +283,11 @@ void DisplayManager::updateDisplay() {
 }
 
 void DisplayManager::updateSensorDisplays(double timestamp) {
-    // First update the sensor data to the target timestamp
     dataManager->updateSensorData(timestamp);
     
     auto gps = dataManager->getCurrentGPS();
     if (gps) {
         gpsLabel->setText(QString::fromStdString(gps->toString()));
-        // Update GPS map with current position - add null check for safety
         if (gpsMapWidget) {
             gpsMapWidget->updateGPSPosition(gps);
         }
@@ -322,31 +320,28 @@ void DisplayManager::updateSensorDisplays(double timestamp) {
 }
 
 void DisplayManager::updateImageDisplays(double timestamp) {
-    // Use synchronous loading to avoid threading issues
-    // Image data should be updated by updateSensorData call from updateSensorDisplays
+
     auto frontImg = dataManager->getCurrentFrontImage();
     auto backImg = dataManager->getCurrentBackImage();
     auto leftImg = dataManager->getCurrentLeftImage();
     auto rightImg = dataManager->getCurrentRightImage();
 
-    // Load one image per update cycle to avoid blocking UI too much
     static int rotateLoad = 0;
     
     if (frontImg && !frontImg->isLoaded() && rotateLoad % 4 == 0) {
-        frontImg->loadImageAsync(); // Now synchronous
+        frontImg->loadImageAsync(); 
     }
     if (backImg && !backImg->isLoaded() && rotateLoad % 4 == 1) {
-        backImg->loadImageAsync(); // Now synchronous  
+        backImg->loadImageAsync(); 
     }
     if (leftImg && !leftImg->isLoaded() && rotateLoad % 4 == 2) {
-        leftImg->loadImageAsync(); // Now synchronous
+        leftImg->loadImageAsync();
     }
     if (rightImg && !rightImg->isLoaded() && rotateLoad % 4 == 3) {
-        rightImg->loadImageAsync(); // Now synchronous
+        rightImg->loadImageAsync(); 
     }
     rotateLoad++;
     
-    // Display loaded images
     if (frontImg && frontImg->isLoaded() && !frontImg->isEmpty()) {
         if (lastFrontImage != frontImg || frontPixmapCache.isNull()) {
             cv::Mat imageCopy = frontImg->getImage();
