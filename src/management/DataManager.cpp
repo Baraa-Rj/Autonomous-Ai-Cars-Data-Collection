@@ -30,7 +30,6 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
             auto reader = DataReaderFactory::createReader(sensorType);
             if (reader && reader->loadAllData(filePath)) {
                 sensorReaders[sensorType] = std::move(reader);
-                currentSensorIndices[sensorType] = 0;
                 
                 // Update clock manager with timestamp range
                 auto& readerRef = sensorReaders[sensorType];
@@ -201,8 +200,7 @@ void DataManager::clearData() {
     sensorReaders.clear();
     imageReaders.clear();
     
-    // Clear indices and image file lists
-    currentSensorIndices.clear();
+    // Clear image file lists and indices
     imageFilesByCamera.clear();
     currentImageIndices.clear();
     

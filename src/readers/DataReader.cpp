@@ -3,33 +3,8 @@
 #include <stdexcept>
 #include <iostream>
 #include <algorithm>
+#include <fstream>
 
-bool DataReader::initializeStream(const std::string& filepath) {
-    closeStream();
-    currentFilepath = filepath;
-    fileStream.open(filepath);
-    headerSkipped = false;
-    
-    if (!fileStream.is_open()) {
-        std::cerr << "Cannot open file: " << filepath << std::endl;
-        return false;
-    }
-    
-    std::string headerLine;
-    if (std::getline(fileStream, headerLine)) {
-        headerSkipped = true;
-    }
-    
-    return true;
-}
-
-void DataReader::closeStream() {
-    if (fileStream.is_open()) {
-        fileStream.close();
-    }
-    lastData.reset();
-    headerSkipped = false;
-}
 
 std::vector<std::string> DataReader::splitLine(const std::string& line, char delimiter) {
     std::vector<std::string> tokens;
@@ -53,7 +28,6 @@ double DataReader::parseDouble(const std::string& str) {
 
 bool DataReader::loadAllData(const std::string& filepath) {
     clearData();
-    currentFilepath = filepath;
     
     std::ifstream file(filepath);
     if (!file.is_open()) {

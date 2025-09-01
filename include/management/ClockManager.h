@@ -37,8 +37,6 @@ public:
     std::string formatElapsedTime(double timestamp) const;
     std::string formatDuration() const;
     
-    template<typename T>
-    T* findClosestData(const std::vector<T>& dataVector) const;
     
     void startTiming(std::function<void()> callback, int intervalMs = 33);
     void stopTiming();
@@ -64,21 +62,3 @@ private:
     std::string formatTime(int totalSeconds) const;
 };
 
-template<typename T>
-T* ClockManager::findClosestData(const std::vector<T>& dataVector) const {
-    if (dataVector.empty()) return nullptr;
-    
-    double currentTs = getCurrentTimestamp();
-    
-    auto it = std::lower_bound(dataVector.begin(), dataVector.end(), currentTs,
-        [](const T& data, double timestamp) {
-            return data.timestamp < timestamp;
-        });
-    
-    if (it == dataVector.begin()) {
-        return const_cast<T*>(&(*it));
-    }
-    
-    --it;
-    return const_cast<T*>(&(*it));
-}

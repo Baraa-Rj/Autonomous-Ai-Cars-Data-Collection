@@ -2,28 +2,6 @@
 #include <fstream>
 #include <iostream>
 
-std::unique_ptr<Data> ThrottleDataReader::readNext() {
-    if (!fileStream.is_open()) {
-        return nullptr;
-    }
-    
-    std::string line;
-    while (std::getline(fileStream, line)) {
-        if (line.empty()) continue;
-        
-        try {
-            auto data = parseLine(line);
-            if (data) {
-                lastData = std::make_unique<ThrottleData>(*static_cast<ThrottleData*>(data.get()));
-                return std::move(data);
-            }
-        } catch (const std::exception& e) {
-            std::cerr << "Error parsing Throttle line: " << line << " - " << e.what() << std::endl;
-            continue;
-        }
-    }
-    return nullptr;
-}
 
 std::unique_ptr<Data> ThrottleDataReader::parseLine(const std::string& line) {
     auto tokens = splitLine(line);

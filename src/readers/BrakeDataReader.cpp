@@ -2,28 +2,6 @@
 #include <fstream>
 #include <iostream>
 
-std::unique_ptr<Data> BrakeDataReader::readNext() {
-    if (!fileStream.is_open()) {
-        return nullptr;
-    }
-    
-    std::string line;
-    while (std::getline(fileStream, line)) {
-        if (line.empty()) continue;
-        
-        try {
-            auto data = parseLine(line);
-            if (data) {
-                lastData = std::make_unique<BrakeData>(*static_cast<BrakeData*>(data.get()));
-                return std::move(data);
-            }
-        } catch (const std::exception& e) {
-            std::cerr << "Error parsing Brake line: " << line << " - " << e.what() << std::endl;
-            continue;
-        }
-    }
-    return nullptr;
-}
 
 std::unique_ptr<Data> BrakeDataReader::parseLine(const std::string& line) {
     auto tokens = splitLine(line);

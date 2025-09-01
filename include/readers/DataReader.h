@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include <fstream>
 #include "core/Data.h"
 
 // Abstract base class for all data readers
@@ -22,10 +21,6 @@ public:
     // New: Clear all loaded data
     virtual void clearData();
     
-    // Legacy streaming methods (deprecated but kept for compatibility)
-    virtual bool initializeStream(const std::string& filepath);
-    virtual std::unique_ptr<Data> readNext() = 0;
-    virtual void closeStream();
     
     // Helper function to split CSV line by delimiter
     static std::vector<std::string> splitLine(const std::string& line, char delimiter = ',');
@@ -39,10 +34,4 @@ protected:
     
     // Storage for preloaded data
     std::vector<std::unique_ptr<Data>> allData;
-    
-    // Stream and state management (legacy)
-    std::ifstream fileStream;
-    std::string currentFilepath;
-    std::unique_ptr<Data> lastData;
-    bool headerSkipped = false;
 };
