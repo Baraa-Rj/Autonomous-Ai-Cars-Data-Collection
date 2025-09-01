@@ -69,9 +69,12 @@ private:
     std::atomic<bool> isLoading{false};
     std::atomic<bool> cancelLoadingFlag{false};
     
-    // Streaming readers for each sensor type
+    // Preloaded data readers for each sensor type
     std::map<DataType, std::unique_ptr<DataReader>> sensorReaders;
     std::map<std::string, std::unique_ptr<DataReader>> imageReaders;
+    
+    // Current data indices for efficient timestamp lookup
+    std::map<DataType, size_t> currentSensorIndices;
     
     // Pre-loaded image file lists for each camera
     std::map<std::string, std::vector<std::pair<double, std::string>>> imageFilesByCamera;

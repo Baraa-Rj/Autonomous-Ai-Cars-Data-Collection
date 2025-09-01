@@ -15,6 +15,7 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
         return false;
     }
     
+    // Preload all CSV data into memory
     std::vector<std::pair<std::string, DataType>> csvFiles = {
         {dataDirectory + "/gps.csv", DataType::GPS},
         {dataDirectory + "/imu.csv", DataType::IMU},
@@ -27,12 +28,23 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
     for (const auto& [filePath, sensorType] : csvFiles) {
         if (std::filesystem::exists(filePath)) {
             auto reader = DataReaderFactory::createReader(sensorType);
-            if (reader && reader->initializeStream(filePath)) {
+            if (reader && reader->loadAllData(filePath)) {
                 sensorReaders[sensorType] = std::move(reader);
+                currentSensorIndices[sensorType] = 0;
+                
+                // Update clock manager with timestamp range
+                auto& readerRef = sensorReaders[sensorType];
+                for (size_t i = 0; i < readerRef->getDataCount(); ++i) {
+                    Data* data = readerRef->getDataAt(i);
+                    if (data) {
+                        clockManager.updateRange(data->timestamp);
+                    }
+                }
             }
         }
     }
     
+    // Initialize image readers and preload image file lists
     std::vector<std::string> cameras = {"front", "back", "left", "right"};
     for (const std::string& camera : cameras) {
         std::string dirPath = dataDirectory + "/3d_images/" + camera;
@@ -49,26 +61,72 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
 void DataManager::updateSensorData(double targetTimestamp) {
     std::unique_lock<std::shared_mutex> lock(dataStoreMutex);
     
-    // Update sensor data by reading until we reach or pass the target timestamp
+    // Update sensor data using preloaded data with binary search for efficiency
     for (auto& [type, reader] : sensorReaders) {
-        if (!reader) continue;
+        if (!reader || reader->getDataCount() == 0) continue;
         
-        Data* currentData = dataStore.getCurrentDataByType(type);
+        // Find the best data point for the target timestamp using binary search
+        size_t dataCount = reader->getDataCount();
+        size_t left = 0;
+        size_t right = dataCount - 1;
+        size_t bestIndex = 0;
         
-        // If we don't have data yet, or current data is before target, read more
-        while (!currentData || currentData->timestamp < targetTimestamp) {
-            std::unique_ptr<Data> nextData = reader->readNext();
-            if (!nextData) {
-                break; // End of stream
-            }
+        // Binary search for the closest timestamp <= targetTimestamp
+        while (left <= right) {
+            size_t mid = left + (right - left) / 2;
+            Data* data = reader->getDataAt(mid);
             
-            clockManager.updateRange(nextData->timestamp);
-            dataStore.addData(type, std::move(nextData));
-            currentData = dataStore.getCurrentDataByType(type);
+            if (data && data->timestamp <= targetTimestamp) {
+                bestIndex = mid;
+                if (left == right) break;
+                left = mid + 1;
+            } else {
+                if (mid == 0) break;
+                right = mid - 1;
+            }
+        }
+        
+        // Get the best data point
+        Data* bestData = reader->getDataAt(bestIndex);
+        if (bestData) {
+            Data* currentData = dataStore.getCurrentDataByType(type);
+            
+            // Only update if this is different from current data
+            if (!currentData || currentData->timestamp != bestData->timestamp) {
+                // Create a copy of the data for the data store
+                std::unique_ptr<Data> dataCopy;
+                
+                switch (type) {
+                    case DataType::GPS:
+                        dataCopy = std::make_unique<GPSData>(*static_cast<GPSData*>(bestData));
+                        break;
+                    case DataType::IMU:
+                        dataCopy = std::make_unique<IMUData>(*static_cast<IMUData*>(bestData));
+                        break;
+                    case DataType::SPEED:
+                        dataCopy = std::make_unique<SpeedData>(*static_cast<SpeedData*>(bestData));
+                        break;
+                    case DataType::BRAKE:
+                        dataCopy = std::make_unique<BrakeData>(*static_cast<BrakeData*>(bestData));
+                        break;
+                    case DataType::THROTTLE:
+                        dataCopy = std::make_unique<ThrottleData>(*static_cast<ThrottleData*>(bestData));
+                        break;
+                    case DataType::STEERING:
+                        dataCopy = std::make_unique<SteeringData>(*static_cast<SteeringData*>(bestData));
+                        break;
+                    default:
+                        continue;
+                }
+                
+                if (dataCopy) {
+                    dataStore.addData(type, std::move(dataCopy));
+                }
+            }
         }
     }
     
-    // Update image data - for now, load images from pre-loaded data
+    // Update image data - images remain on-demand as before
     updateImageDataForTimestamp(targetTimestamp);
 }
 
@@ -145,17 +203,29 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
     
     std::thread([this, dataDirectory]() {
         try {
-            updateSensorData(0.0);
+            emit dataLoadingProgress(50);
+            
+            // Data is already preloaded during initializeStreamingReaders
+            // Just need to initialize the current data state
+            updateSensorData(clockManager.getMinTimestamp());
             
             emit dataLoadingProgress(100);
             emit dataLoaded();
             
-            std::cout << "Streaming readers initialized. Time range: " 
+            // Count total data points loaded
+            size_t totalDataPoints = 0;
+            for (const auto& [type, reader] : sensorReaders) {
+                if (reader) {
+                    totalDataPoints += reader->getDataCount();
+                }
+            }
+            
+            std::cout << "Preloaded " << totalDataPoints << " CSV data points. Time range: " 
                      << clockManager.getMinTimestamp() << " to " 
                      << clockManager.getMaxTimestamp() << std::endl;
             
         } catch (const std::exception& e) {
-            emit dataLoadingError("Error initializing data streams: " + QString::fromStdString(e.what()));
+            emit dataLoadingError("Error loading preloaded data: " + QString::fromStdString(e.what()));
         }
         
         isLoading.store(false);
@@ -170,14 +240,17 @@ void DataManager::clearData() {
     std::unique_lock<std::shared_mutex> lock(dataStoreMutex);
     dataStore.clear();
     
+    // Clear all preloaded data
     for (auto& [type, reader] : sensorReaders) {
         if (reader) {
-            reader->closeStream();
+            reader->clearData();
         }
     }
     sensorReaders.clear();
     imageReaders.clear();
     
+    // Clear indices and image file lists
+    currentSensorIndices.clear();
     imageFilesByCamera.clear();
     currentImageIndices.clear();
     

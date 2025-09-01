@@ -10,13 +10,21 @@ class DataReader {
 public:
     virtual ~DataReader() = default;
     
-    // Initialize streaming read from CSV file
+    // New: Load all data from CSV file into memory
+    virtual bool loadAllData(const std::string& filepath);
+    
+    // New: Get data point at specific index
+    virtual Data* getDataAt(size_t index) const;
+    
+    // New: Get total number of loaded data points
+    virtual size_t getDataCount() const { return allData.size(); }
+    
+    // New: Clear all loaded data
+    virtual void clearData();
+    
+    // Legacy streaming methods (deprecated but kept for compatibility)
     virtual bool initializeStream(const std::string& filepath);
-    
-    // Read next data point from stream, returns nullptr if no more data
     virtual std::unique_ptr<Data> readNext() = 0;
-    
-    // Close stream and cleanup
     virtual void closeStream();
     
     // Helper function to split CSV line by delimiter
@@ -26,7 +34,13 @@ protected:
     // Helper function to convert string to double with error handling
     static double parseDouble(const std::string& str);
     
-    // Stream and state management
+    // Parse a single CSV line into a Data object
+    virtual std::unique_ptr<Data> parseLine(const std::string& line) = 0;
+    
+    // Storage for preloaded data
+    std::vector<std::unique_ptr<Data>> allData;
+    
+    // Stream and state management (legacy)
     std::ifstream fileStream;
     std::string currentFilepath;
     std::unique_ptr<Data> lastData;

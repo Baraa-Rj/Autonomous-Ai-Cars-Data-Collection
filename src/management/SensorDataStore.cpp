@@ -26,21 +26,18 @@ Data* SensorDataStore::getCurrentImageData(const std::string& cameraPosition) co
 std::vector<Data*> SensorDataStore::getCurrentData() const {
     std::vector<Data*> allData;
     
-    // Add all sensor data
     for (const auto& [type, data] : sensorData) {
         if (data) {
             allData.push_back(data.get());
         }
     }
     
-    // Add all image data
     for (const auto& [position, data] : imageData) {
         if (data) {
             allData.push_back(data.get());
         }
     }
     
-    // Sort by timestamp for consistent ordering
     std::sort(allData.begin(), allData.end(), 
               [](const Data* a, const Data* b) {
                   return a->timestamp < b->timestamp;

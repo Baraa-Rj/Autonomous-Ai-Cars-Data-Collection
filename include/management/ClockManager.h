@@ -5,11 +5,16 @@
 #include <cmath>
 #include <string>
 #include <limits>
+#include <thread>
+#include <atomic>
+#include <functional>
+#include <chrono>
 
 
 class ClockManager {
 public:
     ClockManager();
+    ~ClockManager();
     
     void updateRange(double timestamp);
     void resetRange();
@@ -35,6 +40,14 @@ public:
     template<typename T>
     T* findClosestData(const std::vector<T>& dataVector) const;
     
+    // Thread-based timing functionality
+    void startTiming(std::function<void()> callback, int intervalMs = 33);
+    void stopTiming();
+    void setTimingInterval(int intervalMs);
+    bool isTimingActive() const { return isRunning.load(); }
+    void setPlaybackSpeed(double speed) { playbackSpeed = speed; }
+    double getPlaybackSpeed() const { return playbackSpeed; }
+    
     static constexpr int SLIDER_MAX = 10000;  
 
 private:
@@ -42,6 +55,14 @@ private:
     double maxTimestamp;
     double currentTimestamp;
     
+    // Thread-based timing members
+    std::atomic<bool> isRunning;
+    std::thread timingThread;
+    std::function<void()> updateCallback;
+    int intervalMs;
+    double playbackSpeed;
+    
+    void timingLoop();
     std::string formatTime(int totalSeconds) const;
 };
 

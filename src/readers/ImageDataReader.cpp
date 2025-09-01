@@ -46,3 +46,8 @@ std::vector<std::unique_ptr<Data>> ImageDataReader::readFromDirectory(const std:
     
     return data;
 }
+
+std::unique_ptr<Data> ImageDataReader::parseLine(const std::string& line) {
+    // ImageDataReader doesn't use CSV parsing - images are loaded from directory
+    throw std::runtime_error("ImageDataReader doesn't support CSV line parsing. Use readFromDirectory() instead.");
+}

@@ -8,7 +8,6 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QGroupBox>
-#include <QtCore/QTimer>
 #include <opencv2/opencv.hpp>
 #include <memory>
 #include "management/DataManager.h"
@@ -87,7 +86,6 @@ private:
     QProgressBar* progressBar;
     
     std::unique_ptr<DataManager> dataManager;
-    std::unique_ptr<QTimer> playbackTimer;
     
     bool isPlaying;
     double playbackSpeed;

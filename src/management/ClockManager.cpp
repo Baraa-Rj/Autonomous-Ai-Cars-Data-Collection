@@ -3,7 +3,12 @@
 #include <iomanip>
 
 ClockManager::ClockManager() 
-    : minTimestamp(0.0), maxTimestamp(0.0), currentTimestamp(0.0) {
+    : minTimestamp(0.0), maxTimestamp(0.0), currentTimestamp(0.0)
+    , isRunning(false), intervalMs(33), playbackSpeed(1.0) {
+}
+
+ClockManager::~ClockManager() {
+    stopTiming();
 }
 
 void ClockManager::updateRange(double timestamp) {
@@ -109,4 +114,58 @@ std::string ClockManager::formatTime(int totalSeconds) const {
     }
     
     return oss.str();
+}
+
+void ClockManager::startTiming(std::function<void()> callback, int intervalMs) {
+    if (isRunning.load()) {
+        stopTiming();
+    }
+    
+    updateCallback = callback;
+    this->intervalMs = intervalMs;
+    isRunning.store(true);
+    
+    timingThread = std::thread(&ClockManager::timingLoop, this);
+}
+
+void ClockManager::stopTiming() {
+    if (isRunning.load()) {
+        isRunning.store(false);
+        if (timingThread.joinable()) {
+            timingThread.join();
+        }
+    }
+}
+
+void ClockManager::setTimingInterval(int intervalMs) {
+    this->intervalMs = intervalMs;
+}
+
+void ClockManager::timingLoop() {
+    while (isRunning.load()) {
+        auto start = std::chrono::high_resolution_clock::now();
+        
+        // Advance time based on playback speed and interval
+        double deltaSeconds = playbackSpeed * (intervalMs / 1000.0);
+        advanceTime(deltaSeconds);
+        
+        // Check if we've reached the end
+        if (getCurrentTimestamp() >= getMaxTimestamp()) {
+            isRunning.store(false);
+        }
+        
+        // Call the update callback
+        if (updateCallback && isRunning.load()) {
+            updateCallback();
+        }
+        
+        // Sleep for the remaining time to maintain interval
+        auto end = std::chrono::high_resolution_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        auto remaining = std::chrono::milliseconds(intervalMs) - elapsed;
+        
+        if (remaining > std::chrono::milliseconds(0)) {
+            std::this_thread::sleep_for(remaining);
+        }
+    }
 }
