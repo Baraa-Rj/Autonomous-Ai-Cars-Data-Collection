@@ -54,6 +54,8 @@ public:
     const ClockManager& getClockManager() const { return clockManager; }
     
     const SensorDataStore& getDataStore() const { return dataStore; }
+    
+    bool isLoading() const { return loadingFlag.load(); }
 
 signals:
     void dataLoadingProgress(int percentage);
@@ -66,7 +68,7 @@ private:
     
     mutable std::shared_mutex dataStoreMutex;
     mutable std::mutex clockManagerMutex;
-    std::atomic<bool> isLoading{false};
+    std::atomic<bool> loadingFlag{false};
     std::atomic<bool> cancelLoadingFlag{false};
     
     // Preloaded data readers for each sensor type

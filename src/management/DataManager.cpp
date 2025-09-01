@@ -143,12 +143,12 @@ void DataManager::updateImageDataForTimestamp(double targetTimestamp) {
 }
 
 void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
-    isLoading.store(true);
+    loadingFlag.store(true);
     cancelLoadingFlag.store(false);
     clearData();
     
     if (!initializeStreamingReaders(dataDirectory)) {
-        isLoading.store(false);
+        loadingFlag.store(false);
         return;
     }
     
@@ -179,7 +179,7 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
             emit dataLoadingError("Error loading preloaded data: " + QString::fromStdString(e.what()));
         }
         
-        isLoading.store(false);
+        loadingFlag.store(false);
     }).detach();
 }
 

@@ -20,8 +20,16 @@ set(SOURCES
     src/management/SensorDataStore.cpp
     
     # GUI
-    src/gui/DisplayManager.cpp
+    src/gui/MainWindow.cpp
     src/gui/GPSMapWidget.cpp
+    
+    # Controllers (SRP-compliant)
+    src/controllers/PlaybackController.cpp
+    src/controllers/DisplayController.cpp
+    src/controllers/DataLoadingController.cpp
+    
+    # Utils
+    src/utils/ImageProcessor.cpp
     
     # Data Readers
     src/readers/DataReader.cpp
@@ -52,8 +60,16 @@ set(HEADERS
     include/management/SensorDataStore.h
     
     # GUI
-    include/gui/DisplayManager.h
+    include/gui/MainWindow.h
     include/gui/GPSMapWidget.h
+    
+    # Controllers (SRP-compliant)
+    include/controllers/PlaybackController.h
+    include/controllers/DisplayController.h
+    include/controllers/DataLoadingController.h
+    
+    # Utils
+    include/utils/ImageProcessor.h
     
     # Data Readers
     include/readers/DataReader.h
