@@ -36,12 +36,9 @@ bool DataReader::loadAllData(const std::string& filepath) {
     }
     
     std::string line;
-    // Skip header
     if (std::getline(file, line)) {
-        // Header skipped
     }
     
-    // Read all data lines
     while (std::getline(file, line)) {
         if (line.empty()) continue;
         
@@ -58,7 +55,6 @@ bool DataReader::loadAllData(const std::string& filepath) {
     
     file.close();
     
-    // Sort data by timestamp for efficient access
     std::sort(allData.begin(), allData.end(), [](const std::unique_ptr<Data>& a, const std::unique_ptr<Data>& b) {
         return a->timestamp < b->timestamp;
     });

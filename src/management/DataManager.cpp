@@ -15,7 +15,6 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
         return false;
     }
     
-    // Preload all CSV data into memory
     std::vector<std::pair<std::string, DataType>> csvFiles = {
         {dataDirectory + "/gps.csv", DataType::GPS},
         {dataDirectory + "/imu.csv", DataType::IMU},
@@ -31,7 +30,6 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
             if (reader && reader->loadAllData(filePath)) {
                 sensorReaders[sensorType] = std::move(reader);
                 
-                // Update clock manager with timestamp range
                 auto& readerRef = sensorReaders[sensorType];
                 for (size_t i = 0; i < readerRef->getDataCount(); ++i) {
                     Data* data = readerRef->getDataAt(i);
@@ -43,7 +41,6 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
         }
     }
     
-    // Initialize image readers and preload image file lists
     std::vector<std::string> cameras = {"front", "back", "left", "right"};
     for (const std::string& camera : cameras) {
         std::string dirPath = dataDirectory + "/3d_images/" + camera;
@@ -60,7 +57,6 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
 void DataManager::updateSensorData(double targetTimestamp) {
     std::unique_lock<std::shared_mutex> lock(dataStoreMutex);
     
-    // Simple approach: find closest data point using std::lower_bound
     for (auto& [type, reader] : sensorReaders) {
         if (!reader || reader->getDataCount() == 0) continue;
         
