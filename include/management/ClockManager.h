@@ -40,7 +40,6 @@ public:
     template<typename T>
     T* findClosestData(const std::vector<T>& dataVector) const;
     
-    // Thread-based timing functionality
     void startTiming(std::function<void()> callback, int intervalMs = 33);
     void stopTiming();
     void setTimingInterval(int intervalMs);
@@ -55,7 +54,6 @@ private:
     double maxTimestamp;
     double currentTimestamp;
     
-    // Thread-based timing members
     std::atomic<bool> isRunning;
     std::thread timingThread;
     std::function<void()> updateCallback;

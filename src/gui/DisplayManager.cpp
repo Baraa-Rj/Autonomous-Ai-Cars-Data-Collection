@@ -14,10 +14,7 @@ DisplayManager::DisplayManager(QWidget *parent)
     , dataManager(std::make_unique<DataManager>(this))
     , isPlaying(false)
     , playbackSpeed(1.0)
-    , lastFrontImage(nullptr)
-    , lastBackImage(nullptr)
-    , lastLeftImage(nullptr)
-    , lastRightImage(nullptr)
+    , userDraggingSlider(false)
 {
     setupUI();
     
@@ -162,6 +159,8 @@ void DisplayManager::setupControlPanel() {
     timeSlider = new QSlider(Qt::Horizontal);
     timeSlider->setEnabled(false);
     connect(timeSlider, &QSlider::valueChanged, this, &DisplayManager::onTimeSliderChanged);
+    connect(timeSlider, &QSlider::sliderPressed, this, &DisplayManager::onTimeSliderPressed);
+    connect(timeSlider, &QSlider::sliderReleased, this, &DisplayManager::onTimeSliderReleased);
     
     timeLabel = new QLabel("00:00 / 00:00");
     timeLabel->setMinimumWidth(80);
@@ -246,10 +245,33 @@ void DisplayManager::playPause() {
 }
 
 void DisplayManager::onTimeSliderChanged(int value) {
-    if (!isPlaying) { 
+    // Only respond to slider changes when user is dragging or when paused
+    if (userDraggingSlider || !isPlaying) { 
         ClockManager& clockManager = dataManager->getClockManager();
         
         clockManager.setProgressFromSlider(value);
+        double currentTime = clockManager.getCurrentTimestamp();
+        
+        updateSensorDisplays(currentTime);
+        updateImageDisplays(currentTime);
+        
+        QString elapsedTime = QString::fromStdString(clockManager.formatElapsedTime(currentTime));
+        QString durationTime = QString::fromStdString(clockManager.formatDuration());
+        timeLabel->setText(elapsedTime + " / " + durationTime);
+    }
+}
+
+void DisplayManager::onTimeSliderPressed() {
+    userDraggingSlider = true;
+}
+
+void DisplayManager::onTimeSliderReleased() {
+    userDraggingSlider = false;
+    
+    // Update displays with final slider position
+    if (timeSlider->isEnabled()) {
+        ClockManager& clockManager = dataManager->getClockManager();
+        clockManager.setProgressFromSlider(timeSlider->value());
         double currentTime = clockManager.getCurrentTimestamp();
         
         updateSensorDisplays(currentTime);
@@ -278,8 +300,11 @@ void DisplayManager::updateDisplay() {
     updateSensorDisplays(currentTime);
     updateImageDisplays(currentTime);
     
-    int sliderValue = clockManager.getSliderFromProgress();
-    timeSlider->setValue(sliderValue);
+    // Only update slider if user is not dragging it
+    if (!userDraggingSlider) {
+        int sliderValue = clockManager.getSliderFromProgress();
+        timeSlider->setValue(sliderValue);
+    }
     
     QString elapsedTime = QString::fromStdString(clockManager.formatElapsedTime(currentTime));
     QString durationTime = QString::fromStdString(clockManager.formatDuration());
@@ -326,69 +351,28 @@ void DisplayManager::updateSensorDisplays(double timestamp) {
 }
 
 void DisplayManager::updateImageDisplays(double timestamp) {
-    // Use synchronous loading to avoid threading issues
-    // Image data should be updated by updateSensorData call from updateSensorDisplays
-    auto frontImg = dataManager->getCurrentFrontImage();
-    auto backImg = dataManager->getCurrentBackImage();
-    auto leftImg = dataManager->getCurrentLeftImage();
-    auto rightImg = dataManager->getCurrentRightImage();
+    // Simple approach: load and display images directly
+    displayImage(dataManager->getCurrentFrontImage(), frontImageLabel);
+    displayImage(dataManager->getCurrentBackImage(), backImageLabel);
+    displayImage(dataManager->getCurrentLeftImage(), leftImageLabel);
+    displayImage(dataManager->getCurrentRightImage(), rightImageLabel);
+}
 
-    // Load one image per update cycle to avoid blocking UI too much
-    static int rotateLoad = 0;
+// Simple image display without complex caching
+void DisplayManager::displayImage(ImageData* imageData, QLabel* label) {
+    if (!imageData || !label) return;
     
-    if (frontImg && !frontImg->isLoaded() && rotateLoad % 4 == 0) {
-        frontImg->loadImageAsync(); // Now synchronous
-    }
-    if (backImg && !backImg->isLoaded() && rotateLoad % 4 == 1) {
-        backImg->loadImageAsync(); // Now synchronous  
-    }
-    if (leftImg && !leftImg->isLoaded() && rotateLoad % 4 == 2) {
-        leftImg->loadImageAsync(); // Now synchronous
-    }
-    if (rightImg && !rightImg->isLoaded() && rotateLoad % 4 == 3) {
-        rightImg->loadImageAsync(); // Now synchronous
-    }
-    rotateLoad++;
-    
-    // Display loaded images
-    if (frontImg && frontImg->isLoaded() && !frontImg->isEmpty()) {
-        if (lastFrontImage != frontImg || frontPixmapCache.isNull()) {
-            cv::Mat imageCopy = frontImg->getImage();
-            QPixmap pixmap = matToQPixmap(imageCopy);
-            frontPixmapCache = pixmap.scaled(frontImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-            lastFrontImage = frontImg;
-        }
-        frontImageLabel->setPixmap(frontPixmapCache);
+    // Load image if needed
+    if (!imageData->isLoaded()) {
+        imageData->loadImageAsync(); // Actually synchronous
     }
     
-    if (backImg && backImg->isLoaded() && !backImg->isEmpty()) {
-        if (lastBackImage != backImg || backPixmapCache.isNull()) {
-            cv::Mat imageCopy = backImg->getImage();
-            QPixmap pixmap = matToQPixmap(imageCopy);
-            backPixmapCache = pixmap.scaled(backImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-            lastBackImage = backImg;
-        }
-        backImageLabel->setPixmap(backPixmapCache);
-    }
-    
-    if (leftImg && leftImg->isLoaded() && !leftImg->isEmpty()) {
-        if (lastLeftImage != leftImg || leftPixmapCache.isNull()) {
-            cv::Mat imageCopy = leftImg->getImage();
-            QPixmap pixmap = matToQPixmap(imageCopy);
-            leftPixmapCache = pixmap.scaled(leftImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-            lastLeftImage = leftImg;
-        }
-        leftImageLabel->setPixmap(leftPixmapCache);
-    }
-    
-    if (rightImg && rightImg->isLoaded() && !rightImg->isEmpty()) {
-        if (lastRightImage != rightImg || rightPixmapCache.isNull()) {
-            cv::Mat imageCopy = rightImg->getImage();
-            QPixmap pixmap = matToQPixmap(imageCopy);
-            rightPixmapCache = pixmap.scaled(rightImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-            lastRightImage = rightImg;
-        }
-        rightImageLabel->setPixmap(rightPixmapCache);
+    // Display if loaded
+    if (imageData->isLoaded() && !imageData->isEmpty()) {
+        cv::Mat image = imageData->getImage();
+        QPixmap pixmap = matToQPixmap(image);
+        QPixmap scaled = pixmap.scaled(label->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        label->setPixmap(scaled);
     }
 }
 

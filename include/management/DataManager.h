@@ -83,4 +83,8 @@ private:
     // Image streaming support
     void updateImageDataForTimestamp(double targetTimestamp);
     void preloadImageFileList(const std::string& cameraName, const std::string& dirPath);
+    
+    // Simplified helper functions
+    Data* findClosestData(DataReader* reader, double targetTimestamp);
+    std::unique_ptr<Data> cloneData(Data* data, DataType type);
 };

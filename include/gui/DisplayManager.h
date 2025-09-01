@@ -27,6 +27,8 @@ private slots:
     void onDataLoadingError(const QString& error);
     void playPause();
     void onTimeSliderChanged(int value);
+    void onTimeSliderPressed();
+    void onTimeSliderReleased();
     void updateDisplay();
 
 private:
@@ -39,16 +41,7 @@ private:
     void updateSensorDisplays(double timestamp);
     void updateImageDisplays(double timestamp);
     QPixmap matToQPixmap(const cv::Mat& mat);
-    
-    // Cache for scaled pixmaps
-    QPixmap frontPixmapCache;
-    QPixmap backPixmapCache;
-    QPixmap leftPixmapCache;
-    QPixmap rightPixmapCache;
-    ImageData* lastFrontImage;
-    ImageData* lastBackImage;
-    ImageData* lastLeftImage;
-    ImageData* lastRightImage;
+    void displayImage(ImageData* imageData, QLabel* label);
     
     // UI Components
     QWidget* centralWidget;
@@ -89,5 +82,6 @@ private:
     
     bool isPlaying;
     double playbackSpeed;
+    bool userDraggingSlider;
 };
 

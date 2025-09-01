@@ -117,9 +117,7 @@ std::string ClockManager::formatTime(int totalSeconds) const {
 }
 
 void ClockManager::startTiming(std::function<void()> callback, int intervalMs) {
-    if (isRunning.load()) {
-        stopTiming();
-    }
+    stopTiming(); // Always stop first (simple)
     
     updateCallback = callback;
     this->intervalMs = intervalMs;
@@ -129,11 +127,9 @@ void ClockManager::startTiming(std::function<void()> callback, int intervalMs) {
 }
 
 void ClockManager::stopTiming() {
-    if (isRunning.load()) {
-        isRunning.store(false);
-        if (timingThread.joinable()) {
-            timingThread.join();
-        }
+    isRunning.store(false);
+    if (timingThread.joinable()) {
+        timingThread.join();
     }
 }
 
@@ -143,29 +139,22 @@ void ClockManager::setTimingInterval(int intervalMs) {
 
 void ClockManager::timingLoop() {
     while (isRunning.load()) {
-        auto start = std::chrono::high_resolution_clock::now();
-        
-        // Advance time based on playback speed and interval
+        // Simple: advance time by fixed amount
         double deltaSeconds = playbackSpeed * (intervalMs / 1000.0);
         advanceTime(deltaSeconds);
         
-        // Check if we've reached the end
+        // Stop if reached end
         if (getCurrentTimestamp() >= getMaxTimestamp()) {
             isRunning.store(false);
+            break;
         }
         
-        // Call the update callback
-        if (updateCallback && isRunning.load()) {
+        // Call update callback
+        if (updateCallback) {
             updateCallback();
         }
         
-        // Sleep for the remaining time to maintain interval
-        auto end = std::chrono::high_resolution_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        auto remaining = std::chrono::milliseconds(intervalMs) - elapsed;
-        
-        if (remaining > std::chrono::milliseconds(0)) {
-            std::this_thread::sleep_for(remaining);
-        }
+        // Simple sleep - no complex timing calculations
+        std::this_thread::sleep_for(std::chrono::milliseconds(intervalMs));
     }
 }

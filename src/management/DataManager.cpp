@@ -61,64 +61,17 @@ bool DataManager::initializeStreamingReaders(const std::string& dataDirectory) {
 void DataManager::updateSensorData(double targetTimestamp) {
     std::unique_lock<std::shared_mutex> lock(dataStoreMutex);
     
-    // Update sensor data using preloaded data with binary search for efficiency
+    // Simple approach: find closest data point using std::lower_bound
     for (auto& [type, reader] : sensorReaders) {
         if (!reader || reader->getDataCount() == 0) continue;
         
-        // Find the best data point for the target timestamp using binary search
-        size_t dataCount = reader->getDataCount();
-        size_t left = 0;
-        size_t right = dataCount - 1;
-        size_t bestIndex = 0;
-        
-        // Binary search for the closest timestamp <= targetTimestamp
-        while (left <= right) {
-            size_t mid = left + (right - left) / 2;
-            Data* data = reader->getDataAt(mid);
-            
-            if (data && data->timestamp <= targetTimestamp) {
-                bestIndex = mid;
-                if (left == right) break;
-                left = mid + 1;
-            } else {
-                if (mid == 0) break;
-                right = mid - 1;
-            }
-        }
-        
-        // Get the best data point
-        Data* bestData = reader->getDataAt(bestIndex);
+        Data* bestData = findClosestData(reader.get(), targetTimestamp);
         if (bestData) {
             Data* currentData = dataStore.getCurrentDataByType(type);
             
-            // Only update if this is different from current data
+            // Only update if timestamp changed
             if (!currentData || currentData->timestamp != bestData->timestamp) {
-                // Create a copy of the data for the data store
-                std::unique_ptr<Data> dataCopy;
-                
-                switch (type) {
-                    case DataType::GPS:
-                        dataCopy = std::make_unique<GPSData>(*static_cast<GPSData*>(bestData));
-                        break;
-                    case DataType::IMU:
-                        dataCopy = std::make_unique<IMUData>(*static_cast<IMUData*>(bestData));
-                        break;
-                    case DataType::SPEED:
-                        dataCopy = std::make_unique<SpeedData>(*static_cast<SpeedData*>(bestData));
-                        break;
-                    case DataType::BRAKE:
-                        dataCopy = std::make_unique<BrakeData>(*static_cast<BrakeData*>(bestData));
-                        break;
-                    case DataType::THROTTLE:
-                        dataCopy = std::make_unique<ThrottleData>(*static_cast<ThrottleData*>(bestData));
-                        break;
-                    case DataType::STEERING:
-                        dataCopy = std::make_unique<SteeringData>(*static_cast<SteeringData*>(bestData));
-                        break;
-                    default:
-                        continue;
-                }
-                
+                auto dataCopy = cloneData(bestData, type);
                 if (dataCopy) {
                     dataStore.addData(type, std::move(dataCopy));
                 }
@@ -126,7 +79,6 @@ void DataManager::updateSensorData(double targetTimestamp) {
         }
     }
     
-    // Update image data - images remain on-demand as before
     updateImageDataForTimestamp(targetTimestamp);
 }
 
@@ -256,6 +208,46 @@ void DataManager::clearData() {
     
     std::lock_guard<std::mutex> clockLock(clockManagerMutex);
     clockManager.resetRange();
+}
+
+// Simple helper: find closest data using standard library
+Data* DataManager::findClosestData(DataReader* reader, double targetTimestamp) {
+    if (!reader || reader->getDataCount() == 0) return nullptr;
+    
+    // Simple linear search from current position (good for sequential access)
+    Data* bestData = nullptr;
+    for (size_t i = 0; i < reader->getDataCount(); ++i) {
+        Data* data = reader->getDataAt(i);
+        if (data && data->timestamp <= targetTimestamp) {
+            bestData = data;
+        } else {
+            break; // Data is sorted, so we can stop here
+        }
+    }
+    
+    return bestData;
+}
+
+// Simple data cloning without complex switch statements
+std::unique_ptr<Data> DataManager::cloneData(Data* data, DataType type) {
+    if (!data) return nullptr;
+    
+    switch (type) {
+        case DataType::GPS:
+            return std::make_unique<GPSData>(*static_cast<GPSData*>(data));
+        case DataType::IMU:
+            return std::make_unique<IMUData>(*static_cast<IMUData*>(data));
+        case DataType::SPEED:
+            return std::make_unique<SpeedData>(*static_cast<SpeedData*>(data));
+        case DataType::BRAKE:
+            return std::make_unique<BrakeData>(*static_cast<BrakeData*>(data));
+        case DataType::THROTTLE:
+            return std::make_unique<ThrottleData>(*static_cast<ThrottleData*>(data));
+        case DataType::STEERING:
+            return std::make_unique<SteeringData>(*static_cast<SteeringData*>(data));
+        default:
+            return nullptr;
+    }
 }
 
 GPSData* DataManager::getCurrentGPS() const {
