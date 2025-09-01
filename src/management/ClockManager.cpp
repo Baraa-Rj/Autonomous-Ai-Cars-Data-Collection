@@ -117,7 +117,7 @@ std::string ClockManager::formatTime(int totalSeconds) const {
 }
 
 void ClockManager::startTiming(std::function<void()> callback, int intervalMs) {
-    stopTiming(); // Always stop first (simple)
+    stopTiming(); 
     
     updateCallback = callback;
     this->intervalMs = intervalMs;
@@ -139,22 +139,18 @@ void ClockManager::setTimingInterval(int intervalMs) {
 
 void ClockManager::timingLoop() {
     while (isRunning.load()) {
-        // Simple: advance time by fixed amount
         double deltaSeconds = playbackSpeed * (intervalMs / 1000.0);
         advanceTime(deltaSeconds);
         
-        // Stop if reached end
         if (getCurrentTimestamp() >= getMaxTimestamp()) {
             isRunning.store(false);
             break;
         }
         
-        // Call update callback
         if (updateCallback) {
             updateCallback();
         }
         
-        // Simple sleep - no complex timing calculations
         std::this_thread::sleep_for(std::chrono::milliseconds(intervalMs));
     }
 }

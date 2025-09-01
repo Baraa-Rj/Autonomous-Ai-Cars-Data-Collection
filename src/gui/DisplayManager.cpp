@@ -235,17 +235,15 @@ void DisplayManager::playPause() {
     } else {
         clockManager.setPlaybackSpeed(playbackSpeed);
         clockManager.startTiming([this]() {
-            // This callback will be executed in the timing thread
-            // We need to use QMetaObject::invokeMethod to call updateDisplay on the main thread
+     
             QMetaObject::invokeMethod(this, "updateDisplay", Qt::QueuedConnection);
-        }, 33); // ~30 FPS
+        }, 33); 
         playPauseButton->setText("Pause");
         isPlaying = true;
     }
 }
 
 void DisplayManager::onTimeSliderChanged(int value) {
-    // Only respond to slider changes when user is dragging or when paused
     if (userDraggingSlider || !isPlaying) { 
         ClockManager& clockManager = dataManager->getClockManager();
         

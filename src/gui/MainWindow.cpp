@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
     
     setupUI();
     
-    // Connect loading controller signals
     connect(loadingController.get(), &DataLoadingController::loadingFinished,
             this, &MainWindow::onDataLoaded);
     connect(loadingController.get(), &DataLoadingController::loadingProgress,
@@ -32,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(loadingController.get(), &DataLoadingController::loadingError,
             this, &MainWindow::onLoadingError);
     
-    // Connect playback controller signals
     connect(playbackController.get(), &PlaybackController::positionChanged,
             this, &MainWindow::onPlaybackPositionChanged);
     
