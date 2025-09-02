@@ -16,7 +16,6 @@ class DisplayController;
 class DataLoadingController;
 class GPSMapWidget;
 
-// Single Responsibility: Main application window and UI layout management
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -41,25 +40,20 @@ private:
     void setupMapPanel();
     void setupControlPanel();
     
-    // Controllers (SRP-compliant)
     std::unique_ptr<DataManager> dataManager;
     std::unique_ptr<PlaybackController> playbackController;
     std::unique_ptr<DisplayController> displayController;
     std::unique_ptr<DataLoadingController> loadingController;
     
-    // UI state
     bool userDraggingSlider;
     
-    // UI Components
     QWidget* centralWidget;
     
-    // Panels
     QGroupBox* sensorPanel;
     QGroupBox* imagePanel;
     QGroupBox* mapPanel;
     QGroupBox* controlPanel;
     
-    // Sensor labels
     QLabel* gpsLabel;
     QLabel* imuLabel;
     QLabel* speedLabel;
@@ -67,16 +61,13 @@ private:
     QLabel* throttleLabel;
     QLabel* steeringLabel;
     
-    // Image labels
     QLabel* frontImageLabel;
     QLabel* backImageLabel;
     QLabel* leftImageLabel;
     QLabel* rightImageLabel;
     
-    // Map widget
     GPSMapWidget* gpsMapWidget;
     
-    // Controls
     QPushButton* loadButton;
     QPushButton* playPauseButton;
     QSlider* timeSlider;

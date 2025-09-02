@@ -4,7 +4,6 @@
 
 class DataManager;
 
-// Single Responsibility: Handle data loading coordination and progress reporting
 class DataLoadingController : public QObject {
     Q_OBJECT
 

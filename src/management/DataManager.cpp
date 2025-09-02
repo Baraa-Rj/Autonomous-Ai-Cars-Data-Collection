@@ -64,7 +64,6 @@ void DataManager::updateSensorData(double targetTimestamp) {
         if (bestData) {
             Data* currentData = dataStore.getCurrentDataByType(type);
             
-            // Only update if timestamp changed
             if (!currentData || currentData->timestamp != bestData->timestamp) {
                 auto dataCopy = cloneData(bestData, type);
                 if (dataCopy) {
@@ -101,7 +100,6 @@ void DataManager::preloadImageFileList(const std::string& cameraName, const std:
         }
     }
     
-    // Sort by timestamp
     std::sort(imageFiles.begin(), imageFiles.end());
     
     imageFilesByCamera[cameraName] = std::move(imageFiles);
@@ -117,21 +115,17 @@ void DataManager::updateImageDataForTimestamp(double targetTimestamp) {
         size_t& currentIndex = currentImageIndices[cameraName];
         Data* currentImageData = dataStore.getCurrentImageData(cameraName);
         
-        // Find the best image for this timestamp
         while (currentIndex < imageFiles.size()) {
             const auto& [timestamp, filepath] = imageFiles[currentIndex];
             
             if (timestamp >= targetTimestamp) {
-                // This image is at or after our target time
                 if (!currentImageData || currentImageData->timestamp != timestamp) {
-                    // Load this image
                     auto imageData = std::make_unique<ImageData>(timestamp, filepath);
                     clockManager.updateRange(timestamp);
                     dataStore.addImageData(cameraName, std::move(imageData));
                 }
                 break;
             } else {
-                // This image is before our target, move to next
                 currentIndex++;
             }
         }
@@ -152,14 +146,12 @@ void DataManager::loadAllSensorDataAsync(const std::string& dataDirectory) {
         try {
             emit dataLoadingProgress(50);
             
-            // Data is already preloaded during initializeStreamingReaders
-            // Just need to initialize the current data state
+            
             updateSensorData(clockManager.getMinTimestamp());
             
             emit dataLoadingProgress(100);
             emit dataLoaded();
             
-            // Count total data points loaded
             size_t totalDataPoints = 0;
             for (const auto& [type, reader] : sensorReaders) {
                 if (reader) {
@@ -187,7 +179,6 @@ void DataManager::clearData() {
     std::unique_lock<std::shared_mutex> lock(dataStoreMutex);
     dataStore.clear();
     
-    // Clear all preloaded data
     for (auto& [type, reader] : sensorReaders) {
         if (reader) {
             reader->clearData();
@@ -196,7 +187,6 @@ void DataManager::clearData() {
     sensorReaders.clear();
     imageReaders.clear();
     
-    // Clear image file lists and indices
     imageFilesByCamera.clear();
     currentImageIndices.clear();
     
@@ -204,25 +194,22 @@ void DataManager::clearData() {
     clockManager.resetRange();
 }
 
-// Simple helper: find closest data using standard library
 Data* DataManager::findClosestData(DataReader* reader, double targetTimestamp) {
     if (!reader || reader->getDataCount() == 0) return nullptr;
     
-    // Simple linear search from current position (good for sequential access)
     Data* bestData = nullptr;
     for (size_t i = 0; i < reader->getDataCount(); ++i) {
         Data* data = reader->getDataAt(i);
         if (data && data->timestamp <= targetTimestamp) {
             bestData = data;
         } else {
-            break; // Data is sorted, so we can stop here
+            break; 
         }
     }
     
     return bestData;
 }
 
-// Simple data cloning without complex switch statements
 std::unique_ptr<Data> DataManager::cloneData(Data* data, DataType type) {
     if (!data) return nullptr;
     

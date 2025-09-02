@@ -4,7 +4,6 @@
 
 class ClockManager;
 
-// Single Responsibility: Handle playback control logic
 class PlaybackController : public QObject {
     Q_OBJECT
 

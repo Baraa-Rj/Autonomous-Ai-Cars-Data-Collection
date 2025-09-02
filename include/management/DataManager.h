@@ -31,7 +31,6 @@ public:
     void cancelLoading();
     void clearData();
     
-    // Get current sensor data (no timestamp needed as we only keep last frame)
     GPSData* getCurrentGPS() const;
     IMUData* getCurrentIMU() const;
     SpeedData* getCurrentSpeed() const;
@@ -44,10 +43,8 @@ public:
     ImageData* getCurrentLeftImage() const;
     ImageData* getCurrentRightImage() const;
     
-    // Update sensor data by reading next values from streams
     void updateSensorData(double targetTimestamp);
     
-    // Initialize streaming readers
     bool initializeStreamingReaders(const std::string& dataDirectory);
     
     ClockManager& getClockManager() { return clockManager; }
@@ -71,19 +68,15 @@ private:
     std::atomic<bool> loadingFlag{false};
     std::atomic<bool> cancelLoadingFlag{false};
     
-    // Preloaded data readers for each sensor type
     std::map<DataType, std::unique_ptr<DataReader>> sensorReaders;
     std::map<std::string, std::unique_ptr<DataReader>> imageReaders;
     
-    // Pre-loaded image file lists for each camera
     std::map<std::string, std::vector<std::pair<double, std::string>>> imageFilesByCamera;
     std::map<std::string, size_t> currentImageIndices;
     
-    // Image streaming support
     void updateImageDataForTimestamp(double targetTimestamp);
     void preloadImageFileList(const std::string& cameraName, const std::string& dirPath);
     
-    // Simplified helper functions
     Data* findClosestData(DataReader* reader, double targetTimestamp);
     std::unique_ptr<Data> cloneData(Data* data, DataType type);
 };

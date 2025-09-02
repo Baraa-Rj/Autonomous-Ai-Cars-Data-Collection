@@ -142,9 +142,9 @@ void MainWindow::setupImagePanel() {
     rightImageLabel->setAlignment(Qt::AlignCenter);
     rightImageLabel->setScaledContents(true);
     
-    imageLayout->addWidget(frontImageLabel, 0, 0);
-    imageLayout->addWidget(rightImageLabel, 0, 1);
-    imageLayout->addWidget(leftImageLabel, 1, 0);
+    imageLayout->addWidget(frontImageLabel, 0, 1);
+    imageLayout->addWidget(rightImageLabel, 1, 0);
+    imageLayout->addWidget(leftImageLabel, 0, 0);
     imageLayout->addWidget(backImageLabel, 1, 1);
 }
 
