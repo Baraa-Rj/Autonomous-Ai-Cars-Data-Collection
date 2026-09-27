@@ -10,10 +10,8 @@ DisplayManager::DisplayManager(QWidget* parent)
     dataStore = new DataStore();
     currentTime = std::chrono::system_clock::now();
 
-    // Build UI using dedicated UIBuilder
     uiComponents = UIBuilder::buildUI(this);
     
-    // Create data presenter to handle data display logic
     dataPresenter = std::make_unique<DataPresenter>(readersManager, dataStore, &uiComponents);
 }
 
@@ -43,7 +41,6 @@ void DisplayManager::updateDisplay(std::chrono::system_clock::time_point time) {
 
 void DisplayManager::setDataStore(DataStore* ds) {
     dataStore = ds;
-    // Update data presenter with new dataStore
     if (dataPresenter) {
         dataPresenter = std::make_unique<DataPresenter>(readersManager, dataStore, &uiComponents);
     }

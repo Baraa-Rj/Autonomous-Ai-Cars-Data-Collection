@@ -1,17 +1,6 @@
 #pragma once
 
 #include "Data.h"
+#include "SingleValueData.h"
 
-class SpeedData : public Data {
-protected:
-    float speed;
-
-public:
-    SpeedData(std::chrono::system_clock::time_point timestamp, float speed);
-    ~SpeedData();
-
-    float getSpeed() const;
-
-    void setSpeed(float speed);
-    DataType getType() const override;
-};
+using SpeedData = SingleValueData<float, DataType::SPEED>;

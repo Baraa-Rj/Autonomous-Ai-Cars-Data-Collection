@@ -6,7 +6,6 @@ UIComponents UIBuilder::buildUI(QWidget* parent) {
     
     auto* mainLayout = new QHBoxLayout(parent);
     
-    // Create sensor panel and camera panel
     auto* sensorPanel = createSensorPanel(parent, components);
     auto* cameraPanel = createCameraPanel(parent, components);
     

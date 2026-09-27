@@ -1,4 +1,4 @@
-#include "data/ImageHandler.h"
+    #include "data/ImageHandler.h"
 #include <QLabel>
 #include <QPixmap>
 
