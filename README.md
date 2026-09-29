@@ -223,6 +223,13 @@ cd build
 If a `sample_data/` directory exists in the project root, CMake copies it into
 the build directory.
 
+Automated headless tests (no display needed) generate a small fixture dataset
+and check parsing and seeking:
+```bash
+cd build
+ctest --output-on-failure
+```
+
 ### Code Style
 - **C++17 Standard**: Modern C++ features and best practices
 - **Qt Conventions**: Follow Qt naming and coding conventions
