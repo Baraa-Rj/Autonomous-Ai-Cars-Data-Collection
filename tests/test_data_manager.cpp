@@ -134,15 +134,32 @@ static void testSeeking(const fs::path& dir, double base) {
     checkImagesAt(manager, base);
 }
 
+static void testZeroBasedRange(const fs::path& dir) {
+    DataManager manager;
+    CHECK(manager.initializeStreamingReaders(dir.string()));
+    CHECK_NEAR(manager.getClockManager().getMinTimestamp(), 0.0);
+    CHECK_NEAR(manager.getClockManager().getMaxTimestamp(), 0.5 * (kSensorRows - 1));
+
+    ClockManager clock;
+    clock.updateRange(0.0);
+    clock.updateRange(1.0);
+    clock.updateRange(2.0);
+    CHECK_NEAR(clock.getMinTimestamp(), 0.0);
+    CHECK_NEAR(clock.getMaxTimestamp(), 2.0);
+    CHECK(clock.hasValidRange());
+}
+
 int main() {
     fs::path root = fs::temp_directory_path() / ("car_status_test_" + std::to_string(::getpid()));
     fs::remove_all(root);
 
     const double base = 1684926118.0;
     writeDataset(root / "epoch", base);
+    writeDataset(root / "zero", 0.0);
 
     testRowCounts(root / "epoch");
     testSeeking(root / "epoch", base);
+    testZeroBasedRange(root / "zero");
 
     fs::remove_all(root);
 

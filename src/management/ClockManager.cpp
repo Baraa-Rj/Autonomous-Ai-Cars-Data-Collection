@@ -3,7 +3,7 @@
 #include <iomanip>
 
 ClockManager::ClockManager() 
-    : minTimestamp(0.0), maxTimestamp(0.0), currentTimestamp(0.0)
+    : minTimestamp(0.0), maxTimestamp(0.0), currentTimestamp(0.0), hasRange(false)
     , isRunning(false), intervalMs(33), playbackSpeed(1.0) {
 }
 
@@ -12,8 +12,9 @@ ClockManager::~ClockManager() {
 }
 
 void ClockManager::updateRange(double timestamp) {
-    if (minTimestamp == 0.0 && maxTimestamp == 0.0) {
+    if (!hasRange) {
         minTimestamp = maxTimestamp = timestamp;
+        hasRange = true;
     } else {
         if (timestamp < minTimestamp) minTimestamp = timestamp;
         if (timestamp > maxTimestamp) maxTimestamp = timestamp;
@@ -24,6 +25,7 @@ void ClockManager::resetRange() {
     minTimestamp = 0.0;
     maxTimestamp = 0.0;
     currentTimestamp = 0.0;
+    hasRange = false;
 }
 
 double ClockManager::getDuration() const {

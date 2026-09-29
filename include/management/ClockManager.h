@@ -51,6 +51,7 @@ private:
     double minTimestamp;
     double maxTimestamp;
     double currentTimestamp;
+    bool hasRange;  // false until the first updateRange(); 0.0 is a valid timestamp
     
     std::atomic<bool> isRunning;
     std::thread timingThread;
