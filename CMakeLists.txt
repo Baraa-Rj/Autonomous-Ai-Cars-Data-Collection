@@ -97,6 +97,37 @@ add_executable(CarStatusVisualization ${SOURCES} ${HEADERS})
 target_include_directories(CarStatusVisualization PRIVATE include)
 target_link_libraries(CarStatusVisualization Qt6::Core Qt6::Widgets Qt6::Network ${OpenCV_LIBS})
 
-# Copy sample data and map HTML to build directory
-file(COPY sample_data DESTINATION ${CMAKE_BINARY_DIR})
+# Copy sample data (if present; it is not in the repository) and map HTML to build directory
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/sample_data)
+    file(COPY sample_data DESTINATION ${CMAKE_BINARY_DIR})
+endif()
 file(COPY map.html DESTINATION ${CMAKE_BINARY_DIR})
+# Headless tests: non-GUI sources only, no display needed
+enable_testing()
+
+add_executable(test_data_manager
+    tests/test_data_manager.cpp
+    src/management/DataManager.cpp
+    src/management/ClockManager.cpp
+    src/management/SensorDataStore.cpp
+    src/readers/DataReader.cpp
+    src/readers/DataReaderFactory.cpp
+    src/readers/GPSDataReader.cpp
+    src/readers/IMUDataReader.cpp
+    src/readers/SpeedDataReader.cpp
+    src/readers/BrakeDataReader.cpp
+    src/readers/ThrottleDataReader.cpp
+    src/readers/SteeringDataReader.cpp
+    src/readers/ImageDataReader.cpp
+    src/data/GPSData.cpp
+    src/data/IMUData.cpp
+    src/data/SpeedData.cpp
+    src/data/BrakeData.cpp
+    src/data/ThrottleData.cpp
+    src/data/SteeringData.cpp
+    src/data/ImageData.cpp
+    include/management/DataManager.h
+)
+target_include_directories(test_data_manager PRIVATE include)
+target_link_libraries(test_data_manager Qt6::Core ${OpenCV_LIBS})
+add_test(NAME data_manager COMMAND test_data_manager)

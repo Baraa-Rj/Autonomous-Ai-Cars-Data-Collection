@@ -213,12 +213,21 @@ factory["newsensor.csv"] = std::make_unique<NewSensorDataReader>();
 4. **Update GUI**: Add display components in `MainWindow`
 
 ### Testing
-The application includes comprehensive sample data for testing:
+Sample data is not included in the repository. To try the application, prepare a
+dataset in the layout described in [Data Format](#-data-format), then:
 ```bash
-# Test with provided sample data
 cd build
 ./CarStatusVisualization
-# Load sample_data/ directory
+# Click "Load Data" and select your dataset directory
+```
+If a `sample_data/` directory exists in the project root, CMake copies it into
+the build directory.
+
+Automated headless tests (no display needed) generate a small fixture dataset
+and check parsing and seeking:
+```bash
+cd build
+ctest --output-on-failure
 ```
 
 ### Code Style

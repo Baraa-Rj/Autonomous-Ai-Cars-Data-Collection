@@ -103,7 +103,6 @@ void DataManager::preloadImageFileList(const std::string& cameraName, const std:
     std::sort(imageFiles.begin(), imageFiles.end());
     
     imageFilesByCamera[cameraName] = std::move(imageFiles);
-    currentImageIndices[cameraName] = 0;
     
     std::cout << "Preloaded " << imageFilesByCamera[cameraName].size() << " images for " << cameraName << " camera" << std::endl;
 }
@@ -112,21 +111,20 @@ void DataManager::updateImageDataForTimestamp(double targetTimestamp) {
     for (auto& [cameraName, imageFiles] : imageFilesByCamera) {
         if (imageFiles.empty()) continue;
         
-        size_t& currentIndex = currentImageIndices[cameraName];
         Data* currentImageData = dataStore.getCurrentImageData(cameraName);
         
-        while (currentIndex < imageFiles.size()) {
-            const auto& [timestamp, filepath] = imageFiles[currentIndex];
-            
-            if (timestamp >= targetTimestamp) {
-                if (!currentImageData || currentImageData->timestamp != timestamp) {
-                    auto imageData = std::make_unique<ImageData>(timestamp, filepath);
-                    clockManager.updateRange(timestamp);
-                    dataStore.addImageData(cameraName, std::move(imageData));
-                }
-                break;
-            } else {
-                currentIndex++;
+        // First frame with timestamp >= target; searched on every update so seeking backward works.
+        auto it = std::lower_bound(imageFiles.begin(), imageFiles.end(), targetTimestamp,
+            [](const std::pair<double, std::string>& file, double target) {
+                return file.first < target;
+            });
+        
+        if (it != imageFiles.end()) {
+            const auto& [timestamp, filepath] = *it;
+            if (!currentImageData || currentImageData->timestamp != timestamp) {
+                auto imageData = std::make_unique<ImageData>(timestamp, filepath);
+                clockManager.updateRange(timestamp);
+                dataStore.addImageData(cameraName, std::move(imageData));
             }
         }
     }
@@ -188,7 +186,6 @@ void DataManager::clearData() {
     imageReaders.clear();
     
     imageFilesByCamera.clear();
-    currentImageIndices.clear();
     
     std::lock_guard<std::mutex> clockLock(clockManagerMutex);
     clockManager.resetRange();
