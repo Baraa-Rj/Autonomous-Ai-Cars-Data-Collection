@@ -97,6 +97,8 @@ add_executable(CarStatusVisualization ${SOURCES} ${HEADERS})
 target_include_directories(CarStatusVisualization PRIVATE include)
 target_link_libraries(CarStatusVisualization Qt6::Core Qt6::Widgets Qt6::Network ${OpenCV_LIBS})
 
-# Copy sample data and map HTML to build directory
-file(COPY sample_data DESTINATION ${CMAKE_BINARY_DIR})
+# Copy sample data (if present; it is not in the repository) and map HTML to build directory
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/sample_data)
+    file(COPY sample_data DESTINATION ${CMAKE_BINARY_DIR})
+endif()
 file(COPY map.html DESTINATION ${CMAKE_BINARY_DIR})
