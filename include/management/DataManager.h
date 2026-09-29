@@ -72,7 +72,6 @@ private:
     std::map<std::string, std::unique_ptr<DataReader>> imageReaders;
     
     std::map<std::string, std::vector<std::pair<double, std::string>>> imageFilesByCamera;
-    std::map<std::string, size_t> currentImageIndices;
     
     void updateImageDataForTimestamp(double targetTimestamp);
     void preloadImageFileList(const std::string& cameraName, const std::string& dirPath);
